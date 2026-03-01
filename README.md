@@ -191,7 +191,7 @@ git init
 git add .
 git commit -m "Initial commit"
 git branch -M main
-git remote add origin https://github.com/你的用户名/DreamChaser-web-preview.git
+git remote add origin https://github.com/你的用户名/DreamChaser.git
 git push -u origin main
 ```
 
@@ -265,7 +265,7 @@ git push origin main
 
 GitHub Pages 完成配置后，几分钟内访问：
 ```
-https://你的用户名.github.io/DreamChaser-web-preview/
+https://你的用户名.github.io/DreamChaser/
 ```
 
 ### 常见问题
@@ -280,11 +280,11 @@ https://你的用户名.github.io/DreamChaser-web-preview/
   - 构建失败（运行本地 `npm run build` 测试）
 
 **Q: 已配置 Pages 但网站还是 404？**
-- A: 检查 `vite.config.ts` 中的 `base` 配置是否正确，应为 `/DreamChaser-web-preview/`
+- A: 检查 `vite.config.ts` 中的 `base` 配置是否正确，应为 `/DreamChaser/`
 
 ### 配置说明
 
-- ✅ 已在 `vite.config.ts` 中配置 `base: '/DreamChaser-web-preview/'`
+- ✅ 已在 `vite.config.ts` 中配置 `base: '/DreamChaser/'`
 - ✅ 已使用 `createWebHashHistory()` 确保路由正常工作
 - ✅ GitHub Actions 会自动创建和管理 `gh-pages` 分支（无需手动创建）
 - 每次推送到 `main` 分支，GitHub Actions 会自动构建并部署到 `gh-pages` 分支
