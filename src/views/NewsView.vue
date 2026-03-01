@@ -84,29 +84,29 @@ const honors = [
   {
     title: '2024中部赛区冠军',
     titleEn: '2024 Central Regional Champion',
-    event: 'RoboMaster 2024',
-    eventEn: 'RoboMaster 2024',
+    event: 'RoboMaster 2024 Regional Competition',
+    eventEn: 'RoboMaster 2024 Regional Competition',
     image: ''
   },
   {
     title: '国家级一等奖',
     titleEn: 'National First Prize',
-    event: 'RoboMaster 2024中部分区赛',
-    eventEn: 'RoboMaster 2024 Central Regional',
+    event: 'RoboMaster 2024 National Competition',
+    eventEn: 'RoboMaster 2024 National Competition',
     image: ''
   },
   {
     title: '高校联盟赛一等奖',
-    titleEn: 'University League First Prize',
-    event: 'RoboMaster 2022',
-    eventEn: 'RoboMaster 2022',
+    titleEn: 'RMUL First Prize',
+    event: 'RoboMaster 2022 University League',
+    eventEn: 'RoboMaster 2022 University League',
     image: ''
   },
   {
     title: '北部赛区一等奖',
     titleEn: 'Northern Regional First Prize',
-    event: 'RoboMaster 2021',
-    eventEn: 'RoboMaster 2021',
+    event: 'RoboMaster 2021 Northern Regional Competition',
+    eventEn: 'RoboMaster 2021 Northern Regional Competition',
     image: ''
   },
   {
@@ -339,70 +339,131 @@ const honors = [
 .honors-section {
   max-width: 1400px;
   margin: 0 auto;
+  padding-bottom: 8rem;
 }
 
 .honors-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.5rem;
 }
 
 .honor-card {
   @include glass-panel;
-  padding: 2rem;
+  padding: 3rem 2rem;
   text-align: center;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  border-color: rgba($color-accent, 0.2);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba($color-accent, 0.1), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
   
   &:hover {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-15px);
     border-color: $color-accent;
-    box-shadow: 0 0 40px rgba($color-accent, 0.4);
+    box-shadow: 0 0 50px rgba($color-accent, 0.3);
+    
+    &::before {
+      opacity: 1;
+    }
+    
+    .honor-info h3::before, .honor-info h3::after {
+      opacity: 1;
+      filter: drop-shadow(0 0 8px $color-accent);
+    }
   }
   
   .honor-image {
     width: 100%;
-    height: 250px;
-    margin-bottom: 1.5rem;
+    height: 220px;
+    margin-bottom: 2rem;
     overflow: hidden;
-    border: 2px solid rgba($color-accent, 0.3);
+    border: 1px solid rgba($color-accent, 0.2);
+    position: relative;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
     
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.5s;
+    }
+    
+    &:hover img {
+      transform: scale(1.1);
     }
   }
   
   .honor-placeholder {
     width: 100%;
-    height: 250px;
+    height: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba($color-primary, 0.1), rgba($color-accent, 0.1));
-    border: 2px dashed rgba($color-accent, 0.3);
-    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, rgba($color-accent, 0.1) 0%, transparent 100%);
+    border: 1px solid rgba($color-accent, 0.2);
+    margin-bottom: 2rem;
+    position: relative;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
     
     .trophy-icon {
-      font-size: 6rem;
-      filter: drop-shadow(0 0 20px rgba($color-accent, 0.5));
+      font-size: 5rem;
+      filter: drop-shadow(0 0 15px rgba($color-accent, 0.4));
+      color: $color-accent;
+      opacity: 0.8;
     }
   }
   
   .honor-info {
     h3 {
       font-family: $font-title;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: $color-accent;
-      margin: 0 0 0.5rem;
+      margin: 0 0 0.8rem;
       text-transform: uppercase;
+      position: relative;
+      display: inline-block;
+      padding: 0 4rem;
+      @include text-glow($color-accent);
+      
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 3.5rem;
+        height: 3.5rem;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 60 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 95 C30 70 20 50 10 10' stroke='%23F0FF00' stroke-width='1.5' fill='none'/%3E%3Cpath d='M28 85 C15 82 8 75 5 65 C12 68 22 75 28 85' fill='%23F0FF00'/%3E%3Cpath d='M25 65 C12 62 5 55 2 45 C9 48 19 55 25 65' fill='%23F0FF00'/%3E%3Cpath d='M20 45 C8 42 2 35 0 25 C7 28 15 35 20 45' fill='%23F0FF00'/%3E%3Cpath d='M15 25 C5 22 1 15 0 5 C5 8 10 15 15 25' fill='%23F0FF00'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: contain;
+        opacity: 0.7;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      
+      &::before {
+        left: 0;
+        transform: translateY(-50%) rotate(-15deg);
+      }
+      
+      &::after {
+        right: 0;
+        transform: translateY(-50%) scaleX(-1) rotate(-15deg);
+      }
     }
     
     p {
       font-family: $font-code;
       color: $color-text-dim;
-      font-size: 1rem;
+      font-size: 0.9rem;
       margin: 0;
+      letter-spacing: 1px;
     }
   }
 }
