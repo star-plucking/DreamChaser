@@ -176,7 +176,15 @@ const photos = ref(shuffleArray([
   { id: 12, src: withBase('imgs/photo_wall/LMJ20260530-17024.webp'), size: 'wide' },
   { id: 13, src: withBase('imgs/photo_wall/LMJ20260601-14779.webp'), size: 'wide' },
   { id: 14, src: withBase('imgs/photo_wall/ZP634201.webp'), size: 'wide' },
-  { id: 15, src: withBase('imgs/photo_wall/ZZP10407.webp'), size: 'wide' }
+  { id: 15, src: withBase('imgs/photo_wall/ZZP10407.webp'), size: 'wide' },
+  { id: 16, src: withBase('imgs/photo_wall/202606010b0a0834.webp'), size: 'large' },
+  { id: 17, src: withBase('imgs/photo_wall/202606010b0a9206.webp'), size: 'medium' },
+  { id: 18, src: withBase('imgs/photo_wall/DC-44.webp'), size: 'wide' },
+  { id: 19, src: withBase('imgs/photo_wall/DC-62.webp'), size: 'large' },
+  { id: 20, src: withBase('imgs/photo_wall/LMJ20260530-16889.webp'), size: 'wide' },
+  { id: 21, src: withBase('imgs/photo_wall/LMJ20260530-17132.webp'), size: 'medium' },
+  { id: 22, src: withBase('imgs/photo_wall/LMJ20260531-11296.webp'), size: 'wide' },
+  { id: 23, src: withBase('imgs/photo_wall/ZZP10586.webp'), size: 'large' }
 ]))
 
 const selectedPhoto = ref<string | null>(null)
