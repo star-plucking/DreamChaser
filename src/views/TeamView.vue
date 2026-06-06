@@ -335,16 +335,18 @@ const hasGroup = (m: Member, group: string) => m.groups.includes(group)
 }
 
 .photo-large {
-  flex: 1;
-  background: #000;
+  flex: 0 1 auto;
+  height: 100%;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.1);
   
   img {
-    width: 100%;
+    display: block;
+    width: auto;
     height: 100%;
-    object-fit: contain; // 使用 cover 如果照片比例统一
+    max-width: 100%;
+    object-fit: contain;
     filter: contrast(110%);
   }
   
