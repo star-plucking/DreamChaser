@@ -18,49 +18,49 @@ const robots = ref(shuffleArray([
     id: 1, 
     name: 'HERO | 英雄', 
     type: 'Destroy Turret', 
-    img: withBase('imgs/robots/1%E5%8F%B7%E8%8B%B1%E9%9B%84.webp'), 
-    features: ['高伤害', '远程吊射', '建筑摧毁']
+    img: withBase('imgs/robots/机器人2026抠图/1号英雄.webp'), 
+    features: ['高伤害', '近战爆发', '建筑摧毁', '地形跨越']
   },
   { 
     id: 2, 
-    name: 'INFANTRY | 步兵', 
+    name: 'INFANTRY | 轮腿步兵', 
     type: 'Main Assault', 
-    img: withBase('imgs/robots/4%E5%8F%B7%E6%AD%A5%E5%85%B5.webp'), 
+    img: withBase('imgs/robots/机器人2026抠图/3号轮腿步兵.webp'), 
     features: ['快速机动', '灵活打击', '前线突破']
   },
   { 
     id: 3, 
     name: 'SENTRY | 哨兵', 
     type: 'Auto Defense', 
-    img: withBase('imgs/robots/7%E5%8F%B7%E5%93%A8%E5%85%B5.webp'), 
+    img: withBase('imgs/robots/机器人2026抠图/7号哨兵.webp'), 
     features: ['自主导航', '自主决策', '区域控制']
   },
   { 
     id: 4, 
     name: 'ENGINEER | 工程', 
     type: 'Economic Support', 
-    img: withBase('imgs/robots/2%E5%8F%B7%E5%B7%A5%E7%A8%8B.webp'), 
+    img: withBase('imgs/robots/机器人2026抠图/2号工程.webp'), 
     features: ['地形跨越', '资源获取', '机械臂操作']
   },
   { 
     id: 5, 
     name: 'DART | 飞镖', 
     type: 'Long Range', 
-    img: withBase('imgs/robots/8%E5%8F%B7%E9%A3%9E%E9%95%96.webp'), 
+    img: withBase('imgs/robots/机器人2026抠图/8号飞镖.webp'), 
     features: ['超远程打击', '超高伤害', '致盲效果']
   },
   { 
     id: 6, 
     name: 'RADAR | 雷达', 
     type: 'Surveillance', 
-    img: withBase('imgs/robots/9%E5%8F%B7%E9%9B%B7%E8%BE%BE.webp'), 
-    features: ['全场视野', '信息共享', '战术中心']
+    img: withBase('imgs/robots/机器人2026抠图/9号雷达.webp'), 
+    features: ['全场视野', '信息共享', '战术中心', '信息波解码', '无人机反制']
   },
   { 
     id: 7, 
     name: 'AERIAL | 空中', 
     type: 'Air Support', 
-    img: withBase('imgs/robots/6%E5%8F%B7%E6%97%A0%E4%BA%BA%E6%9C%BA.webp'), 
+    img: withBase('imgs/robots/机器人2026抠图/6号无人机.webp'), 
     features: ['空中打击', '强化火力', '视野侦察']
   },
 ]))

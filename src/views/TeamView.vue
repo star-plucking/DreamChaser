@@ -17,43 +17,104 @@ interface Member {
   id: number;
   name: string;
   role: string;
-  group: string; // 分类：MANAGEMENT、OPERATORS 等
+  groups: string[]; // 分类：MANAGEMENT、OPERATORS 等
   img: string;
   title: string; // 队内职务
   technicalGroup: string; // 技术组
   description: string; // 个人介绍
 }
 
-// 模拟数据 - 实际应从 public/imgs/people 读取或重命名后引用
-// 这里为了演示稳定性，部分使用机器人图或占位图，如果您已在 public/imgs/people 下整理好，可替换路径
 const members = ref<Member[]>(shuffleArray([
   { 
-    id: 1, name: 'Cheng Zhihong', role: 'Captain', group: 'MANAGEMENT', 
-    img: withBase('imgs/people/3%E5%8F%B7-%E6%93%8D%E4%BD%9C%E6%89%8B-%E9%99%88%E5%BF%97%E9%B8%BF-%E5%A4%A7%E4%BA%8C.webp'),
-    title: '队长',
-    technicalGroup: '电控组',
-    description: '具备卓越的领导能力和技术专长，负责团队整体战略规划与执行。'
-  },
-  { 
-    id: 2, name: 'Wang Beizhuo', role: 'Project Manager', group: 'MANAGEMENT', 
-    img: withBase('imgs/people/1%E5%8F%B7-%E6%93%8D%E4%BD%9C%E6%89%8B-%E7%8E%8B%E5%80%8D%E5%8D%93-%E5%A4%A7%E4%BA%8C.webp'),
-    title: '项管',
+    id: 1, name: '王倍卓', role: '项目管理 / 英雄操作手', groups: ['OPERATORS', 'MANAGEMENT', 'MECHANICS'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-操作手-王倍卓.webp'),
+    title: '项目管理，英雄操作手',
     technicalGroup: '机械组',
-    description: '优秀的项目管理者，协调团队资源与进度，确保项目按时高质量完成。'
+    description: '工程机械，安德森电竞椅指定使用人。'
   },
   { 
-    id: 3, name: 'Jiang Huantong', role: 'Head of the Embedded Software Group', group: 'EMBEDDED SOFTWARE', 
-    img: withBase('imgs/people/%E5%8C%97%E4%BA%AC%E7%90%86%E5%B7%A5%E5%A4%A7%E5%AD%A6_%E4%BA%BA%E5%91%98/%E5%8C%97%E4%BA%AC%E7%90%86%E5%B7%A5%E5%A4%A7%E5%AD%A6_%E4%BA%BA%E5%91%98/%E7%A0%94%E5%8F%91%E4%BB%A3%E8%A1%A8/7%E5%8F%B7-%E7%A0%94%E5%8F%91%E4%BB%A3%E8%A1%A8-%E5%A7%9C%E6%AC%A2%E6%A1%90-%E5%A4%A7%E4%BA%8C.webp'),
-    title: '电控组负责人',
+    id: 2, name: '宋昊润', role: '英雄电控工程师', groups: ['EMBEDDED SOFTWARE'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-研发代表-宋昊润.webp'),
+    title: '英雄机器人研发',
     technicalGroup: '电控组',
-    description: '嵌入式软件专家，精通系统架构设计与优化，领导电控组技术研发。Sugar Bro aka 唐哥'
+    description: '英雄电控，喜欢玩原神。'
   },
   { 
-    id: 4, name: 'Yang Ruixinag', role: 'Head of the Mechanical Group', group: 'MECHANICS', 
-    img: withBase('imgs/people/4%E5%8F%B7-%E6%93%8D%E4%BD%9C%E6%89%8B-%E6%9D%A8%E9%94%90%E7%BF%94-%E5%A4%A7%E4%BA%8C.webp'),
-    title: '机械组负责人',
+    id: 3, name: '潘志榛', role: '工程操作手 / 工程机械工程师', groups: ['OPERATORS', 'MECHANICS'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/2号-操作手-潘志榛.webp'),
+    title: '工程操作手，工程机器人研发',
     technicalGroup: '机械组',
-    description: '机械设计和加工工艺专家，负责机构优化和可靠性保障。创新意识强，方案执行能力强。'
+    description: '工程机械，工程操作手，牢潘。'
+  },
+  { 
+    id: 4, name: '王博', role: '工程电控工程师', groups: ['EMBEDDED SOFTWARE'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/2号-研发代表-王博.webp'),
+    title: '工程机器人研发',
+    technicalGroup: '电控组',
+    description: '工程电控，牢博。'
+  },
+  { 
+    id: 5, name: '陈志鸿', role: '队长 / 步兵操作手', groups: ['OPERATORS', 'MANAGEMENT'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/3号-操作手-陈志鸿.webp'),
+    title: '3号操作手，队长',
+    technicalGroup: '电控组',
+    description: '队长大人，步兵操作手，隐藏烟宝宝。'
+  },
+  { 
+    id: 6, name: '苏铭宇', role: '步兵电控工程师', groups: ['EMBEDDED SOFTWARE'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/3号-研发代表-苏铭宇.webp'),
+    title: '步兵机器人研发',
+    technicalGroup: '电控组',
+    description: '步兵电控。'
+  },
+  { 
+    id: 7, name: '李韦俊', role: '步兵操作手 / 步兵机械工程师', groups: ['OPERATORS', 'MECHANICS'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/4号-操作手-李韦俊.webp'),
+    title: '步兵机器人研发，步兵操作手',
+    technicalGroup: '机械组',
+    description: '步兵机械和操作手，备场区禁止吸烟饮食。'
+  },
+  { 
+    id: 8, name: '岑之初', role: '步兵电控工程师', groups: ['EMBEDDED SOFTWARE'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/4号-研发代表-岑之初.webp'),
+    title: '步兵机器人研发',
+    technicalGroup: '电控组',
+    description: '步兵电控。'
+  },
+  { 
+    id: 9, name: '闫博程', role: '无人机机械工程师', groups: ['MECHANICS'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/6号-研发代表-闫博程.webp'),
+    title: '无人机研发',
+    technicalGroup: '机械组',
+    description: '无人机电控。'
+  },
+  { 
+    id: 10, name: '郑杰心', role: '无人机飞手 / 工程机械工程师', groups: ['OPERATORS', 'MECHANICS'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/6号-飞手-郑杰心.webp'),
+    title: '无人机飞手，工程机械',
+    technicalGroup: '机械组',
+    description: '无人机飞手，工程机械。'
+  },
+  { 
+    id: 11, name: '王瑶程', role: '哨兵电控工程师', groups: ['EMBEDDED SOFTWARE'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/7号-研发代表-王瑶程.webp'),
+    title: '哨兵机器人研发',
+    technicalGroup: '电控组',
+    description: '哨兵电控，全队唯一指定PBB。'
+  },
+  { 
+    id: 12, name: '施宇翔', role: '飞镖机械工程师', groups: ['MECHANICS'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/8号-研发代表-施宇翔.webp'),
+    title: '飞镖机械',
+    technicalGroup: '机械组',
+    description: '飞镖机械食欲xiang。'
+  },
+  { 
+    id: 13, name: '秦沐阳', role: '雷达算法工程师', groups: ['VISION'], 
+    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/9号-研发代表-秦沐阳.webp'),
+    title: '雷达研发代表',
+    technicalGroup: '雷达组',
+    description: '雷达组最强工程师。'
   }
 ]))
 
@@ -62,6 +123,8 @@ const activeMember = ref<Member>(members.value[0])
 const selectMember = (m: Member) => {
   activeMember.value = m
 }
+
+const hasGroup = (m: Member, group: string) => m.groups.includes(group)
 </script>
 
 <template>
@@ -73,7 +136,28 @@ const selectMember = (m: Member) => {
         <h3 class="group-title">MANAGEMENT</h3>
         <div class="member-list">
           <div 
-            v-for="m in members.filter(x => x.group === 'MANAGEMENT')" 
+            v-for="m in members.filter(x => hasGroup(x, 'MANAGEMENT'))" 
+            :key="m.id"
+            class="member-card-mini"
+            :class="{ active: activeMember.id === m.id }"
+            @click="selectMember(m)"
+          >
+            <div class="avatar-thumb">
+              <img :src="m.img" alt="" />
+            </div>
+            <div class="info">
+              <div class="name">{{ m.name }}</div>
+              <div class="role">{{ m.role }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-section">
+        <h3 class="group-title">OPERATORS</h3>
+        <div class="member-list">
+          <div 
+            v-for="m in members.filter(x => hasGroup(x, 'OPERATORS'))" 
             :key="m.id"
             class="member-card-mini"
             :class="{ active: activeMember.id === m.id }"
@@ -94,7 +178,7 @@ const selectMember = (m: Member) => {
         <h3 class="group-title">ENGINEERING</h3>
         <div class="member-list">
           <div 
-            v-for="m in members.filter(x => x.group !== 'OPERATORS' && x.group !== 'MANAGEMENT')" 
+            v-for="m in members.filter(x => x.groups.some(group => group !== 'OPERATORS' && group !== 'MANAGEMENT'))" 
             :key="m.id"
             class="member-card-mini"
             :class="{ active: activeMember.id === m.id }"
@@ -117,13 +201,12 @@ const selectMember = (m: Member) => {
         <div class="profile-header">
           <div class="id-tag">ID: 00{{ activeMember.id }}</div>
           <h1 class="full-name">{{ activeMember.name }}</h1>
-          <div class="rank">POSITION: {{ activeMember.role.toUpperCase() }}</div>
+          <div class="rank">ROLE: {{ activeMember.role }}</div>
         </div>
         
         <div class="profile-body">
           <div class="photo-large">
             <img :src="activeMember.img" :alt="activeMember.name" />
-            <div class="scan-line"></div>
           </div>
           
           <div class="bio-section">
@@ -265,19 +348,6 @@ const selectMember = (m: Member) => {
     filter: contrast(110%);
   }
   
-  .scan-line {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 4px;
-    background: rgba($color-primary, 0.5);
-    box-shadow: 0 0 10px $color-primary;
-    animation: scan 3s infinite linear;
-    pointer-events: none;
-  }
-}
-
-@keyframes scan {
-  0% { top: -10%; }
-  100% { top: 110%; }
 }
 
 .bio-section {

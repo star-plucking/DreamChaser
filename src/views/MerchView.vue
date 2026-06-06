@@ -6,7 +6,6 @@ const { t } = useI18n()
 const contactMethods = [
   { icon: '📧', key: 'email', value: 'public@dreamchaser.ink' },
   { icon: '📱', key: 'phone', value: '+86 17511626718 (工作日)' },
-  { icon: '💬', key: 'wechat', value: 'Dream Chaser机器人战队' },
   { icon: '🎮', key: 'qq', value: '106794812' },
   { icon: '📍', key: 'address', value: '北京市房山区北京理工大学良乡校区工训楼' }
 ]
@@ -18,8 +17,10 @@ const positions = [
   { key: 'operation', icon: '💻' }
 ]
 
-const goToWeChat = () => {
-  window.open('https://mp.weixin.qq.com/s/UfRi2xrtFgaQ58vVTs3UNA', '_blank')
+const recruitmentUrl = 'https://dreamchaser.feishu.cn/wiki/ZEMSwWYs4iWZs4knENnczzMNnUd?from=from_copylink'
+
+const openRecruitment = () => {
+  window.open(recruitmentUrl, '_blank', 'noopener,noreferrer')
 }
 </script>
 
@@ -59,8 +60,14 @@ const goToWeChat = () => {
         </h2>
         
         <div class="join-banner">
-          <h3>{{ t('contact.joinTitle') }}</h3>
-          <p>{{ t('contact.joinDesc') }}</p>
+          <div class="join-banner-content">
+            <h3>{{ t('contact.joinTitle') }}</h3>
+            <p>{{ t('contact.joinDesc') }}</p>
+            <button class="join-btn" type="button" @click="openRecruitment">
+              {{ t('contact.recruitment') }}
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
 
         <div class="positions-title">{{ t('contact.positions') }}</div>
@@ -72,9 +79,6 @@ const goToWeChat = () => {
           </div>
         </div>
 
-        <button class="recruitment-btn" @click="goToWeChat">
-          {{ t('contact.recruitment') }} >>
-        </button>
       </section>
     </div>
   </div>
@@ -181,11 +185,31 @@ const goToWeChat = () => {
 // 加入我们
 .join-section {
   .join-banner {
-    @include glass-panel;
+    min-height: 360px;
     padding: 3rem;
-    text-align: center;
     margin-bottom: 3rem;
-    background: linear-gradient(135deg, rgba($color-primary, 0.1), rgba($color-secondary, 0.1));
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba($color-primary, 0.4);
+    background:
+      linear-gradient(90deg, rgba($color-bg, 0.96) 0%, rgba($color-bg, 0.78) 48%, rgba($color-bg, 0.25) 100%),
+      url('/imgs/photo_wall/photo_01.webp') center 42% / cover no-repeat;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba($color-primary, 0.18);
+      pointer-events: none;
+    }
+
+    .join-banner-content {
+      width: min(560px, 100%);
+      position: relative;
+      z-index: 1;
+    }
     
     h3 {
       font-family: $font-title;
@@ -199,7 +223,30 @@ const goToWeChat = () => {
       font-family: $font-code;
       color: $color-text-main;
       font-size: 1.2rem;
-      margin: 0;
+      margin: 0 0 2rem;
+    }
+
+    .join-btn {
+      min-height: 52px;
+      padding: 0.85rem 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      border: 1px solid $color-primary;
+      background: $color-primary;
+      color: $color-black;
+      font-family: $font-title;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+
+      &:hover {
+        background: $color-bg;
+        color: $color-primary;
+        box-shadow: 0 0 20px rgba($color-primary, 0.35);
+      }
     }
   }
   
@@ -254,27 +301,19 @@ const goToWeChat = () => {
   }
 }
 
-.recruitment-btn {
-  display: block;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 1.5rem;
-  background: $color-secondary;
-  border: 2px solid $color-secondary;
-  color: $color-white;
-  font-family: $font-title;
-  font-size: 1.3rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  cursor: pointer;
-  clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-  transition: all 0.3s;
-  
-  &:hover {
-    background: transparent;
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba($color-secondary, 0.5);
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 2rem 1rem;
+  }
+
+  .join-section .join-banner {
+    min-height: 420px;
+    padding: 2rem 1.5rem;
+    align-items: flex-end;
+    background:
+      linear-gradient(0deg, rgba($color-bg, 0.98) 0%, rgba($color-bg, 0.72) 62%, rgba($color-bg, 0.2) 100%),
+      url('/imgs/photo_wall/photo_01.webp') center / cover no-repeat;
   }
 }
+
 </style>
