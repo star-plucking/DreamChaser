@@ -303,7 +303,8 @@ const hasGroup = (m: Member, group: string) => m.groups.includes(group)
 <style lang="scss" scoped>
 .team-container {
   display: flex;
-  height: 100%;
+  height: calc(100dvh - var(--top-bar-height) - var(--status-bar-height));
+  box-sizing: border-box;
   padding: var(--page-padding-y);
   gap: 2rem;
   overflow-x: hidden;
