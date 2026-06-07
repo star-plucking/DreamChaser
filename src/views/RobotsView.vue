@@ -19,6 +19,7 @@ const robots = ref(shuffleArray([
     name: 'HERO | 英雄', 
     type: 'Destroy Turret', 
     img: withBase('imgs/robots/机器人2026抠图/1号英雄.webp'), 
+    description: '英雄机器人具备快速上台阶与地形跨越能力，采用快拆三摩擦云台与双相机自瞄方案，兼顾高爆发火力与复杂地形作战能力。',
     features: ['高伤害', '近战爆发', '建筑摧毁', '地形跨越']
   },
   { 
@@ -26,6 +27,7 @@ const robots = ref(shuffleArray([
     name: 'INFANTRY | 轮腿步兵', 
     type: 'Main Assault', 
     img: withBase('imgs/robots/机器人2026抠图/3号轮腿步兵.webp'), 
+    description: '轮腿步兵底盘采用主动悬挂与串联腿构型，能够稳定跨越台阶、飞坡等复杂地形，并支持翻倒自救与高机动连续作战。',
     features: ['快速机动', '灵活打击', '前线突破']
   },
   { 
@@ -33,6 +35,7 @@ const robots = ref(shuffleArray([
     name: 'SENTRY | 哨兵', 
     type: 'Auto Defense', 
     img: withBase('imgs/robots/机器人2026抠图/7号哨兵.webp'), 
+    description: '哨兵机器人采用底盘与发射机构解耦设计，支持快速拆装与维护，同时结合自主识别、自主决策与无线充电，实现长期区域压制。',
     features: ['自主导航', '自主决策', '区域控制']
   },
   { 
@@ -40,6 +43,7 @@ const robots = ref(shuffleArray([
     name: 'ENGINEER | 工程', 
     type: 'Economic Support', 
     img: withBase('imgs/robots/机器人2026抠图/2号工程.webp'), 
+    description: '工程机器人兼顾跨越能力与资源作业能力，搭载六轴串联机械臂和主动锁紧存储舱，能够完成能量单元抓取、兑换与精确搬运任务。',
     features: ['地形跨越', '资源获取', '机械臂操作']
   },
   { 
@@ -47,6 +51,7 @@ const robots = ref(shuffleArray([
     name: 'DART | 飞镖', 
     type: 'Long Range', 
     img: withBase('imgs/robots/机器人2026抠图/8号飞镖.webp'), 
+    description: '飞镖系统采用双制导思路，发射架通过长焦识别与精密装填完成发射准备，镖体则配合 FPGA 视觉实时解算，实现高速度远程精确打击。',
     features: ['超远程打击', '超高伤害', '致盲效果']
   },
   { 
@@ -54,6 +59,7 @@ const robots = ref(shuffleArray([
     name: 'RADAR | 雷达', 
     type: 'Surveillance', 
     img: withBase('imgs/robots/机器人2026抠图/9号雷达.webp'), 
+    description: '雷达系统融合激光雷达、视觉与点云信息，可完成战场感知、目标标记、信息波解析与反无人机辅助，是整队战术协同的信息中枢。',
     features: ['全场视野', '信息共享', '战术中心', '信息波解码', '无人机反制']
   },
   { 
@@ -61,6 +67,7 @@ const robots = ref(shuffleArray([
     name: 'AERIAL | 空中', 
     type: 'Air Support', 
     img: withBase('imgs/robots/机器人2026抠图/6号无人机.webp'), 
+    description: '空中机器人采用折叠机臂轻量化结构，配合神经网络识别、卡尔曼滤波建模与双相机方案，兼顾空中侦察、远近打击和快速收纳部署。',
     features: ['空中打击', '强化火力', '视野侦察']
   },
 ]))
@@ -105,7 +112,12 @@ const toggleRobot = (id: number) => {
 
         <transition name="features-slide">
           <div class="features-panel" v-if="activeRobot === robot.id">
+            <div class="robot-description">
+              <div class="panel-label">UNIT PROFILE</div>
+              <p>{{ robot.description }}</p>
+            </div>
             <div class="features-list">
+              <div class="panel-label">TACTICAL TAGS</div>
               <div v-for="(feature, idx) in robot.features" :key="idx" class="feature-tag">
                 <span class="tag-icon">▸</span>
                 {{ feature }}
@@ -174,6 +186,7 @@ const toggleRobot = (id: number) => {
 
 .robot-card {
   position: relative;
+  min-height: 400px;
   height: 400px;
   /* 移除容器本身背景和边框，由内部元素或伪元素接管，或者接受边框瞬变 */
   background: rgba(255, 255, 255, 0.02);
@@ -216,6 +229,7 @@ const toggleRobot = (id: number) => {
     flex-basis: 600px; 
     min-width: 600px; 
     max-width: 800px;
+    height: auto;
     background: rgba($color-primary, 0.05);
     border-color: $color-accent;
     z-index: 20;
@@ -236,6 +250,7 @@ const toggleRobot = (id: number) => {
     position: relative;
     width: 350px; /* 设定固定理想宽度 */
     max-width: 100%; /* 允许缩窄以适应小屏幕或未展开状态 */
+    min-height: 400px;
     height: 100%;
     flex-shrink: 0; /* 防止被挤压 */
     display: flex;
@@ -291,14 +306,15 @@ const toggleRobot = (id: number) => {
   padding: 0; 
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  overflow: hidden; /* 隐藏溢出内容 */
+  justify-content: flex-start;
+  overflow-x: hidden;
+  overflow-y: auto;
   
   .features-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 2rem 1.5rem; /* Padding移动到内部容器以避免宽度为0时的溢出 */
+    gap: 0.85rem;
+    padding: 1rem 1.5rem 1.5rem; /* Padding移动到内部容器以避免宽度为0时的溢出 */
     min-width: 300px; /* 防止内容换行 */
   }
   
@@ -384,6 +400,25 @@ const toggleRobot = (id: number) => {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+.robot-description {
+  padding: 1.5rem 1.5rem 0;
+  min-width: 300px;
+
+  p {
+    margin: 0.75rem 0 0;
+    color: rgba($color-white, 0.88);
+    line-height: 1.68;
+    font-size: 0.92rem;
+  }
+}
+
+.panel-label {
+  font-family: $font-code;
+  color: $color-primary;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
 }
 
 @media (max-width: 1024px) {
@@ -489,6 +524,16 @@ const toggleRobot = (id: number) => {
     .feature-tag {
       font-size: 0.92rem;
       padding: 0.75rem 0.85rem;
+    }
+  }
+
+  .robot-description {
+    min-width: 0;
+    padding: 1rem 1rem 0;
+
+    p {
+      font-size: 0.92rem;
+      line-height: 1.7;
     }
   }
 
