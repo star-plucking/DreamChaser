@@ -92,9 +92,10 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
 
 <style lang="scss" scoped>
 .sparks-container {
-  padding: 2rem 4rem;
+  padding: var(--page-padding-y) var(--page-padding-x);
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .header {
@@ -264,6 +265,65 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
         transform: scale(1.05);
         box-shadow: 0 0 30px rgba(#00A1D6, 0.5);
       }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    margin-bottom: 2.5rem;
+
+    h1 {
+      font-size: clamp(2.2rem, 12vw, 3rem);
+    }
+
+    p {
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+    }
+  }
+
+  .content-wrapper {
+    gap: 2.5rem;
+  }
+
+  .section-docs .doc-list {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-item {
+    padding: 1rem;
+    align-items: flex-start;
+
+    .doc-title {
+      line-height: 1.5;
+    }
+
+    .doc-desc {
+      line-height: 1.5;
+    }
+  }
+
+  .section-training .training-banner {
+    padding: 2rem 1.25rem;
+
+    .bilibili-icon svg {
+      width: 64px;
+      height: 64px;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+
+    .bilibili-btn {
+      width: 100%;
+      padding: 0.9rem 1.25rem;
+      font-size: 1rem;
     }
   }
 }

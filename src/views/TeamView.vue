@@ -135,20 +135,43 @@ const hasGroup = (m: Member, group: string) => m.groups.includes(group)
       <div class="group-section">
         <h3 class="group-title">MANAGEMENT</h3>
         <div class="member-list">
-          <div 
+          <div
             v-for="m in members.filter(x => hasGroup(x, 'MANAGEMENT'))" 
             :key="m.id"
-            class="member-card-mini"
+            class="member-entry"
             :class="{ active: activeMember.id === m.id }"
-            @click="selectMember(m)"
           >
-            <div class="avatar-thumb">
-              <img :src="m.img" alt="" />
+            <div class="member-card-mini" @click="selectMember(m)">
+              <div class="avatar-thumb">
+                <img :src="m.img" alt="" />
+              </div>
+              <div class="info">
+                <div class="name">{{ m.name }}</div>
+                <div class="role">{{ m.role }}</div>
+              </div>
             </div>
-            <div class="info">
-              <div class="name">{{ m.name }}</div>
-              <div class="role">{{ m.role }}</div>
-            </div>
+
+            <transition name="member-expand">
+              <div v-if="activeMember.id === m.id" class="member-mobile-detail">
+                <div class="detail-photo">
+                  <img :src="m.img" :alt="m.name" />
+                </div>
+                <div class="detail-meta">
+                  <div class="detail-item">
+                    <label>队内职务</label>
+                    <div class="detail-content">{{ m.title }}</div>
+                  </div>
+                  <div class="detail-item">
+                    <label>技术组</label>
+                    <div class="detail-content">{{ m.technicalGroup }}</div>
+                  </div>
+                  <div class="detail-item">
+                    <label>个人介绍</label>
+                    <div class="detail-content">{{ m.description }}</div>
+                  </div>
+                </div>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
@@ -159,17 +182,40 @@ const hasGroup = (m: Member, group: string) => m.groups.includes(group)
           <div 
             v-for="m in members.filter(x => hasGroup(x, 'OPERATORS'))" 
             :key="m.id"
-            class="member-card-mini"
+            class="member-entry"
             :class="{ active: activeMember.id === m.id }"
-            @click="selectMember(m)"
           >
-            <div class="avatar-thumb">
-              <img :src="m.img" alt="" />
+            <div class="member-card-mini" @click="selectMember(m)">
+              <div class="avatar-thumb">
+                <img :src="m.img" alt="" />
+              </div>
+              <div class="info">
+                <div class="name">{{ m.name }}</div>
+                <div class="role">{{ m.role }}</div>
+              </div>
             </div>
-            <div class="info">
-              <div class="name">{{ m.name }}</div>
-              <div class="role">{{ m.role }}</div>
-            </div>
+
+            <transition name="member-expand">
+              <div v-if="activeMember.id === m.id" class="member-mobile-detail">
+                <div class="detail-photo">
+                  <img :src="m.img" :alt="m.name" />
+                </div>
+                <div class="detail-meta">
+                  <div class="detail-item">
+                    <label>队内职务</label>
+                    <div class="detail-content">{{ m.title }}</div>
+                  </div>
+                  <div class="detail-item">
+                    <label>技术组</label>
+                    <div class="detail-content">{{ m.technicalGroup }}</div>
+                  </div>
+                  <div class="detail-item">
+                    <label>个人介绍</label>
+                    <div class="detail-content">{{ m.description }}</div>
+                  </div>
+                </div>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
@@ -180,17 +226,40 @@ const hasGroup = (m: Member, group: string) => m.groups.includes(group)
           <div 
             v-for="m in members.filter(x => x.groups.some(group => group !== 'OPERATORS' && group !== 'MANAGEMENT'))" 
             :key="m.id"
-            class="member-card-mini"
+            class="member-entry"
             :class="{ active: activeMember.id === m.id }"
-            @click="selectMember(m)"
           >
-            <div class="avatar-thumb">
-              <img :src="m.img" alt="" />
+            <div class="member-card-mini" @click="selectMember(m)">
+              <div class="avatar-thumb">
+                <img :src="m.img" alt="" />
+              </div>
+              <div class="info">
+                <div class="name">{{ m.name }}</div>
+                <div class="role">{{ m.role }}</div>
+              </div>
             </div>
-            <div class="info">
-              <div class="name">{{ m.name }}</div>
-              <div class="role">{{ m.role }}</div>
-            </div>
+
+            <transition name="member-expand">
+              <div v-if="activeMember.id === m.id" class="member-mobile-detail">
+                <div class="detail-photo">
+                  <img :src="m.img" :alt="m.name" />
+                </div>
+                <div class="detail-meta">
+                  <div class="detail-item">
+                    <label>队内职务</label>
+                    <div class="detail-content">{{ m.title }}</div>
+                  </div>
+                  <div class="detail-item">
+                    <label>技术组</label>
+                    <div class="detail-content">{{ m.technicalGroup }}</div>
+                  </div>
+                  <div class="detail-item">
+                    <label>个人介绍</label>
+                    <div class="detail-content">{{ m.description }}</div>
+                  </div>
+                </div>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
@@ -235,8 +304,9 @@ const hasGroup = (m: Member, group: string) => m.groups.includes(group)
 .team-container {
   display: flex;
   height: 100%;
-  padding: 2rem;
+  padding: var(--page-padding-y);
   gap: 2rem;
+  overflow-x: hidden;
 }
 
 .roster-panel {
@@ -285,11 +355,15 @@ const hasGroup = (m: Member, group: string) => m.groups.includes(group)
     width: 40px; height: 40px;
     background: #333;
     overflow: hidden;
-    img { width: 100%; height: 100%; object-fit: cover; }
+    img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
   }
   
   .name { font-family: $font-title; color: white; font-size: 0.9rem; }
   .role { font-size: 0.7rem; color: $color-text-dim; }
+}
+
+.member-mobile-detail {
+  display: none;
 }
 
 .profile-panel {
@@ -347,6 +421,7 @@ const hasGroup = (m: Member, group: string) => m.groups.includes(group)
     height: 100%;
     max-width: 100%;
     object-fit: contain;
+    object-position: center top;
     filter: contrast(110%);
   }
   
@@ -386,6 +461,169 @@ const hasGroup = (m: Member, group: string) => m.groups.includes(group)
     .bio-description {
       min-height: 80px;
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .team-container {
+    gap: 1.5rem;
+  }
+
+  .profile-body {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .roster-panel {
+    width: 100%;
+    border-right: none;
+    padding-right: 0;
+    max-height: none;
+  }
+
+  .panel-title {
+    margin-bottom: 1rem !important;
+  }
+
+  .group-section {
+    margin-bottom: 1rem;
+  }
+
+  .member-card-mini {
+    padding: 0.85rem;
+
+    .role {
+      line-height: 1.4;
+    }
+  }
+
+  .member-entry {
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba($color-primary, 0.12);
+    background: rgba(0, 0, 0, 0.24);
+  }
+
+  .member-mobile-detail {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 0.875rem;
+    padding: 0 0.85rem 0.85rem;
+    border-top: 1px solid rgba($color-primary, 0.12);
+  }
+
+  .detail-photo {
+    align-self: start;
+    overflow: hidden;
+    border: 1px solid rgba($color-primary, 0.18);
+    background: rgba(255, 255, 255, 0.03);
+
+    img {
+      display: block;
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      object-position: center 35%;
+    }
+  }
+
+  .detail-meta {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .detail-item {
+    display: grid;
+    gap: 0.25rem;
+
+    label {
+      color: $color-accent;
+      font-family: $font-title;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+  }
+
+  .detail-content {
+    color: $color-text-dim;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    padding: 0.6rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 2px solid $color-primary;
+  }
+
+  .profile-panel {
+    display: none;
+  }
+
+  .profile-card {
+    padding: 1.25rem;
+    gap: 1.25rem;
+  }
+
+  .profile-header .full-name {
+    font-size: 2rem;
+  }
+
+  .profile-body {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .photo-large {
+    height: auto;
+    max-height: 420px;
+
+    img {
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+    }
+  }
+
+  .bio-section {
+    gap: 1rem;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .member-expand-enter-active,
+  .member-expand-leave-active {
+    transition: opacity 0.22s ease, max-height 0.22s ease;
+    max-height: 520px;
+    overflow: hidden;
+  }
+
+  .member-expand-enter-from,
+  .member-expand-leave-to {
+    opacity: 0;
+    max-height: 0;
+  }
+
+  .member-expand-enter-to,
+  .member-expand-leave-from {
+    opacity: 1;
+    max-height: 520px;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-container {
+    padding-inline: 0.875rem;
+  }
+
+  .member-mobile-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-photo img {
+    height: 180px;
   }
 }
 </style>

@@ -24,7 +24,7 @@ import CommanderAssistant from '@/components/CommanderAssistant.vue'
     </footer>
 
     <!-- 虚拟看板娘 -->
-    <CommanderAssistant />
+    <CommanderAssistant class="desktop-assistant" />
   </div>
 </template>
 
@@ -32,17 +32,19 @@ import CommanderAssistant from '@/components/CommanderAssistant.vue'
 .command-center-layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   position: relative;
 }
 
 .top-bar {
-  height: 64px;
+  height: var(--top-bar-height);
   z-index: 100;
   border-bottom: 1px solid rgba($color-primary, 0.2);
   background: rgba($color-bg, 0.8);
   backdrop-filter: blur(10px);
+  flex-shrink: 0;
 }
 
 .viewport {
@@ -54,10 +56,11 @@ import CommanderAssistant from '@/components/CommanderAssistant.vue'
 }
 
 .bottom-status {
-  height: 40px;
+  height: var(--status-bar-height);
   border-top: 1px solid rgba($color-primary, 0.2);
   background: $color-bg;
   z-index: 100;
+  flex-shrink: 0;
 }
 
 /* Transition Effects */
@@ -71,5 +74,17 @@ import CommanderAssistant from '@/components/CommanderAssistant.vue'
   opacity: 0;
   transform: scale(1.02);
   filter: blur(2px);
+}
+
+@media (max-width: 768px) {
+  .desktop-assistant {
+    display: none;
+  }
+
+  .glitch-fade-enter-from,
+  .glitch-fade-leave-to {
+    transform: translateY(8px);
+    filter: blur(1px);
+  }
 }
 </style>

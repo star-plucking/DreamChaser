@@ -73,15 +73,17 @@ const news = ref([
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .hero-section {
   position: relative;
   height: 80vh;
+  min-height: 640px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 4rem;
+  padding: var(--page-padding-y) var(--page-padding-x);
   overflow: hidden;
 
   /* Hero Background */
@@ -251,7 +253,7 @@ const news = ref([
 
 .quick-news {
   background: $color-bg;
-  padding: 2rem 4rem;
+  padding: var(--page-padding-y) var(--page-padding-x);
   border-top: 1px solid rgba($color-primary, 0.2);
   
   .section-title {
@@ -279,6 +281,93 @@ const news = ref([
     .news-category {
       color: $color-text-main;
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-section {
+    min-height: 560px;
+  }
+
+  .glitch-title {
+    font-size: 4rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: auto;
+    min-height: calc(100dvh - var(--top-bar-height) - var(--status-bar-height));
+    justify-content: flex-end;
+    padding-top: 4rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .hero-content {
+    max-width: none;
+  }
+
+  .glitch-title {
+    font-size: clamp(2.4rem, 12vw, 3.5rem);
+    line-height: 0.95;
+    word-break: break-word;
+  }
+
+  .hero-content .subtitle {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+  }
+
+  .cyber-btn {
+    margin-top: 2rem;
+    padding: 0.9rem 1.75rem;
+    letter-spacing: 1px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
+
+  .quick-news .news-item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+    align-items: start;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding-top: 3rem;
+  }
+
+  .glitch-title {
+    font-size: clamp(2rem, 14vw, 2.8rem);
+  }
+
+  .hero-content .subtitle {
+    font-size: 0.85rem;
+  }
+
+  .stats-grid .stat-card .stat-value {
+    font-size: 1.6rem;
+  }
+
+  .quick-news {
+    padding-top: 1rem;
+  }
+
+  .quick-news .news-item {
+    font-size: 0.82rem;
   }
 }
 </style>

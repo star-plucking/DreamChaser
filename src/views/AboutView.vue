@@ -338,8 +338,9 @@ const closePhoto = () => {
 <style lang="scss" scoped>
 .about-container {
   min-height: 100%;
-  padding: 2rem 4rem;
+  padding: var(--page-padding-y) var(--page-padding-x);
   padding-bottom: 4rem;
+  overflow-x: hidden;
 }
 
 /* Section Header */
@@ -923,11 +924,15 @@ const closePhoto = () => {
 
 @media (max-width: 768px) {
   .about-container {
-    padding: 1rem;
+    padding-bottom: 3rem;
   }
 
   .section-title {
     font-size: 1.5rem !important;
+  }
+
+  .intro-section .intro-content {
+    padding: 1.25rem;
   }
 
   .team-name .team-cn {
@@ -972,14 +977,71 @@ const closePhoto = () => {
   .timeline-item {
     padding-right: 0;
     padding-left: 60px !important;
+    margin-bottom: 2rem;
 
     .timeline-content {
       margin: 0 !important;
+      max-width: none;
     }
   }
 
   .timeline-dot {
     left: 30px;
+  }
+
+  .honors-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .honor-card {
+    padding: 2rem 1.25rem;
+  }
+
+  .honor-card .honor-info h3 {
+    padding: 0;
+    font-size: 1.15rem;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .photo-modal .modal-content {
+    max-width: calc(100vw - 1.5rem);
+  }
+
+  .photo-modal .close-btn {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1.5rem;
+    background: rgba($color-bg, 0.85);
+  }
+}
+
+@media (max-width: 480px) {
+  .photo-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: 220px !important;
+  }
+
+  .photo-item.photo-large,
+  .photo-item.photo-wide,
+  .photo-item.photo-medium,
+  .photo-item.photo-small {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+
+  .timeline-year {
+    font-size: 1.5rem;
+  }
+
+  .timeline-card {
+    padding: 1rem;
   }
 }
 </style>

@@ -614,7 +614,7 @@ onBeforeUnmount(() => {
 
 @media (max-width: 768px) {
   .contact-container {
-    padding: 2rem 1rem;
+    padding: var(--page-padding-y) var(--page-padding-x);
   }
 
   .contact-header {
@@ -626,7 +626,7 @@ onBeforeUnmount(() => {
   }
 
   .join-section .join-banner {
-    min-height: 420px;
+    min-height: 360px;
     padding: 2rem 1.5rem;
     align-items: flex-end;
     background:
@@ -660,6 +660,61 @@ onBeforeUnmount(() => {
     align-items: stretch;
     flex-direction: column;
     gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-container {
+    padding-inline: 0.875rem;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+    gap: 0.5rem;
+  }
+
+  .section-title .title-line {
+    min-width: 1.25rem;
+  }
+
+  .contact-card,
+  .position-card {
+    padding: 1.25rem;
+  }
+
+  .join-section .join-banner {
+    min-height: 320px;
+    padding: 1.5rem 1rem;
+
+    h3 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    .join-btn {
+      width: 100%;
+    }
+  }
+
+  .modal-title-row {
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    .modal-icon {
+      font-size: 2.5rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .modal-close {
+    top: 0.75rem;
+    right: 0.75rem;
   }
 }
 

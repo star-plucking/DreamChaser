@@ -120,8 +120,9 @@ const toggleRobot = (id: number) => {
 
 <style lang="scss" scoped>
 .robots-container {
-  padding: 2rem 4rem;
+  padding: var(--page-padding-y) var(--page-padding-x);
   height: 100%;
+  overflow-x: hidden;
 }
 
 .header {
@@ -136,6 +137,7 @@ const toggleRobot = (id: number) => {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
   
   .count {
     color: $color-primary;
@@ -381,6 +383,149 @@ const toggleRobot = (id: number) => {
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 1024px) {
+  .robots-grid {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .robots-grid.has-active .robot-card:not(.active) .features-panel {
+    display: none;
+  }
+
+  .robots-container {
+    padding-top: 1.5rem;
+  }
+
+  .header {
+    margin-bottom: 1.5rem;
+  }
+
+  .page-title {
+    font-size: 1.6rem;
+    gap: 0.5rem;
+
+    .count {
+      font-size: 0.78rem;
+    }
+  }
+
+  .robots-grid,
+  .robots-grid.has-active {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  .robots-grid.has-active .robot-card:not(.active) {
+    flex-basis: auto;
+    max-width: none;
+    opacity: 1;
+  }
+
+  .robot-card,
+  .robot-card.active {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: auto;
+    flex-basis: auto;
+    overflow: visible;
+  }
+
+  .card-main {
+    width: 100%;
+    height: auto;
+    border-right: none;
+  }
+
+  .robot-visual {
+    height: 220px;
+    padding: 1.25rem;
+  }
+
+  .robot-info {
+    padding: 1rem 1rem 1.25rem;
+
+    .robot-name {
+      font-size: 1.2rem;
+    }
+  }
+
+  .features-panel,
+  .features-slide-enter-active,
+  .features-slide-leave-active,
+  .features-slide-enter-to,
+  .features-slide-leave-from {
+    width: 100%;
+    max-width: none;
+  }
+
+  .robot-card:not(.active) .features-panel {
+    display: none;
+  }
+
+  .features-panel {
+    height: auto;
+    display: block;
+    flex-grow: 0;
+    background: rgba(13, 13, 14, 0.82);
+    border-top: 1px solid rgba($color-primary, 0.18);
+    overflow: visible;
+
+    .features-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-width: 0;
+      padding: 1rem;
+      gap: 0.75rem;
+    }
+
+    .feature-tag {
+      font-size: 0.92rem;
+      padding: 0.75rem 0.85rem;
+    }
+  }
+
+  .features-slide-enter-active,
+  .features-slide-leave-active {
+    transition: opacity 0.25s ease, max-height 0.25s ease;
+    max-height: 480px;
+    clip-path: none;
+  }
+
+  .features-slide-enter-from,
+  .features-slide-leave-to {
+    opacity: 0;
+    max-height: 0;
+    clip-path: none;
+  }
+
+  .features-slide-enter-to,
+  .features-slide-leave-from {
+    opacity: 1;
+    max-height: 480px;
+    clip-path: none;
+  }
+
+  .features-panel .feature-tag {
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.35rem;
+  }
+
+  .robot-visual {
+    height: 180px;
+    padding: 1rem;
   }
 }
 </style>

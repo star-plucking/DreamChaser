@@ -73,4 +73,34 @@ const timeDisplay = useDateFormat(now, 'YYYY-MM-DD HH:mm:ss')
   color: rgba($color-text-main, 0.5);
   letter-spacing: 2px;
 }
+
+@media (max-width: 768px) {
+  .status-bar {
+    padding: 0 0.75rem;
+    font-size: 0.68rem;
+    gap: 0.75rem;
+  }
+
+  .left-indicators {
+    gap: 0.5rem;
+
+    .indicator:not(.online) {
+      display: none;
+    }
+  }
+
+  .center-ticker {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .status-bar {
+    padding: 0 0.625rem;
+  }
+
+  .right-clock {
+    font-size: 0.62rem;
+  }
+}
 </style>
