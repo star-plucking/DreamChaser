@@ -30,7 +30,7 @@ const members = ref<Member[]>(shuffleArray([
     img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-研发代表-宋昊润.webp'),
     title: '英雄机器人研发',
     technicalGroup: '电控组',
-    description: '英雄电控，喜欢玩原神。'
+    description: '英雄电控。'
   },
   { 
     id: 5, name: '魏洲航', role: '队长', groups: ['MANAGEMENT'], 
