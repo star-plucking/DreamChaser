@@ -84,14 +84,21 @@ const milestones = [
     year: '2026',
     title: '再攀高峰',
     titleEn: 'New Heights',
-    desc: '联盟赛山东站亚军，北部分区赛八强',
-    descEn: 'Runner-up at the University League Shandong Station and Top 8 in the Northern Regional',
+    desc: '联盟赛山东站亚军，北部分区赛八强，国赛十六强',
+    descEn: 'Runner-up at the University League Shandong Station, Top 8 in the Northern Regional, and National Top 16',
     image: ''
   }
 ]
 
 // 荣誉展示
 const honors = [
+  {
+    title: '2026国赛十六强',
+    titleEn: '2026 National Top 16',
+    event: 'RoboMaster 2026 National Competition',
+    eventEn: 'RoboMaster 2026 National Competition',
+    image: ''
+  },
   {
     title: '2026联盟赛山东站亚军',
     titleEn: '2026 University League Shandong Station Runner-up',

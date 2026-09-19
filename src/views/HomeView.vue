@@ -12,6 +12,7 @@ const stats = computed(() => [
 ])
 
 const news = ref([
+  { id: 7, date: '2026-09-20', title: '2026秋招启动', category: 'EVENT' },
   { id: 1, date: '2026-08-01', title: 'RMUC机甲大师曹集对抗赛超级对抗赛全国赛', category: 'COMPETITION' },
   { id: 2, date: '2026-05-29', title: 'RMUC机甲大师超级对抗赛北部分区赛', category: 'COMPETITION' },
   { id: 3, date: '2026-03-29', title: 'RMUL机甲大师高校联盟赛亚军', category: 'COMPETITION' },

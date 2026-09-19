@@ -26,13 +26,6 @@ interface Member {
 
 const members = ref<Member[]>(shuffleArray([
   { 
-    id: 1, name: '王倍卓', role: '项目管理 / 英雄操作手', groups: ['OPERATORS', 'MANAGEMENT', 'MECHANICS'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-操作手-王倍卓.webp'),
-    title: '项目管理，英雄操作手',
-    technicalGroup: '机械组',
-    description: '工程机械，安德森电竞椅指定使用人。'
-  },
-  { 
     id: 2, name: '宋昊润', role: '英雄电控工程师', groups: ['EMBEDDED SOFTWARE'], 
     img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-研发代表-宋昊润.webp'),
     title: '英雄机器人研发',
@@ -40,83 +33,52 @@ const members = ref<Member[]>(shuffleArray([
     description: '英雄电控，喜欢玩原神。'
   },
   { 
-    id: 3, name: '潘志榛', role: '工程操作手 / 工程机械工程师', groups: ['OPERATORS', 'MECHANICS'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/2号-操作手-潘志榛.webp'),
-    title: '工程操作手，工程机器人研发',
+    id: 5, name: '魏洲航', role: '队长', groups: ['MANAGEMENT'], 
+    img: withBase('imgs/people/北京理工大学_人员/魏洲航.png'),
+    title: '队长，硬件组负责人',
+    technicalGroup: '硬件组',
+    description: '硬件组负责人。'
+  },
+  { 
+    id: 7, name: '李伟俊', role: '副队长', groups: ['OPERATORS', 'MANAGEMENT', 'MECHANICS'], 
+    img: withBase('imgs/people/北京理工大学_人员/4号-操作手-李韦俊.webp'),
+    title: '副队长，步兵机器人研发，步兵操作手',
     technicalGroup: '机械组',
-    description: '工程机械，工程操作手，牢潘。'
-  },
-  { 
-    id: 4, name: '王博', role: '工程电控工程师', groups: ['EMBEDDED SOFTWARE'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/2号-研发代表-王博.webp'),
-    title: '工程机器人研发',
-    technicalGroup: '电控组',
-    description: '工程电控，牢博。'
-  },
-  { 
-    id: 5, name: '陈志鸿', role: '队长 / 步兵操作手', groups: ['OPERATORS', 'MANAGEMENT'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/3号-操作手-陈志鸿.webp'),
-    title: '3号操作手，队长',
-    technicalGroup: '电控组',
-    description: '队长大人，步兵操作手，隐藏烟宝宝。'
-  },
-  { 
-    id: 6, name: '苏铭宇', role: '步兵电控工程师', groups: ['EMBEDDED SOFTWARE'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/3号-研发代表-苏铭宇.webp'),
-    title: '步兵机器人研发',
-    technicalGroup: '电控组',
-    description: '步兵电控。'
-  },
-  { 
-    id: 7, name: '李韦俊', role: '步兵操作手 / 步兵机械工程师', groups: ['OPERATORS', 'MECHANICS'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/4号-操作手-李韦俊.webp'),
-    title: '步兵机器人研发，步兵操作手',
-    technicalGroup: '机械组',
-    description: '步兵机械和操作手，备场区禁止吸烟饮食。'
+    description: '步兵机械和操作手。'
   },
   { 
     id: 8, name: '岑之初', role: '步兵电控工程师', groups: ['EMBEDDED SOFTWARE'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/4号-研发代表-岑之初.webp'),
+    img: withBase('imgs/people/北京理工大学_人员/4号-研发代表-岑之初.webp'),
     title: '步兵机器人研发',
     technicalGroup: '电控组',
     description: '步兵电控。'
   },
   { 
-    id: 9, name: '闫博程', role: '无人机机械工程师', groups: ['MECHANICS'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/6号-研发代表-闫博程.webp'),
-    title: '无人机研发',
-    technicalGroup: '机械组',
-    description: '无人机电控。'
-  },
-  { 
     id: 10, name: '郑杰心', role: '无人机飞手 / 工程机械工程师', groups: ['OPERATORS', 'MECHANICS'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/6号-飞手-郑杰心.webp'),
+    img: withBase('imgs/people/北京理工大学_人员/6号-飞手-郑杰心.webp'),
     title: '无人机飞手，工程机械',
     technicalGroup: '机械组',
     description: '无人机飞手，工程机械。'
   },
   { 
-    id: 11, name: '王瑶程', role: '哨兵电控工程师', groups: ['EMBEDDED SOFTWARE'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/7号-研发代表-王瑶程.webp'),
-    title: '哨兵机器人研发',
-    technicalGroup: '电控组',
+    id: 11, name: '王瑶程', role: '项目管理', groups: ['MANAGEMENT'], 
+    img: withBase('imgs/people/北京理工大学_人员/7号-研发代表-王瑶程.webp'),
+    title: '项目管理',
+    technicalGroup: '管理组',
     description: '哨兵电控，全队唯一指定PBB。'
   },
   { 
-    id: 12, name: '施宇翔', role: '飞镖机械工程师', groups: ['MECHANICS'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/8号-研发代表-施宇翔.webp'),
-    title: '飞镖机械',
-    technicalGroup: '机械组',
-    description: '飞镖机械食欲xiang。'
-  },
-  { 
     id: 13, name: '秦沐阳', role: '雷达算法工程师', groups: ['VISION'], 
-    img: withBase('imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/9号-研发代表-秦沐阳.webp'),
+    img: withBase('imgs/people/北京理工大学_人员/9号-研发代表-秦沐阳.webp'),
     title: '雷达研发代表',
     technicalGroup: '雷达组',
     description: '雷达组最强工程师。'
   }
-]))
+]).sort((a, b) => {
+  if (a.name === '魏洲航') return -1
+  if (b.name === '魏洲航') return 1
+  return 0
+}))
 
 const activeMember = ref<Member>(members.value[0])
 

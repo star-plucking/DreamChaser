@@ -44,7 +44,7 @@ const robots = ref(shuffleArray([
     type: 'Economic Support', 
     img: withBase('imgs/robots/机器人2026抠图/2号工程.webp'), 
     description: '工程机器人兼顾跨越能力与资源作业能力，搭载六轴串联机械臂和主动锁紧存储舱，能够完成能量单元抓取、兑换与精确搬运任务。',
-    features: ['地形跨越', '资源获取', '机械臂操作']
+    features: ['地形跨越', '资源获取', '机械臂操作', '双臂操作']
   },
   { 
     id: 5, 

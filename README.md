@@ -36,10 +36,8 @@ root
 │       ├── robots/              # 机器人图片
 │       └── people/              # 队员照片
 │           └── 北京理工大学_人员/
-│               └── 北京理工大学_人员/
-│                   ├── 操作手/
-│                   ├── 研发代表/
-│                   └── 留念/
+│               ├── 魏洲航.png
+│               └── *.webp         # 现役队员头像
 ├── src/
 │   ├── components/              # 公共组件
 │   │   ├── NavBar.vue          # 导航栏
@@ -124,7 +122,7 @@ interface Member {
   name: 'Cheng Zhihong', 
   role: 'Captain', 
   group: 'MANAGEMENT', 
-  img: '/imgs/people/北京理工大学_人员/北京理工大学_人员/xxx.webp',
+  img: '/imgs/people/北京理工大学_人员/xxx.webp',
   title: '队长',
   technicalGroup: '电控组',
   description: '具备卓越的领导能力和技术专长，负责团队整体战略规划与执行。'

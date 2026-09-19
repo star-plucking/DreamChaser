@@ -10,7 +10,7 @@ const localizedList = (path: string) => tm(path) as string[]
 const contactMethods = [
   { icon: '📧', key: 'email', value: 'public@dreamchaser.ink' },
   { icon: '📱', key: 'phone', value: '+86 17511626718 (工作日)' },
-  { icon: '🎮', key: 'qq', value: '106794812' },
+  { icon: '🎮', key: 'qq', value: '1092034753' },
   { icon: '📍', key: 'address', value: '北京市房山区北京理工大学良乡校区工训楼' }
 ]
 
@@ -21,7 +21,7 @@ const positions = [
   { key: 'operation', icon: '💻' }
 ]
 
-const recruitmentUrl = 'https://dreamchaser.feishu.cn/wiki/ZEMSwWYs4iWZs4knENnczzMNnUd?from=from_copylink'
+const recruitmentUrl = 'https://dreamchaser.feishu.cn/wiki/IxOswfobAixXuUkcq73cLyQZney?share_token=3626e26e-bc03-4ae1-839c-08be0ff94aa0&qq_aio_chat_type=3'
 
 const openPosition = (key: string) => {
   activePosition.value = key
