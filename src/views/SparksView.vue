@@ -4,6 +4,86 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 const docs = [
+  {
+    title: 'RM2026 技术报告（工程组）',
+    titleEn: 'RM2026 Technical Report (Engineer Division)',
+    description: '整合机械、控制与视觉方向的 2026 赛季技术报告',
+    descriptionEn: 'RM2026 engineering report covering mechanics, control and vision',
+    type: 'REPORT',
+    url: 'https://bbs.robomaster.com/article/1942648'
+  },
+  {
+    title: '单&双臂上台阶工程机器人机械开源',
+    titleEn: 'Single & Dual Arm Stair-Climbing Engineer Robot',
+    description: '工程机器人机械结构设计与实现',
+    descriptionEn: 'Mechanical design of the engineer robot',
+    type: 'MECH',
+    url: 'https://bbs.robomaster.com/article/1942225'
+  },
+  {
+    title: '工程自定义控制器机械部分开源',
+    titleEn: 'Custom Engineer Controller Mechanics',
+    description: 'DreamChaser RM2026 工程自定义控制器机械设计',
+    descriptionEn: 'Mechanical design of the custom controller',
+    type: 'MECH',
+    url: 'https://bbs.robomaster.com/article/1942228'
+  },
+  {
+    title: '七轴双臂机械臂控制技术开源',
+    titleEn: 'Seven-Axis Dual-Arm Control',
+    description: '仿人形双臂机械臂的嵌入式控制方案',
+    descriptionEn: 'Embedded control for a humanoid dual-arm robot',
+    type: 'CTRL',
+    url: 'https://bbs.robomaster.com/article/1941628'
+  },
+  {
+    title: '工程视觉上位机方案开源',
+    titleEn: 'Engineer Vision Host Application',
+    description: 'RM2026 工程机器人视觉上位机方案',
+    descriptionEn: 'Vision host application for the RM2026 engineer robot',
+    type: 'VISION',
+    url: 'https://bbs.robomaster.com/article/1940784'
+  },
+  {
+    title: '哨兵自主导航开源',
+    titleEn: 'Sentry Autonomous Navigation',
+    description: 'ROS 2、激光雷达、定位、规划与 MPC 跟踪完整链路',
+    descriptionEn: 'ROS 2 navigation with lidar, planning and MPC tracking',
+    type: 'ROS2',
+    url: 'https://bbs.robomaster.com/article/1940848'
+  },
+  {
+    title: '轮腿机器人 FPGA 强化学习加速器',
+    titleEn: 'FPGA RL Accelerator for Wheeled-Leg Robots',
+    description: '基于 ZYNQ-7010 的实验性强化学习硬件加速',
+    descriptionEn: 'Experimental RL hardware acceleration on ZYNQ-7010',
+    type: 'FPGA',
+    url: 'https://bbs.robomaster.com/article/1941956'
+  },
+  {
+    title: 'FPGA 制导飞镖控制器软硬件开源',
+    titleEn: 'FPGA Guided Dart Controller',
+    description: '控制板、RTL、Vivado、PetaLinux 与制导控制全栈开源',
+    descriptionEn: 'Open hardware, RTL, Vivado, PetaLinux and guidance control',
+    type: 'FPGA',
+    url: 'https://bbs.robomaster.com/article/1939776'
+  },
+  {
+    title: 'DAB 双有源桥无线充电系统',
+    titleEn: 'DAB Wireless Charging System',
+    description: 'RM2026 无线充电系统迭代方案',
+    descriptionEn: 'An updated wireless charging system for RM2026',
+    type: 'POWER',
+    url: 'https://bbs.robomaster.com/article/1890297'
+  },
+  {
+    title: 'ZeroShot 自动标注系统',
+    titleEn: 'ZeroShot Auto-Labeling System',
+    description: '北京理工大学公开的 SAM 自动标注工具',
+    descriptionEn: 'BIT open-source SAM-based auto-labeling tool',
+    type: 'TOOL',
+    url: 'https://github.com/HargereavesQin/bit-auto-label'
+  },
   { 
     title: '300FPS识别帧率FPGA制导飞镖开源', 
     titleEn: '300FPS Recognition & FPGA Guided Dart',

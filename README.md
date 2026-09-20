@@ -1,5 +1,7 @@
 # RoboMaster Command Center - 官方网站工程
 
+> RM2026 北京理工大学 DreamChaser 开源资料索引：[OPEN_SOURCE_2026.md](./OPEN_SOURCE_2026.md)
+
 这是一个基于 **Vue 3 + TypeScript + Vite** 构建的现代化 RoboMaster 战队官网。项目采用"赛博工业风"设计，旨在展示技术实力与战队文化。
 
 ## 快速开始
