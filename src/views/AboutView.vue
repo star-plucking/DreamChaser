@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { imageAttrs } from '@/utils/images'
 import { nextTick, onBeforeUnmount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SeasonReview from '@/components/SeasonReview.vue'
@@ -452,7 +453,7 @@ onBeforeUnmount(() => {
           @click="openPhoto(photo)"
         >
           <span class="photo-frame">
-            <img :src="photo.src" alt="" loading="lazy" decoding="async" />
+            <img v-bind="imageAttrs(photo.src, '(max-width: 768px) 90vw, 45vw')" alt="" loading="lazy" decoding="async" />
             <span class="photo-overlay">
               <span class="photo-id">#{{ String(photo.id).padStart(2, '0') }}</span>
             </span>
@@ -480,7 +481,7 @@ onBeforeUnmount(() => {
           <button ref="closePhotoButton" class="close-btn" type="button" :aria-label="t('about.closePhoto')" @click="closePhoto">
             <span>×</span>
           </button>
-          <img :src="selectedPhoto.src" :alt="t('about.openPhoto', { number: selectedPhoto.id })" />
+          <img v-bind="imageAttrs(selectedPhoto.src, '90vw')" decoding="async" :alt="t('about.openPhoto', { number: selectedPhoto.id })" />
         </div>
       </div>
     </transition>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { imageAttrs } from '@/utils/images'
 import { onBeforeUnmount, ref } from 'vue'
 import { Plus, ArrowDownRight } from 'lucide-vue-next'
 import gsap from 'gsap'
@@ -129,7 +130,7 @@ onBeforeUnmount(() => { if (root.value) gsap.killTweensOf(root.value.querySelect
         <div v-surface="12" class="card-main motion-surface">
           <div class="card-bg"></div>
           <div class="robot-visual"><div class="visual-ring" aria-hidden="true"></div>
-            <img data-depth :src="robot.img" :alt="locale === 'zh-CN' ? robot.nameZh : robot.nameEn" loading="lazy" decoding="async" />
+            <img data-depth v-bind="imageAttrs(robot.img, '(max-width: 768px) 70vw, 35vw')" :alt="locale === 'zh-CN' ? robot.nameZh : robot.nameEn" loading="lazy" decoding="async" />
           </div>
           
           <div class="robot-info"><span class="robot-index">{{ String(robot.id).padStart(2, '0') }} / 2026</span>

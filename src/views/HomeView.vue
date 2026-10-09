@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, ref } from 'vue'
+import { imageAttrs } from '@/utils/images'
+import { computed, defineAsyncComponent, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ArrowUpRight, ArrowRight, ArrowDown, ChevronLeft, ChevronRight } from 'lucide-vue-next'
 import ProcessStory from '@/components/ProcessStory.vue'
@@ -7,6 +8,29 @@ import { useHomeMotion } from '@/composables/useHomeMotion'
 const KineticField = defineAsyncComponent(() => import('@/components/KineticField.vue'))
 const root = ref<HTMLElement | null>(null)
 useHomeMotion(root)
+const fieldReady = ref(false)
+let disposed = false
+let idleHandle: number | undefined
+let fallbackTimer: ReturnType<typeof setTimeout> | undefined
+const prepareField = async () => {
+  const heroImage = root.value?.querySelector<HTMLImageElement>('.machine-image img')
+  await heroImage?.decode().catch(() => undefined)
+  if (disposed) return
+  const activate = () => { if (!disposed) fieldReady.value = true }
+  if ('requestIdleCallback' in window) idleHandle = window.requestIdleCallback(activate, { timeout: 800 })
+  else fallbackTimer = setTimeout(activate, 80)
+}
+onMounted(() => {
+  if (document.querySelector('.startup-loader')) window.addEventListener('dreamchaser:logo-flight-start', prepareField, { once: true })
+  else void prepareField()
+})
+onBeforeUnmount(() => {
+  disposed = true
+  window.removeEventListener('dreamchaser:logo-flight-start', prepareField)
+  if (idleHandle !== undefined) window.cancelIdleCallback(idleHandle)
+  if (fallbackTimer !== undefined) clearTimeout(fallbackTimer)
+})
+
 const { t, locale } = useI18n()
 const zh = computed(() => locale.value === 'zh-CN')
 const asset = (path: string) => `${import.meta.env.BASE_URL}imgs/${path}`
@@ -54,13 +78,13 @@ const manifesto = computed(() => zh.value ? ['把热爱，', '写进每一次创
         <a class="scroll-cue" href="#team-story" @click.prevent="scrollToStory"><ArrowDown :size="14" /> {{ zh ? '向下探索' : 'EXPLORE MORE' }} <span>SCROLL TO DISCOVER</span></a>
       </div>
       <div v-surface="18" class="hero-machine motion-surface">
-        <KineticField />
+        <KineticField v-if="fieldReady" />
         <div class="machine-grid" aria-hidden="true"></div>
         <div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div>
         <div class="machine-topline"><span>ROBOTICS / 2026</span><span class="machine-dot">{{ zh ? '自主研发' : 'BUILT IN-HOUSE' }}</span></div>
         <span class="machine-number" aria-hidden="true">{{ machine.id }}</span>
         <div class="stage-parallax"><div class="machine-image" data-depth>
-          <Transition name="machine-switch" mode="out-in"><img :key="machine.id" :src="asset(`robots/机器人2026抠图/${machine.file}.webp`)" :alt="zh ? machine.name : machine.en" fetchpriority="high" /></Transition>
+          <Transition name="machine-switch" mode="out-in"><img :key="machine.id" v-bind="imageAttrs(asset(`robots/机器人2026抠图/${machine.file}.webp`), '(max-width: 900px) 85vw, 45vw')" decoding="async" :alt="zh ? machine.name : machine.en" fetchpriority="high" /></Transition>
         </div></div>
         <div class="machine-caption" aria-live="polite">
           <div><p class="machine-en">{{ machine.en }}</p><h2>{{ zh ? machine.name : `UNIT ${machine.id}` }}</h2><p class="machine-tag">{{ zh ? machine.tag : machine.tagEn }}</p></div>
@@ -73,7 +97,7 @@ const manifesto = computed(() => zh.value ? ['把热爱，', '写进每一次创
     <div class="brand-marquee" aria-hidden="true"><div class="marquee-track"><span>BUILT TO CHASE.</span><span class="marquee-outline">ENGINEERED TO WIN.</span><span>BUILT TO CHASE.</span><span class="marquee-outline">ENGINEERED TO WIN.</span></div></div>
 
     <section id="team-story" v-reveal class="team-story">
-      <div class="story-photo" data-reveal-item><img :src="asset('photo_wall/202606010b0a0834.webp')" :alt="zh ? '追梦战队赛场合影' : 'DreamChaser team at the competition'" loading="lazy" /><span class="photo-caption">TOGETHER, WE GO FURTHER.</span></div>
+      <div class="story-photo" data-reveal-item><img v-bind="imageAttrs(asset('photo_wall/202606010b0a0834.webp'), '(max-width: 900px) 90vw, 45vw')" decoding="async" :alt="zh ? '追梦战队赛场合影' : 'DreamChaser team at the competition'" loading="lazy" /><span class="photo-caption">TOGETHER, WE GO FURTHER.</span></div>
       <div class="story-copy" data-reveal-item><p class="eyebrow">01 / {{ zh ? '关于追梦' : 'OUR STORY' }}</p><h2>{{ zh ? '一群追梦的人，' : 'Many minds.' }}<br><span>{{ zh ? '一件热爱的事。' : 'One shared passion.' }}</span></h2><p>{{ zh ? '从实验室的深夜，到赛场上的每一秒。我们因机器人相聚，在机械、电控、视觉与硬件的交汇处，把每一次挑战变成下一次突破。' : 'From late nights in the lab to every second in the arena. We unite mechanical design, control, vision and hardware to turn each challenge into our next breakthrough.' }}</p><router-link to="/about" class="text-button">{{ zh ? '了解我们的故事' : 'Discover our story' }} <ArrowUpRight :size="17" /></router-link><div class="story-stats"><div><strong>2018<span> /</span></strong><span>{{ zh ? '正式成立' : 'ESTABLISHED' }}</span></div><div><strong>80<span> +</span></strong><span>{{ zh ? '跨学科队员' : 'TEAM MEMBERS' }}</span></div><div><strong>16<span>{{ zh ? ' 强' : ' TOP' }}</span></strong><span>{{ zh ? '2026 全国赛' : '2026 NATIONAL TOP 16' }}</span></div></div></div>
     </section>
 

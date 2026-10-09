@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { imageAttrs } from '@/utils/images'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -143,7 +144,7 @@ const membersInGroup = (group: string) => members.value.filter((member) => {
           >
             <button class="member-card-mini" type="button" :aria-pressed="activeMember.id === m.id" @click="selectMember(m)">
               <span class="avatar-thumb">
-                <img :src="m.img" alt="" loading="lazy" decoding="async" />
+                <img v-bind="imageAttrs(m.img, '48px')" alt="" loading="lazy" decoding="async" />
               </span>
               <span class="info">
                 <span class="name">{{ m.name }}</span>
@@ -154,7 +155,7 @@ const membersInGroup = (group: string) => members.value.filter((member) => {
             <transition name="member-expand">
               <div v-if="activeMember.id === m.id" class="member-mobile-detail">
                 <div class="detail-photo">
-                  <img :src="m.img" :alt="m.name" />
+                  <img v-bind="imageAttrs(m.img, '(max-width: 900px) 40vw, 240px')" :alt="m.name" loading="lazy" decoding="async" />
                 </div>
                 <div class="detail-meta">
                   <div class="detail-item">
@@ -187,7 +188,7 @@ const membersInGroup = (group: string) => members.value.filter((member) => {
           >
             <button class="member-card-mini" type="button" :aria-pressed="activeMember.id === m.id" @click="selectMember(m)">
               <span class="avatar-thumb">
-                <img :src="m.img" alt="" loading="lazy" decoding="async" />
+                <img v-bind="imageAttrs(m.img, '48px')" alt="" loading="lazy" decoding="async" />
               </span>
               <span class="info">
                 <span class="name">{{ m.name }}</span>
@@ -198,7 +199,7 @@ const membersInGroup = (group: string) => members.value.filter((member) => {
             <transition name="member-expand">
               <div v-if="activeMember.id === m.id" class="member-mobile-detail">
                 <div class="detail-photo">
-                  <img :src="m.img" :alt="m.name" />
+                  <img v-bind="imageAttrs(m.img, '(max-width: 900px) 40vw, 240px')" :alt="m.name" loading="lazy" decoding="async" />
                 </div>
                 <div class="detail-meta">
                   <div class="detail-item">
@@ -231,7 +232,7 @@ const membersInGroup = (group: string) => members.value.filter((member) => {
           >
             <button class="member-card-mini" type="button" :aria-pressed="activeMember.id === m.id" @click="selectMember(m)">
               <span class="avatar-thumb">
-                <img :src="m.img" alt="" loading="lazy" decoding="async" />
+                <img v-bind="imageAttrs(m.img, '48px')" alt="" loading="lazy" decoding="async" />
               </span>
               <span class="info">
                 <span class="name">{{ m.name }}</span>
@@ -242,7 +243,7 @@ const membersInGroup = (group: string) => members.value.filter((member) => {
             <transition name="member-expand">
               <div v-if="activeMember.id === m.id" class="member-mobile-detail">
                 <div class="detail-photo">
-                  <img :src="m.img" :alt="m.name" />
+                  <img v-bind="imageAttrs(m.img, '(max-width: 900px) 40vw, 240px')" :alt="m.name" loading="lazy" decoding="async" />
                 </div>
                 <div class="detail-meta">
                   <div class="detail-item">
@@ -275,7 +276,7 @@ const membersInGroup = (group: string) => members.value.filter((member) => {
         
         <div class="profile-body">
           <div class="photo-large">
-            <img :src="activeMember.img" :alt="activeMember.name" />
+            <img v-bind="imageAttrs(activeMember.img, '(max-width: 900px) 80vw, 400px')" decoding="async" :alt="activeMember.name" />
           </div>
           
           <div class="bio-section">

@@ -120,6 +120,8 @@ onBeforeUnmount(() => dispose?.())
 </script>
 <template><div ref="host" class="kinetic-field" aria-hidden="true"></div></template>
 <style scoped>
-.kinetic-field { position: absolute; inset: 10% -4% 25%; pointer-events: none; overflow: hidden; opacity: .72; mask-image: radial-gradient(ellipse at 50% 46%, black 20%, black 44%, transparent 72%); }
+.kinetic-field { position: absolute; inset: 10% -4% 25%; pointer-events: none; overflow: hidden; opacity: .72; animation: field-appear .8s ease both; mask-image: radial-gradient(ellipse at 50% 46%, black 20%, black 44%, transparent 72%); }
 .kinetic-field :deep(canvas) { display: block; width: 100%; height: 100%; }
+@keyframes field-appear { from { opacity: 0; } to { opacity: .72; } }
+@media (prefers-reduced-motion: reduce) { .kinetic-field { animation: none; } }
 </style>

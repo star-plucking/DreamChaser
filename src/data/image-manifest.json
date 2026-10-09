@@ -1,0 +1,784 @@
+{
+  "imgs/people/北京理工大学_人员/4号-操作手-李韦俊.webp": {
+    "width": 800,
+    "height": 1200,
+    "variants": [
+      {
+        "width": 96,
+        "path": "imgs/optimized/people/北京理工大学_人员/4号-操作手-李韦俊-96.webp"
+      },
+      {
+        "width": 320,
+        "path": "imgs/optimized/people/北京理工大学_人员/4号-操作手-李韦俊-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/people/北京理工大学_人员/4号-操作手-李韦俊-640.webp"
+      },
+      {
+        "width": 800,
+        "path": "imgs/people/北京理工大学_人员/4号-操作手-李韦俊.webp"
+      }
+    ]
+  },
+  "imgs/people/北京理工大学_人员/4号-研发代表-岑之初.webp": {
+    "width": 800,
+    "height": 1200,
+    "variants": [
+      {
+        "width": 96,
+        "path": "imgs/optimized/people/北京理工大学_人员/4号-研发代表-岑之初-96.webp"
+      },
+      {
+        "width": 320,
+        "path": "imgs/optimized/people/北京理工大学_人员/4号-研发代表-岑之初-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/people/北京理工大学_人员/4号-研发代表-岑之初-640.webp"
+      },
+      {
+        "width": 800,
+        "path": "imgs/people/北京理工大学_人员/4号-研发代表-岑之初.webp"
+      }
+    ]
+  },
+  "imgs/people/北京理工大学_人员/6号-飞手-郑杰心.webp": {
+    "width": 800,
+    "height": 1200,
+    "variants": [
+      {
+        "width": 96,
+        "path": "imgs/optimized/people/北京理工大学_人员/6号-飞手-郑杰心-96.webp"
+      },
+      {
+        "width": 320,
+        "path": "imgs/optimized/people/北京理工大学_人员/6号-飞手-郑杰心-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/people/北京理工大学_人员/6号-飞手-郑杰心-640.webp"
+      },
+      {
+        "width": 800,
+        "path": "imgs/people/北京理工大学_人员/6号-飞手-郑杰心.webp"
+      }
+    ]
+  },
+  "imgs/people/北京理工大学_人员/7号-研发代表-王瑶程.webp": {
+    "width": 800,
+    "height": 1200,
+    "variants": [
+      {
+        "width": 96,
+        "path": "imgs/optimized/people/北京理工大学_人员/7号-研发代表-王瑶程-96.webp"
+      },
+      {
+        "width": 320,
+        "path": "imgs/optimized/people/北京理工大学_人员/7号-研发代表-王瑶程-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/people/北京理工大学_人员/7号-研发代表-王瑶程-640.webp"
+      },
+      {
+        "width": 800,
+        "path": "imgs/people/北京理工大学_人员/7号-研发代表-王瑶程.webp"
+      }
+    ]
+  },
+  "imgs/people/北京理工大学_人员/9号-研发代表-秦沐阳.webp": {
+    "width": 800,
+    "height": 1200,
+    "variants": [
+      {
+        "width": 96,
+        "path": "imgs/optimized/people/北京理工大学_人员/9号-研发代表-秦沐阳-96.webp"
+      },
+      {
+        "width": 320,
+        "path": "imgs/optimized/people/北京理工大学_人员/9号-研发代表-秦沐阳-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/people/北京理工大学_人员/9号-研发代表-秦沐阳-640.webp"
+      },
+      {
+        "width": 800,
+        "path": "imgs/people/北京理工大学_人员/9号-研发代表-秦沐阳.webp"
+      }
+    ]
+  },
+  "imgs/people/北京理工大学_人员/魏洲航.png": {
+    "width": 994,
+    "height": 1320,
+    "variants": [
+      {
+        "width": 96,
+        "path": "imgs/optimized/people/北京理工大学_人员/魏洲航-96.webp"
+      },
+      {
+        "width": 320,
+        "path": "imgs/optimized/people/北京理工大学_人员/魏洲航-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/people/北京理工大学_人员/魏洲航-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/people/北京理工大学_人员/魏洲航-960.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/202606010b0a0834.webp": {
+    "width": 1920,
+    "height": 1280,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/202606010b0a0834-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/202606010b0a0834-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/202606010b0a0834-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/202606010b0a0834-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/202606010b0a9206.webp": {
+    "width": 1920,
+    "height": 1280,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/202606010b0a9206-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/202606010b0a9206-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/202606010b0a9206-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/202606010b0a9206-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/DC-44.webp": {
+    "width": 1920,
+    "height": 1281,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/DC-44-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/DC-44-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/DC-44-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/DC-44-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/DC-62.webp": {
+    "width": 1920,
+    "height": 1525,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/DC-62-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/DC-62-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/DC-62-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/DC-62-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/LMJ20260530-16889.webp": {
+    "width": 1920,
+    "height": 1280,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-16889-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-16889-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-16889-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-16889-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/LMJ20260530-17024.webp": {
+    "width": 1920,
+    "height": 1280,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-17024-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-17024-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-17024-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-17024-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/LMJ20260530-17132.webp": {
+    "width": 1920,
+    "height": 1280,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-17132-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-17132-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-17132-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/LMJ20260530-17132-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/LMJ20260531-11296.webp": {
+    "width": 1920,
+    "height": 1280,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/LMJ20260531-11296-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/LMJ20260531-11296-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/LMJ20260531-11296-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/LMJ20260531-11296-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/LMJ20260601-14779.webp": {
+    "width": 1920,
+    "height": 1280,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/LMJ20260601-14779-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/LMJ20260601-14779-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/LMJ20260601-14779-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/LMJ20260601-14779-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/ZP634201.webp": {
+    "width": 1920,
+    "height": 1280,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/ZP634201-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/ZP634201-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/ZP634201-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/ZP634201-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/ZZP10407.webp": {
+    "width": 1920,
+    "height": 1280,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/ZZP10407-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/ZZP10407-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/ZZP10407-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/ZZP10407-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/ZZP10586.webp": {
+    "width": 1920,
+    "height": 1280,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/ZZP10586-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/ZZP10586-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/ZZP10586-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/photo_wall/ZZP10586-1600.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_01.webp": {
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_01-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_01-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_01.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_02.webp": {
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_02-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_02-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_02.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_03.webp": {
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_03-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_03-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/photo_03-960.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_03.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_04.webp": {
+    "width": 1280,
+    "height": 720,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_04-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_04-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_04.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_05.webp": {
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_05-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_05-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/photo_05-960.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_05.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_06.webp": {
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_06-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_06-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/photo_wall/photo_06-960.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_06.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_07.webp": {
+    "width": 1280,
+    "height": 854,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_07-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_07-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_07.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_08.webp": {
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_08-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_08-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_08.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_09.webp": {
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_09-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_09-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_09.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_10.webp": {
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_10-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_10-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_10.webp"
+      }
+    ]
+  },
+  "imgs/photo_wall/photo_11.webp": {
+    "width": 1280,
+    "height": 720,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/photo_wall/photo_11-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/photo_wall/photo_11-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "imgs/photo_wall/photo_11.webp"
+      }
+    ]
+  },
+  "imgs/robots/机器人2026抠图/1号英雄.webp": {
+    "width": 5725,
+    "height": 3835,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/robots/机器人2026抠图/1号英雄-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/robots/机器人2026抠图/1号英雄-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/robots/机器人2026抠图/1号英雄-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/robots/机器人2026抠图/1号英雄-1600.webp"
+      }
+    ]
+  },
+  "imgs/robots/机器人2026抠图/2号工程.webp": {
+    "width": 4648,
+    "height": 4182,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/robots/机器人2026抠图/2号工程-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/robots/机器人2026抠图/2号工程-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/robots/机器人2026抠图/2号工程-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/robots/机器人2026抠图/2号工程-1600.webp"
+      }
+    ]
+  },
+  "imgs/robots/机器人2026抠图/3号轮腿步兵.webp": {
+    "width": 1600,
+    "height": 1085,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/robots/机器人2026抠图/3号轮腿步兵-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/robots/机器人2026抠图/3号轮腿步兵-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/robots/机器人2026抠图/3号轮腿步兵-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/robots/机器人2026抠图/3号轮腿步兵.webp"
+      }
+    ]
+  },
+  "imgs/robots/机器人2026抠图/6号无人机.webp": {
+    "width": 1600,
+    "height": 682,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/robots/机器人2026抠图/6号无人机-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/robots/机器人2026抠图/6号无人机-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/robots/机器人2026抠图/6号无人机-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/robots/机器人2026抠图/6号无人机.webp"
+      }
+    ]
+  },
+  "imgs/robots/机器人2026抠图/7号哨兵.webp": {
+    "width": 1600,
+    "height": 1087,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/robots/机器人2026抠图/7号哨兵-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/robots/机器人2026抠图/7号哨兵-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/robots/机器人2026抠图/7号哨兵-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/robots/机器人2026抠图/7号哨兵.webp"
+      }
+    ]
+  },
+  "imgs/robots/机器人2026抠图/8号飞镖.webp": {
+    "width": 5268,
+    "height": 4242,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/robots/机器人2026抠图/8号飞镖-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/robots/机器人2026抠图/8号飞镖-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/robots/机器人2026抠图/8号飞镖-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/optimized/robots/机器人2026抠图/8号飞镖-1600.webp"
+      }
+    ]
+  },
+  "imgs/robots/机器人2026抠图/9号雷达.webp": {
+    "width": 1600,
+    "height": 1364,
+    "variants": [
+      {
+        "width": 320,
+        "path": "imgs/optimized/robots/机器人2026抠图/9号雷达-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/robots/机器人2026抠图/9号雷达-640.webp"
+      },
+      {
+        "width": 960,
+        "path": "imgs/optimized/robots/机器人2026抠图/9号雷达-960.webp"
+      },
+      {
+        "width": 1600,
+        "path": "imgs/robots/机器人2026抠图/9号雷达.webp"
+      }
+    ]
+  },
+  "imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-研发代表-宋昊润.webp": {
+    "width": 800,
+    "height": 1200,
+    "variants": [
+      {
+        "width": 96,
+        "path": "imgs/optimized/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-研发代表-宋昊润-96.webp"
+      },
+      {
+        "width": 320,
+        "path": "imgs/optimized/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-研发代表-宋昊润-320.webp"
+      },
+      {
+        "width": 640,
+        "path": "imgs/optimized/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-研发代表-宋昊润-640.webp"
+      },
+      {
+        "width": 800,
+        "path": "imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-研发代表-宋昊润.webp"
+      }
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { imageAttrs } from '@/utils/images'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ArrowUpRight } from 'lucide-vue-next'
@@ -12,6 +13,8 @@ const root = ref<HTMLElement | null>(null)
 const active = ref(0)
 const progress = ref(0)
 const scrollLinked = ref(false)
+const imagesReady = ref(false)
+let imageObserver: IntersectionObserver | undefined
 const asset = (path: string) => `${import.meta.env.BASE_URL}imgs/${path}`
 const chapters = [
   { en: 'BUILD', title: '让构想，成为实物。', titleEn: 'Ideas. Made real.', desc: '从第一张图纸到最后一颗螺丝，在一次次设计、装配与调试中，找到属于我们的答案。', descEn: 'From the first drawing to the final screw. Design, assemble, test, and find our own answers.', image: 'photo_wall/ZZP10407.webp', to: '/robots' },
@@ -29,6 +32,12 @@ const choose = (index: number) => {
 }
 onMounted(() => {
   if (!root.value) return
+  if ('IntersectionObserver' in window) {
+    imageObserver = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) { imagesReady.value = true; imageObserver?.disconnect() }
+    }, { rootMargin: '600px' })
+    imageObserver.observe(root.value)
+  } else imagesReady.value = true
   media = gsap.matchMedia(root.value)
   media.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
     scrollLinked.value = true
@@ -50,14 +59,14 @@ onMounted(() => {
   })
   resize.observe(root.value)
 })
-onBeforeUnmount(() => { clearTimeout(refreshTimer); resize?.disconnect(); media?.revert() })
+onBeforeUnmount(() => { imageObserver?.disconnect(); clearTimeout(refreshTimer); resize?.disconnect(); media?.revert() })
 </script>
 
 <template>
   <section ref="root" class="process-story" :class="{ 'motion-enabled': scrollLinked }">
     <div class="process-stage">
       <div class="chapter-images" aria-hidden="true">
-        <div v-for="(chapter, index) in chapters" :key="chapter.en" class="chapter-image" :class="{ active: active === index }" :style="{ backgroundImage: `url(${asset(chapter.image)})` }"></div>
+        <div v-for="(chapter, index) in chapters" :key="chapter.en" class="chapter-image" :class="{ active: active === index }"><img v-if="imagesReady" v-bind="imageAttrs(asset(chapter.image), '(max-width: 900px) 100vw, 90vw')" alt="" decoding="async" /></div>
       </div>
       <div class="chapter-shade" aria-hidden="true"></div>
       <div class="stage-topline"><span>{{ zh ? '从实验室，到聚光灯下。' : 'FROM THE LAB. TO THE SPOTLIGHT.' }}</span><span>DREAMCHASER / IN MOTION</span></div>
@@ -124,4 +133,5 @@ onBeforeUnmount(() => { clearTimeout(refreshTimer); resize?.disconnect(); media?
  .chapter-steps { padding: 20px 24px 28px; gap: 16px; }
  .step-label { gap: 8px; font-size: 11px; letter-spacing: .5px; padding-top: 15px; }
 }
+.chapter-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
 </style>

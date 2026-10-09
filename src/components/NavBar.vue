@@ -12,7 +12,7 @@ const onMediaChange = () => { isMobile.value = mediaQuery.matches; closeMenu() }
 const menuButton = ref<HTMLButtonElement | null>(null)
 const logoInFlight = ref(false)
 const animatedLogoMarkup = ref('')
-const logoSrc = `${import.meta.env.BASE_URL}imgs/logo.png`
+const logoSrc = `${import.meta.env.BASE_URL}imgs/optimized/logo.webp`
 
 const onLogoFlightStart = () => {
   logoInFlight.value = true
