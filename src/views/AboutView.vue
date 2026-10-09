@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { nextTick, onBeforeUnmount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const withBase = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
 
@@ -90,85 +90,170 @@ const milestones = [
   }
 ]
 
-// 荣誉展示
+// 年度赛事成绩。相同赛事的名次合并在一条记录中，避免重复展示。
 const honors = [
   {
-    title: '2026国赛十六强',
-    titleEn: '2026 National Top 16',
-    event: 'RoboMaster 2026 National Competition',
-    eventEn: 'RoboMaster 2026 National Competition',
-    image: ''
+    year: '2026',
+    records: [
+      {
+        event: 'RoboMaster 超级对抗赛',
+        eventEn: 'RoboMaster Super Competition',
+        results: [
+          { label: '全国一等奖', labelEn: 'National First Prize', tone: 'gold' },
+          { label: '全国十六强', labelEn: 'National Top 16', tone: 'finalist' }
+        ]
+      },
+      {
+        event: '全国大学生电子设计竞赛 · 模拟邀请赛',
+        eventEn: 'National Undergraduate Electronic Design Competition · Simulation Invitational',
+        results: [{ label: '全国二等奖', labelEn: 'National Second Prize', tone: 'silver' }]
+      },
+      {
+        event: 'RoboMaster 北部分区赛',
+        eventEn: 'RoboMaster Northern Regional Competition',
+        results: [{ label: '北部赛区八强', labelEn: 'Northern Regional Top 8', tone: 'finalist' }]
+      },
+      {
+        event: 'RoboMaster 高校联盟赛 · 山东站',
+        eventEn: 'RoboMaster University League · Shandong Station',
+        results: [{ label: '亚军', labelEn: 'Runner-up', tone: 'silver' }]
+      }
+    ]
   },
   {
-    title: '2026联盟赛山东站亚军',
-    titleEn: '2026 University League Shandong Station Runner-up',
-    event: 'RoboMaster 2026 University League Shandong Station',
-    eventEn: 'RoboMaster 2026 University League Shandong Station',
-    image: ''
+    year: '2025',
+    records: [
+      {
+        event: 'RoboMaster 超级对抗赛',
+        eventEn: 'RoboMaster Super Competition',
+        results: [{ label: '全国三等奖', labelEn: 'National Third Prize', tone: 'bronze' }]
+      },
+      {
+        event: '全国大学生电子设计竞赛',
+        eventEn: 'National Undergraduate Electronic Design Competition',
+        results: [{ label: '全国一等奖', labelEn: 'National First Prize', tone: 'gold' }]
+      }
+    ]
   },
   {
-    title: '2026北部分区赛八强',
-    titleEn: '2026 Northern Regional Top 8',
-    event: 'RoboMaster 2026 Northern Regional Competition',
-    eventEn: 'RoboMaster 2026 Northern Regional Competition',
-    image: ''
+    year: '2024',
+    records: [
+      {
+        event: 'RoboMaster 超级对抗赛',
+        eventEn: 'RoboMaster Super Competition',
+        results: [
+          { label: '全国一等奖', labelEn: 'National First Prize', tone: 'gold' },
+          { label: '中部区域赛冠军', labelEn: 'Central Regional Champion', tone: 'gold' },
+          { label: '全国十六强', labelEn: 'National Top 16', tone: 'finalist' }
+        ]
+      },
+      {
+        event: '全国大学生电子设计竞赛',
+        eventEn: 'National Undergraduate Electronic Design Competition',
+        results: [{ label: '全国二等奖', labelEn: 'National Second Prize', tone: 'silver' }]
+      }
+    ]
   },
   {
-    title: '2024中部赛区冠军',
-    titleEn: '2024 Central Regional Champion',
-    event: 'RoboMaster 2024 Regional Competition',
-    eventEn: 'RoboMaster 2024 Regional Competition',
-    image: ''
+    year: '2023',
+    records: [
+      {
+        event: 'RoboMaster Sim2Real 挑战赛',
+        eventEn: 'RoboMaster Sim2Real Challenge',
+        results: [{ label: '国际二等奖', labelEn: 'International Second Prize', tone: 'silver' }]
+      },
+      {
+        event: 'RoboMaster 超级对抗赛',
+        eventEn: 'RoboMaster Super Competition',
+        results: [{ label: '全国三等奖', labelEn: 'National Third Prize', tone: 'bronze' }]
+      }
+    ]
   },
   {
-    title: '国家级一等奖',
-    titleEn: 'National First Prize',
-    event: 'RoboMaster 2024 National Competition',
-    eventEn: 'RoboMaster 2024 National Competition',
-    image: ''
+    year: '2022',
+    records: [
+      {
+        event: 'RoboMaster 超级对抗赛',
+        eventEn: 'RoboMaster Super Competition',
+        results: [{ label: '全国三等奖', labelEn: 'National Third Prize', tone: 'bronze' }]
+      },
+      {
+        event: 'RoboMaster ICRA 人工智能挑战赛',
+        eventEn: 'RoboMaster ICRA AI Challenge',
+        results: [{ label: '全国三等奖', labelEn: 'National Third Prize', tone: 'bronze' }]
+      },
+      {
+        event: 'RoboMaster 高校联盟赛',
+        eventEn: 'RoboMaster University League',
+        results: [{ label: '一等奖', labelEn: 'First Prize', tone: 'gold' }]
+      }
+    ]
   },
   {
-    title: '高校联盟赛一等奖',
-    titleEn: 'RMUL First Prize',
-    event: 'RoboMaster 2022 University League',
-    eventEn: 'RoboMaster 2022 University League',
-    image: ''
+    year: '2021',
+    records: [
+      {
+        event: 'RoboMaster 超级对抗赛',
+        eventEn: 'RoboMaster Super Competition',
+        results: [{ label: '全国二等奖', labelEn: 'National Second Prize', tone: 'silver' }]
+      },
+      {
+        event: 'RoboMaster 北部分区赛',
+        eventEn: 'RoboMaster Northern Regional Competition',
+        results: [{ label: '北部赛区一等奖', labelEn: 'Northern Regional First Prize', tone: 'gold' }]
+      }
+    ]
   },
   {
-    title: '北部赛区一等奖',
-    titleEn: 'Northern Regional First Prize',
-    event: 'RoboMaster 2021 Northern Regional Competition',
-    eventEn: 'RoboMaster 2021 Northern Regional Competition',
-    image: ''
+    year: '2020',
+    records: [
+      {
+        event: 'RoboMaster 工程机器人',
+        eventEn: 'RoboMaster Engineer Robot',
+        results: [{ label: '全国一等奖', labelEn: 'National First Prize', tone: 'gold' }]
+      },
+      {
+        event: 'RoboMaster 超级对抗赛',
+        eventEn: 'RoboMaster Super Competition',
+        results: [{ label: '全国二等奖', labelEn: 'National Second Prize', tone: 'silver' }]
+      }
+    ]
   },
   {
-    title: '步兵对抗全国冠军',
-    titleEn: 'Infantry Combat National Champion',
-    event: 'RoboMaster 2019',
-    eventEn: 'RoboMaster 2019',
-    image: ''
+    year: '2019',
+    records: [
+      {
+        event: 'RoboMaster ICRA 人工智能挑战赛',
+        eventEn: 'RoboMaster ICRA AI Challenge',
+        results: [{ label: '全球总冠军', labelEn: 'Global Champion', tone: 'gold' }]
+      },
+      {
+        event: 'RoboMaster 步兵对抗赛',
+        eventEn: 'RoboMaster Infantry Combat',
+        results: [{ label: '全国冠军', labelEn: 'National Champion', tone: 'gold' }]
+      },
+      {
+        event: 'RoboMaster 超级对抗赛',
+        eventEn: 'RoboMaster Super Competition',
+        results: [{ label: '全国三等奖', labelEn: 'National Third Prize', tone: 'bronze' }],
+        sourceUrl: 'https://mp.weixin.qq.com/s/-l5qDsDULCZYlF0rat871g'
+      }
+    ]
   },
   {
-    title: 'Robocon全国三等奖',
-    titleEn: 'Robocon National Third Prize',
-    event: 'Robocon 2016',
-    eventEn: 'Robocon 2016',
-    image: ''
+    year: '2016',
+    records: [
+      {
+        event: 'Robocon',
+        eventEn: 'Robocon',
+        results: [{ label: '全国三等奖', labelEn: 'National Third Prize', tone: 'bronze' }]
+      }
+    ]
   }
 ]
 
-// 随机打乱数组的工具函数
-const shuffleArray = <T>(array: T[]): T[] => {
-  const newArr = [...array]
-  for (let i = newArr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArr[i], newArr[j]] = [newArr[j], newArr[i]]
-  }
-  return newArr
-}
-
 // 照片墙数据 - 为每张图片分配不同的尺寸类型
-const photos = ref(shuffleArray([
+const photos = [
   { id: 1, src: withBase('imgs/photo_wall/photo_01.webp'), size: 'large' },
   { id: 2, src: withBase('imgs/photo_wall/photo_02.webp'), size: 'wide' },
   { id: 3, src: withBase('imgs/photo_wall/photo_03.webp'), size: 'small' },
@@ -192,17 +277,41 @@ const photos = ref(shuffleArray([
   { id: 21, src: withBase('imgs/photo_wall/LMJ20260530-17132.webp'), size: 'medium' },
   { id: 22, src: withBase('imgs/photo_wall/LMJ20260531-11296.webp'), size: 'wide' },
   { id: 23, src: withBase('imgs/photo_wall/ZZP10586.webp'), size: 'large' }
-]))
+]
 
-const selectedPhoto = ref<string | null>(null)
+const selectedPhoto = ref<(typeof photos)[number] | null>(null)
+const closePhotoButton = ref<HTMLButtonElement | null>(null)
+let previousFocus: HTMLElement | null = null
+let previousBodyOverflow = ''
 
-const openPhoto = (src: string) => {
-  selectedPhoto.value = src
+const openPhoto = (photo: (typeof photos)[number]) => {
+  previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null
+  previousBodyOverflow = document.body.style.overflow
+  document.body.style.overflow = 'hidden'
+  selectedPhoto.value = photo
+  nextTick(() => closePhotoButton.value?.focus())
 }
 
 const closePhoto = () => {
+  if (!selectedPhoto.value) return
   selectedPhoto.value = null
+  document.body.style.overflow = previousBodyOverflow
+  nextTick(() => previousFocus?.focus())
 }
+
+const onPhotoKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closePhoto()
+  } else if (event.key === 'Tab') {
+    event.preventDefault()
+    closePhotoButton.value?.focus()
+  }
+}
+
+onBeforeUnmount(() => {
+  document.body.style.overflow = previousBodyOverflow
+})
 </script>
 
 <template>
@@ -210,43 +319,35 @@ const closePhoto = () => {
     <!-- 队伍介绍部分 -->
     <section class="intro-section">
       <div class="section-header">
-        <h1 class="section-title">/// TEAM PROFILE</h1>
+        <h1 class="section-title">{{ t('about.introTitle') }}</h1>
         <div class="title-deco"></div>
       </div>
 
       <div class="intro-content">
         <div class="content-wrapper">
           <div class="team-name">
-            <span class="team-cn">北京理工大学追梦战队</span>
+            <span class="team-cn">{{ t('about.teamName') }}</span>
             <span class="team-en">DREAM CHASER</span>
           </div>
 
           <div class="description-block">
-            <p>
-              北京理工大学追梦战队（Dream Chaser） 成立于2018年，是由自动化学院指导、面向全校选拔的校级学生机器人战队，前身可追溯至2015年的RoboMaster与Robocon参赛队。战队以 RoboMaster机甲大师赛 为核心平台，致力于培养具备价值引领、知识积累与工程实践能力的工程创新人才。
-            </p>
-
-            <p>
-              战队在近十年中屡获佳绩，多次晋级全国赛并斩获国家级奖项，2024赛季获得分区赛冠军及全国赛一等奖。其发展始终秉持“追求极致、团队协作、勇于创新”等核心原则。除竞赛外，追梦战队高度重视技术研发与文化传承，通过“薪火培训”、校内机甲大师赛、技术开源等方式推动科创普及，并形成“谦卑、包容、传承”的团队文化。同时以“机娘IP”和多平台新媒体运营构建独特品牌影响力。
-            </p>
-
-            <p>
-              目前，战队拥有80余名跨学院成员，致力于打造高质量科创平台，欢迎不同基础的同学加入，共同在机器人竞赛与工程实践中追梦前行。
-            </p>
+            <p>{{ t('about.paragraph1') }}</p>
+            <p>{{ t('about.paragraph2') }}</p>
+            <p>{{ t('about.paragraph3') }}</p>
           </div>
 
           <div class="stats-highlight">
             <div class="stat-item">
               <div class="stat-number">2018</div>
-              <div class="stat-label">成立年份</div>
+              <div class="stat-label">{{ t('about.founded') }}</div>
             </div>
             <div class="stat-item">
               <div class="stat-number">80+</div>
-              <div class="stat-label">队员人数</div>
+              <div class="stat-label">{{ t('about.members') }}</div>
             </div>
             <div class="stat-item">
               <div class="stat-number">1ST</div>
-              <div class="stat-label">2024中部分区赛</div>
+              <div class="stat-label">{{ t('about.bestResult') }}</div>
             </div>
           </div>
         </div>
@@ -256,11 +357,11 @@ const closePhoto = () => {
     <!-- 发展历程时间线 -->
     <section class="timeline-section">
       <div class="section-header">
-        <h2 class="section-title">/// {{ t('history.journey') }}</h2>
+        <h2 class="section-title">{{ t('history.journey') }}</h2>
         <div class="title-deco"></div>
       </div>
       <div class="timeline">
-        <div v-for="(milestone, index) in milestones" :key="index" class="timeline-item" :class="{ right: index % 2 === 1 }">
+        <div v-reveal v-for="(milestone, index) in milestones" :key="index" class="timeline-item" :class="{ right: index % 2 === 1 }">
           <div class="timeline-content">
             <div class="timeline-year">{{ milestone.year }}</div>
             <div class="timeline-card">
@@ -278,64 +379,102 @@ const closePhoto = () => {
       </div>
     </section>
 
-    <!-- 荣誉墙 -->
+    <!-- 年度成绩档案 -->
     <section class="honors-section">
       <div class="section-header">
-        <h2 class="section-title">/// {{ t('history.honors') }}</h2>
+        <h2 class="section-title">{{ t('history.honors') }}</h2>
         <div class="title-deco"></div>
       </div>
       <div class="honors-grid">
-        <div v-for="(honor, index) in honors" :key="index" class="honor-card">
-          <div v-if="honor.image" class="honor-image">
-            <img :src="honor.image" :alt="honor.title" />
+        <section
+          v-reveal
+          v-for="season in honors"
+          :key="season.year"
+          class="honor-season"
+          :aria-labelledby="`honor-season-${season.year}`"
+        >
+          <header class="honor-season-header">
+            <div>
+              <span class="honor-season-label">{{ t('history.resultArchive') }}</span>
+              <h3 :id="`honor-season-${season.year}`">{{ season.year }}</h3>
+            </div>
+            <span class="honor-record-count">{{ t('history.recordCount', { count: season.records.length }) }}</span>
+          </header>
+
+          <div class="honor-records">
+            <article v-for="record in season.records" :key="record.event" class="honor-record">
+              <h4>{{ locale === 'zh-CN' ? record.event : record.eventEn }}</h4>
+              <div class="honor-results">
+                <span
+                  v-for="result in record.results"
+                  :key="result.label"
+                  class="honor-result"
+                  :class="`tone-${result.tone}`"
+                >
+                  {{ locale === 'zh-CN' ? result.label : result.labelEn }}
+                </span>
+              </div>
+              <a
+                v-if="record.sourceUrl"
+                class="honor-source"
+                :href="record.sourceUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ t('history.recordSource') }} <span aria-hidden="true">↗</span>
+              </a>
+            </article>
           </div>
-          <div v-else class="honor-placeholder">
-            <div class="trophy-icon">🏆</div>
-          </div>
-          <div class="honor-info">
-            <h3>{{ $i18n.locale === 'zh-CN' ? honor.title : honor.titleEn }}</h3>
-            <p>{{ $i18n.locale === 'zh-CN' ? honor.event : honor.eventEn }}</p>
-          </div>
-        </div>
+        </section>
       </div>
     </section>
 
     <!-- 照片墙部分 -->
     <section class="photo-wall-section">
       <div class="section-header">
-        <h2 class="section-title">/// MOMENTS ARCHIVE</h2>
+        <h2 class="section-title">{{ t('about.photoArchive') }}</h2>
         <div class="title-deco"></div>
       </div>
 
       <div class="photo-grid">
-        <div
+        <button
           v-for="photo in photos"
           :key="photo.id"
           :class="['photo-item', `photo-${photo.size}`]"
-          @click="openPhoto(photo.src)"
+          type="button"
+          :aria-label="t('about.openPhoto', { number: photo.id })"
+          @click="openPhoto(photo)"
         >
-          <div class="photo-frame">
-            <img :src="photo.src" :alt="`照片 ${photo.id}`" />
-            <div class="photo-overlay">
-              <div class="photo-id">#{{ String(photo.id).padStart(2, '0') }}</div>
-            </div>
-            <div class="corner-deco top-left"></div>
-            <div class="corner-deco top-right"></div>
-            <div class="corner-deco bottom-left"></div>
-            <div class="corner-deco bottom-right"></div>
-          </div>
-        </div>
+          <span class="photo-frame">
+            <img :src="photo.src" alt="" loading="lazy" decoding="async" />
+            <span class="photo-overlay">
+              <span class="photo-id">#{{ String(photo.id).padStart(2, '0') }}</span>
+            </span>
+            <span class="corner-deco top-left"></span>
+            <span class="corner-deco top-right"></span>
+            <span class="corner-deco bottom-left"></span>
+            <span class="corner-deco bottom-right"></span>
+          </span>
+        </button>
       </div>
     </section>
 
     <!-- 图片预览弹窗 -->
     <transition name="modal-fade">
-      <div v-if="selectedPhoto" class="photo-modal" @click="closePhoto">
-        <div class="modal-content" @click.stop>
-          <button class="close-btn" @click="closePhoto">
+      <div
+        v-if="selectedPhoto"
+        class="photo-modal"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="t('about.photoPreview')"
+        @click.self="closePhoto"
+        @keydown="onPhotoKeydown"
+      >
+        <div class="modal-content">
+          <button ref="closePhotoButton" class="close-btn" type="button" :aria-label="t('about.closePhoto')" @click="closePhoto">
             <span>×</span>
           </button>
-          <img :src="selectedPhoto" alt="预览" />
+          <img :src="selectedPhoto.src" :alt="t('about.openPhoto', { number: selectedPhoto.id })" />
         </div>
       </div>
     </transition>
@@ -422,6 +561,7 @@ const closePhoto = () => {
   }
 
   .description-block {
+    font-family: $font-body;
     font-size: 1rem;
     line-height: 1.8;
     color: $color-text-dim;
@@ -482,6 +622,14 @@ const closePhoto = () => {
   }
 
   .photo-item {
+    display: block;
+    width: 100%;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    font: inherit;
+    text-align: left;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -507,6 +655,7 @@ const closePhoto = () => {
     }
 
     .photo-frame {
+      display: block;
       width: 100%;
       height: 100%;
       position: relative;
@@ -538,6 +687,7 @@ const closePhoto = () => {
       }
 
       .photo-overlay {
+        display: block;
         position: absolute;
         top: 0;
         left: 0;
@@ -554,7 +704,7 @@ const closePhoto = () => {
           right: 10px;
           font-family: $font-code;
           color: $color-primary;
-          font-size: 0.8rem;
+          font-size: .875rem;
           background: rgba(0, 0, 0, 0.7);
           padding: 4px 8px;
           border: 1px solid $color-primary;
@@ -563,6 +713,7 @@ const closePhoto = () => {
       }
 
       .corner-deco {
+        display: block;
         position: absolute;
         width: 10px;
         height: 10px;
@@ -603,6 +754,11 @@ const closePhoto = () => {
         opacity: 1;
       }
     }
+  }
+
+  .photo-item:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 3px;
   }
 }
 
@@ -780,7 +936,7 @@ const closePhoto = () => {
   z-index: 10;
 }
 
-// 荣誉墙样式
+// 年度成绩档案样式
 .honors-section {
   max-width: 1400px;
   margin: 0 auto;
@@ -789,127 +945,119 @@ const closePhoto = () => {
 
 .honors-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 1.25rem;
 }
 
-.honor-card {
-  @include glass-panel;
-  padding: 3rem 2rem;
-  text-align: center;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  border-color: rgba($color-accent, 0.2);
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 50% 0%, rgba($color-accent, 0.1), transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-  }
-  
+.honor-season {
+  min-width: 0;
+  padding: 1.15rem 1.2rem 0.4rem;
+  border: 1px solid rgba($color-primary, 0.16);
+  border-top: 2px solid rgba($color-accent, 0.72);
+  background: linear-gradient(145deg, rgba($color-primary, 0.045), rgba(0, 0, 0, 0.22) 58%);
+  transition: border-color 0.22s ease, background-color 0.22s ease;
+
   &:hover {
-    transform: translateY(-15px);
-    border-color: $color-accent;
-    box-shadow: 0 0 50px rgba($color-accent, 0.3);
-    
-    &::before {
-      opacity: 1;
-    }
-    
-    .honor-info h3::before, .honor-info h3::after {
-      opacity: 1;
-      filter: drop-shadow(0 0 8px $color-accent);
-    }
+    border-color: rgba($color-primary, 0.42);
   }
-  
-  .honor-image {
-    width: 100%;
-    height: 220px;
-    margin-bottom: 2rem;
-    overflow: hidden;
-    border: 1px solid rgba($color-accent, 0.2);
-    position: relative;
-    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
-    
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s;
-    }
-    
-    &:hover img {
-      transform: scale(1.1);
-    }
+}
+
+.honor-season-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.8rem;
+
+  h3 {
+    margin: 0.1rem 0 0;
+    color: $color-accent;
+    font-family: $font-title;
+    font-size: 2.6rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
   }
-  
-  .honor-placeholder {
-    width: 100%;
-    height: 220px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba($color-accent, 0.1) 0%, transparent 100%);
-    border: 1px solid rgba($color-accent, 0.2);
-    margin-bottom: 2rem;
-    position: relative;
-    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
-    
-    .trophy-icon {
-      font-size: 5rem;
-      filter: drop-shadow(0 0 15px rgba($color-accent, 0.4));
-      color: $color-accent;
-      opacity: 0.8;
-    }
+}
+
+.honor-season-label,
+.honor-record-count {
+  color: rgba($color-text-main, 0.58);
+  font-family: $font-code;
+  font-size: .875rem;
+  letter-spacing: 0.08em;
+}
+
+.honor-record-count {
+  padding-bottom: 0.15rem;
+  text-align: right;
+}
+
+.honor-record {
+  padding: 0.9rem 0;
+  border-top: 1px solid rgba($color-white, 0.1);
+
+  h4 {
+    margin: 0 0 0.65rem;
+    color: rgba($color-white, 0.92);
+    font-family: $font-body;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.5;
   }
-  
-  .honor-info {
-    h3 {
-      font-family: $font-title;
-      font-size: 1.4rem;
-      color: $color-accent;
-      margin: 0 0 0.8rem;
-      text-transform: uppercase;
-      position: relative;
-      display: inline-block;
-      padding: 0 4rem;
-      @include text-glow($color-accent);
-      
-      &::before, &::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        width: 3.5rem;
-        height: 3.5rem;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 60 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 95 C30 70 20 50 10 10' stroke='%23F0FF00' stroke-width='1.5' fill='none'/%3E%3Cpath d='M28 85 C15 82 8 75 5 65 C12 68 22 75 28 85' fill='%23F0FF00'/%3E%3Cpath d='M25 65 C12 62 5 55 2 45 C9 48 19 55 25 65' fill='%23F0FF00'/%3E%3Cpath d='M20 45 C8 42 2 35 0 25 C7 28 15 35 20 45' fill='%23F0FF00'/%3E%3Cpath d='M15 25 C5 22 1 15 0 5 C5 8 10 15 15 25' fill='%23F0FF00'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-size: contain;
-        opacity: 0.7;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-      
-      &::before {
-        left: 0;
-        transform: translateY(-50%) rotate(-15deg);
-      }
-      
-      &::after {
-        right: 0;
-        transform: translateY(-50%) scaleX(-1) rotate(-15deg);
-      }
-    }
-    
-    p {
-      font-family: $font-code;
-      color: $color-text-dim;
-      font-size: 0.9rem;
-      margin: 0;
-      letter-spacing: 1px;
-    }
+}
+
+.honor-results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.honor-result {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.7rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid rgba($color-primary, 0.3);
+  background: rgba($color-primary, 0.07);
+  color: #bafaff;
+  font-size: .875rem;
+  line-height: 1.3;
+
+  &.tone-gold {
+    border-color: rgba($color-accent, 0.48);
+    background: rgba($color-accent, 0.1);
+    color: $color-accent;
+  }
+
+  &.tone-silver {
+    border-color: rgba($color-white, 0.32);
+    background: rgba($color-white, 0.07);
+    color: #e9f0f2;
+  }
+
+  &.tone-bronze {
+    border-color: rgba(#e99a68, 0.42);
+    background: rgba(#e99a68, 0.09);
+    color: #ffc29e;
+  }
+
+  &.tone-finalist {
+    border-color: rgba($color-primary, 0.35);
+    background: rgba($color-primary, 0.08);
+    color: #a5f5fa;
+  }
+}
+
+.honor-source {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-top: 0.6rem;
+  color: rgba($color-white, 0.62);
+  font-size: .875rem;
+
+  &:hover {
+    color: $color-accent;
   }
 }
 
@@ -997,22 +1145,16 @@ const closePhoto = () => {
   }
 
   .honors-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;
   }
 
-  .honor-card {
-    padding: 2rem 1.25rem;
+  .honor-season {
+    padding: 1rem 1rem 0.35rem;
   }
 
-  .honor-card .honor-info h3 {
-    padding: 0;
-    font-size: 1.15rem;
-
-    &::before,
-    &::after {
-      display: none;
-    }
+  .honor-season-header h3 {
+    font-size: 2.25rem;
   }
 
   .photo-modal .modal-content {
@@ -1030,6 +1172,10 @@ const closePhoto = () => {
 }
 
 @media (max-width: 480px) {
+  .honors-grid {
+    grid-template-columns: 1fr;
+  }
+
   .photo-grid {
     grid-template-columns: 1fr !important;
     grid-auto-rows: 220px !important;
@@ -1051,4 +1197,65 @@ const closePhoto = () => {
     padding: 1rem;
   }
 }
+
+.about-container { max-width: 1600px; margin: auto; }
+.section-header { margin-bottom: 28px; }
+.section-header .section-title { font-size: clamp(23px, 2.6vw, 36px); font-weight: 500; color: #e4ede8; letter-spacing: -.5px; margin: 0 0 16px; }
+.section-header .title-deco { height: 1px; background: #ffffff18; margin: 0; }
+.intro-section .intro-content { background: #111b1e; padding: clamp(24px, 4vw, 56px); border-radius: 4px; }
+.intro-section .intro-content::before { display: none; }
+.intro-section .team-name { text-align: left; border: 0; padding-bottom: 0; }
+.intro-section .team-name .team-cn { font-weight: 500; font-size: clamp(23px, 2.5vw, 34px); }
+.intro-section .team-name .team-en { font-family: $font-code; font-size: 14px; letter-spacing: 3px; color: #7aa691; }
+.intro-section .description-block { max-width: 980px; font-size: 14px; line-height: 2; }
+.intro-section .description-block p { text-indent: 0; text-align: left; }
+.intro-section .stats-highlight { border-color: #ffffff15; }
+.intro-section .stats-highlight .stat-item { background: transparent; border: 0; text-align: left; padding-left: 0; }
+.intro-section .stats-highlight .stat-item .stat-number { font-weight: 500; font-size: 36px; }
+.intro-section .stats-highlight .stat-item .stat-label { font-size: 14px; }
+.timeline-card { background: #111b1e; border-radius: 4px; box-shadow: none; }
+.timeline-card:hover { box-shadow: none; }
+.timeline-year { font-weight: 400; font-size: 25px; }
+.timeline-info h3 { font-weight: 500; }
+.timeline-info p { font-size: 14px; line-height: 1.9; }
+.photo-wall-section .photo-item .photo-frame { border-radius: 4px; border-color: #ffffff15; }
+.photo-wall-section .photo-item .photo-frame:hover { box-shadow: none; }
+.photo-wall-section .photo-item .photo-frame img { filter: saturate(.85); }
+@media (max-width: 600px) {
+ .intro-section .stats-highlight { gap: 12px; }
+ .intro-section .stats-highlight .stat-item .stat-number { font-size: 28px; }
+ .intro-section .stats-highlight .stat-item .stat-label { font-size: 14px; }
+ .intro-section .description-block { font-size: 14px; }
+}
+
+
+.about-container { max-width: 1680px; padding-top: 80px; }
+.section-header .section-title { font-size: var(--heading-section); line-height: 1.35; font-weight: 600; margin-bottom: 22px; }
+.intro-section .section-header .section-title { font-size: var(--heading-page); }
+.intro-section .team-name .team-cn { font-size: clamp(28px, 3vw, 44px); font-weight: 600; }
+.intro-section .team-name .team-en { font-size: 15px; letter-spacing: 2px; }
+.intro-section .description-block { font-size: 18px; max-width: 1120px; color: #b5c5bc; line-height: 2; }
+.intro-section .stats-highlight .stat-item .stat-number { font-size: clamp(40px, 4.2vw, 62px); }
+.intro-section .stats-highlight .stat-item .stat-label { font-size: 16px; }
+.timeline-year { font-size: 36px; font-weight: 500; }
+.timeline-info h3 { font-size: 24px; }
+.timeline-info p { font-size: 16px; color: #b1c2b7; }
+.honor-season { padding: 30px; border-radius: 6px; background: #111d18; }
+.honor-season-header h3 { font-size: 48px; }
+.honor-record { padding: 22px 0; }
+.honor-record h4 { font-size: 18px; line-height: 1.7; }
+.honor-result { font-size: 14px; padding: 7px 12px; border-radius: 3px; }
+.timeline-content, .honor-season, .photo-item { transition: border-color .4s, background .4s; }
+@media (max-width: 768px) {
+ .about-container { padding-top: 46px; }
+ .intro-section .description-block { font-size: 16px; }
+ .intro-section .stats-highlight { gap: 18px; }
+ .intro-section .stats-highlight .stat-item .stat-number { font-size: 34px; }
+ .intro-section .stats-highlight .stat-item .stat-label { font-size: 14px; }
+ .honor-season { padding: 24px; }
+ .timeline-year { font-size: 28px; }
+ .timeline-info h3 { font-size: 22px; }
+ .timeline-info p { font-size: 16px; }
+}
+
 </style>

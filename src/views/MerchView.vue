@@ -1,36 +1,71 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref } from 'vue'
+import { nextTick, onBeforeUnmount, ref } from 'vue'
+import { Mail, Phone, MessageSquare, MapPin, Cog, CircuitBoard, ScanEye, Code2 } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 
 const { t, tm } = useI18n()
+const recruitmentImage = `url("${import.meta.env.BASE_URL}imgs/photo_wall/photo_01.webp")`
 const activePosition = ref<string | null>(null)
+const modalRef = ref<HTMLElement | null>(null)
+const modalCloseButton = ref<HTMLButtonElement | null>(null)
+let previousFocus: HTMLElement | null = null
+let previousBodyOverflow = ''
 
 const localizedList = (path: string) => tm(path) as string[]
 
 const contactMethods = [
-  { icon: '📧', key: 'email', value: 'public@dreamchaser.ink' },
-  { icon: '📱', key: 'phone', value: '+86 17511626718 (工作日)' },
-  { icon: '🎮', key: 'qq', value: '1092034753' },
-  { icon: '📍', key: 'address', value: '北京市房山区北京理工大学良乡校区工训楼' }
+  { icon: Mail, key: 'email', value: 'public@dreamchaser.ink', href: 'mailto:public@dreamchaser.ink' },
+  { icon: Phone, key: 'phone', valueKey: 'phoneValue', href: 'tel:+8617511626718' },
+  { icon: MessageSquare, key: 'qq', value: '1092034753' },
+  { icon: MapPin, key: 'address', valueKey: 'addressValue' }
 ]
 
 const positions = [
-  { key: 'mechanical', icon: '⚙️' },
-  { key: 'electrical', icon: '💡' },
-  { key: 'vision', icon: '👁️' },
-  { key: 'operation', icon: '💻' }
+  { key: 'mechanical', icon: Cog },
+  { key: 'electrical', icon: CircuitBoard },
+  { key: 'vision', icon: ScanEye },
+  { key: 'operation', icon: Code2 }
 ]
 
 const recruitmentUrl = 'https://dreamchaser.feishu.cn/wiki/IxOswfobAixXuUkcq73cLyQZney?share_token=3626e26e-bc03-4ae1-839c-08be0ff94aa0&qq_aio_chat_type=3'
 
 const openPosition = (key: string) => {
+  previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null
+  previousBodyOverflow = document.body.style.overflow
   activePosition.value = key
   document.body.style.overflow = 'hidden'
+  nextTick(() => modalCloseButton.value?.focus())
 }
 
 const closePosition = () => {
+  if (!activePosition.value) return
   activePosition.value = null
-  document.body.style.overflow = ''
+  document.body.style.overflow = previousBodyOverflow
+  nextTick(() => previousFocus?.focus())
+}
+
+const onPositionKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closePosition()
+    return
+  }
+
+  if (event.key !== 'Tab' || !modalRef.value) return
+  const focusable = Array.from(modalRef.value.querySelectorAll<HTMLElement>(
+    'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+  ))
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  if (!first || !last) return
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first.focus()
+  }
 }
 
 const openRecruitment = () => {
@@ -38,13 +73,13 @@ const openRecruitment = () => {
 }
 
 onBeforeUnmount(() => {
-  document.body.style.overflow = ''
+  document.body.style.overflow = previousBodyOverflow
 })
 </script>
 
 <template>
-  <div class="contact-container">
-    <div class="contact-header">
+  <div class="contact-container" :style="{ '--recruitment-image': recruitmentImage }">
+    <div v-reveal class="contact-header"><p class="page-eyebrow">CONNECT / JOIN DREAMCHASER</p>
       <h1 class="contact-title">{{ t('contact.title') }}</h1>
       <p class="contact-subtitle">{{ t('contact.subtitle') }}</p>
     </div>
@@ -59,13 +94,20 @@ onBeforeUnmount(() => {
         </h2>
         
         <div class="contact-cards">
-          <div v-for="method in contactMethods" :key="method.key" class="contact-card">
-            <div class="contact-icon">{{ method.icon }}</div>
+          <component
+            v-for="method in contactMethods"
+            :key="method.key"
+            :is="method.href ? 'a' : 'div'"
+            v-bind="method.href ? { href: method.href } : {}"
+            v-surface class="contact-card motion-surface"
+            :class="{ 'is-link': method.href }"
+          >
+            <div class="contact-icon" aria-hidden="true"><component :is="method.icon" :size="24" /></div>
             <div class="contact-details">
               <div class="contact-label">{{ t(`contact.${method.key}`) }}</div>
-              <div class="contact-value">{{ method.value }}</div>
+              <div class="contact-value">{{ method.valueKey ? t(`contact.${method.valueKey}`) : method.value }}</div>
             </div>
-          </div>
+          </component>
         </div>
       </section>
 
@@ -81,7 +123,7 @@ onBeforeUnmount(() => {
           <div class="join-banner-content">
             <h3>{{ t('contact.joinTitle') }}</h3>
             <p>{{ t('contact.joinDesc') }}</p>
-            <button class="join-btn" type="button" @click="openRecruitment">
+            <button v-magnetic class="join-btn" type="button" @click="openRecruitment">
               {{ t('contact.recruitment') }}
               <span aria-hidden="true">→</span>
             </button>
@@ -90,18 +132,18 @@ onBeforeUnmount(() => {
 
         <div class="positions-title">{{ t('contact.positions') }}</div>
         <div class="positions-grid">
-          <button
+          <article
             v-for="pos in positions"
             :key="pos.key"
-            class="position-card"
-            type="button"
-            @click="openPosition(pos.key)"
+            v-surface v-reveal class="position-card motion-surface"
           >
-            <div class="position-icon">{{ pos.icon }}</div>
+            <div class="position-icon"><component :is="pos.icon" :size="28" /></div>
             <h4 class="position-name">{{ t(`contact.${pos.key}`) }}</h4>
             <p class="position-desc">{{ t(`contact.${pos.key}Desc`) }}</p>
-            <span class="position-action">{{ t('contact.viewRequirements') }} →</span>
-          </button>
+            <button class="position-action" type="button" @click="openPosition(pos.key)">
+              {{ t('contact.viewRequirements') }} →
+            </button>
+          </article>
         </div>
 
       </section>
@@ -114,18 +156,20 @@ onBeforeUnmount(() => {
           class="position-modal-backdrop"
           role="presentation"
           @click.self="closePosition"
-          @keydown.esc="closePosition"
         >
           <section
+            ref="modalRef"
             class="position-modal"
             role="dialog"
             aria-modal="true"
+            tabindex="-1"
             :aria-labelledby="`position-${activePosition}-title`"
+            @keydown="onPositionKeydown"
           >
-            <button class="modal-close" type="button" :aria-label="t('contact.close')" @click="closePosition">×</button>
+            <button ref="modalCloseButton" class="modal-close" type="button" :aria-label="t('contact.close')" @click="closePosition">×</button>
             <div class="modal-index">RECRUITMENT FILE // {{ activePosition.toUpperCase() }}</div>
             <div class="modal-title-row">
-              <span class="modal-icon">{{ positions.find(pos => pos.key === activePosition)?.icon }}</span>
+              <span class="modal-icon"><component :is="positions.find(pos => pos.key === activePosition)?.icon" :size="30" /></span>
               <div>
                 <span>{{ t('contact.technicalPosition') }}</span>
                 <h3 :id="`position-${activePosition}-title`">{{ t(`contact.${activePosition}`) }}</h3>
@@ -160,7 +204,7 @@ onBeforeUnmount(() => {
 
             <div class="modal-footer">
               <p>{{ t('contact.requirementNote') }}</p>
-              <button type="button" class="join-btn" @click="openRecruitment">
+              <button type="button" v-magnetic class="join-btn" @click="openRecruitment">
                 {{ t('contact.fullRequirements') }} <span aria-hidden="true">↗</span>
               </button>
             </div>
@@ -192,7 +236,7 @@ onBeforeUnmount(() => {
   }
   
   .contact-subtitle {
-    font-family: $font-code;
+    font-family: $font-body;
     color: $color-text-dim;
     font-size: 1.2rem;
     letter-spacing: 2px;
@@ -232,11 +276,17 @@ onBeforeUnmount(() => {
 
 .contact-card {
   @include glass-panel;
+  color: $color-white;
+  text-decoration: none;
   padding: 2rem;
   display: flex;
   align-items: center;
   gap: 1.5rem;
   transition: all 0.3s;
+
+  &.is-link {
+    cursor: pointer;
+  }
   
   &:hover {
     transform: translateY(-5px);
@@ -253,7 +303,7 @@ onBeforeUnmount(() => {
     flex: 1;
     
     .contact-label {
-      font-family: $font-code;
+      font-family: $font-body;
       color: $color-accent;
       font-size: 0.9rem;
       margin-bottom: 0.5rem;
@@ -261,12 +311,17 @@ onBeforeUnmount(() => {
     }
     
     .contact-value {
-      font-family: $font-code;
+      font-family: $font-body;
       color: $color-white;
       font-size: 1.1rem;
       word-break: break-all;
     }
   }
+}
+
+.contact-card:focus-visible {
+  outline: 2px solid $color-accent;
+  outline-offset: 3px;
 }
 
 // 加入我们
@@ -282,7 +337,7 @@ onBeforeUnmount(() => {
     border: 1px solid rgba($color-primary, 0.4);
     background:
       linear-gradient(90deg, rgba($color-bg, 0.96) 0%, rgba($color-bg, 0.78) 48%, rgba($color-bg, 0.25) 100%),
-      url('/imgs/photo_wall/photo_01.webp') center 42% / cover no-repeat;
+      var(--recruitment-image) center 42% / cover no-repeat;
 
     &::after {
       content: '';
@@ -307,7 +362,7 @@ onBeforeUnmount(() => {
     }
     
     p {
-      font-family: $font-code;
+      font-family: $font-body;
       color: $color-text-main;
       font-size: 1.2rem;
       margin: 0 0 2rem;
@@ -360,11 +415,10 @@ onBeforeUnmount(() => {
   padding: 2rem;
   text-align: center;
   color: inherit;
-  cursor: pointer;
   transition: all 0.3s;
   
   &:hover {
-    transform: translateY(-8px) scale(1.02);
+    transform: translateY(-4px) scale(1.01);
     border-color: $color-accent;
     box-shadow: 0 0 40px rgba($color-accent, 0.3);
   }
@@ -393,10 +447,19 @@ onBeforeUnmount(() => {
   .position-action {
     margin-top: 1.5rem;
     display: inline-block;
+    padding: 0.25rem 0;
+    border: 0;
+    background: transparent;
     color: $color-accent;
     font-family: $font-code;
-    font-size: 0.78rem;
+    font-size: .875rem;
     letter-spacing: 0.08em;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid $color-primary;
+      outline-offset: 3px;
+    }
   }
 }
 
@@ -453,7 +516,7 @@ onBeforeUnmount(() => {
 .modal-index {
   color: $color-accent;
   font-family: $font-code;
-  font-size: 0.72rem;
+  font-size: .875rem;
   letter-spacing: 0.15em;
 }
 
@@ -469,7 +532,7 @@ onBeforeUnmount(() => {
 
   span {
     color: $color-text-dim;
-    font-size: 0.75rem;
+    font-size: .875rem;
     letter-spacing: 0.12em;
   }
 
@@ -518,7 +581,7 @@ onBeforeUnmount(() => {
   p {
     margin: 0.4rem 0 0;
     color: $color-text-dim;
-    font-size: 0.78rem;
+    font-size: .875rem;
     line-height: 1.6;
   }
 }
@@ -537,7 +600,7 @@ onBeforeUnmount(() => {
 
   .requirement-number {
     color: $color-accent;
-    font-size: 0.7rem;
+    font-size: .875rem;
   }
 
   h4 {
@@ -551,7 +614,7 @@ onBeforeUnmount(() => {
     margin: 0;
     padding-left: 1.1rem;
     color: $color-text-dim;
-    font-size: 0.84rem;
+    font-size: .875rem;
     line-height: 1.75;
   }
 
@@ -571,7 +634,7 @@ onBeforeUnmount(() => {
   p {
     margin: 0;
     color: $color-text-dim;
-    font-size: 0.78rem;
+    font-size: .875rem;
   }
 
   .join-btn {
@@ -631,7 +694,7 @@ onBeforeUnmount(() => {
     align-items: flex-end;
     background:
       linear-gradient(0deg, rgba($color-bg, 0.98) 0%, rgba($color-bg, 0.72) 62%, rgba($color-bg, 0.2) 100%),
-      url('/imgs/photo_wall/photo_01.webp') center / cover no-repeat;
+      var(--recruitment-image) center / cover no-repeat;
   }
 
   .position-modal-backdrop {
@@ -717,5 +780,68 @@ onBeforeUnmount(() => {
     right: 0.75rem;
   }
 }
+
+
+.contact-container { max-width: 1600px; margin: auto; padding: var(--page-padding-y) var(--page-padding-x); }
+.contact-header { text-align: left; margin-bottom: 44px; }
+.contact-header .page-eyebrow { font-family: $font-code; font-size: 14px; letter-spacing: 2px; color: #75958b; margin: 0 0 16px; }
+.contact-header .contact-title { font-size: clamp(28px, 3vw, 42px); color: #e4ede8; font-weight: 500; letter-spacing: -1px; }
+.contact-header .contact-subtitle { font-size: 14px; letter-spacing: .5px; }
+.content-grid { max-width: none; gap: 52px; }
+.section-title { font-size: 20px; color: #e4ede8; font-weight: 500; margin: 0 0 24px; }
+.section-title .title-line { display: none; }
+.contact-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.contact-card { flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px; border-radius: 4px; background: #111b1e; }
+.contact-card:hover { transform: translateY(-3px); box-shadow: none; border-color: #a8e8cc55; }
+.contact-card .contact-icon { font-size: 0; color: #9ec4b0; }
+.contact-card .contact-details .contact-label { font-size: 14px; color: #729889; margin-bottom: 8px; }
+.contact-card .contact-details .contact-value { font-size: 14px; word-break: break-word; }
+.join-section .join-banner { border-color: #ffffff18; border-radius: 4px; padding: clamp(24px, 4vw, 56px); }
+.join-section .join-banner::after { display: none; }
+.join-section .join-banner h3 { font-size: clamp(24px, 3vw, 38px); font-weight: 500; color: #e8f3ee; }
+.join-section .join-banner p { font-size: 14px; line-height: 1.9; color: #acbfb6; }
+.join-section .join-banner .join-btn { font-size: 14px; font-weight: 500; border-radius: 3px; min-height: 46px; }
+.join-section .join-banner .join-btn:hover { box-shadow: none; background: #cbf5df; color: #10241d; }
+.join-section .positions-title { text-align: left; font-family: $font-body; font-size: 18px; font-weight: 500; color: #e4ede8; }
+.positions-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.position-card { text-align: left; padding: 28px 24px; background: #111b1e; border-radius: 4px; }
+.position-card:hover { box-shadow: none; transform: translateY(-3px); border-color: #a8e8cc55; }
+.position-card .position-icon { font-size: 0; color: #8bbc9f; margin-bottom: 26px; }
+.position-card .position-name { color: #e4ede8; font-size: 20px; font-weight: 500; }
+.position-card .position-desc { font-family: $font-body; font-size: 14px; line-height: 1.9; }
+.position-card .position-action { font-family: $font-body; font-size: 14px; }
+.position-modal { background: #111b1e; border-color: #ffffff25; border-radius: 6px; box-shadow: 0 30px 100px #0008; }
+.position-modal::before { display: none; }
+.modal-icon { color: #a8e8cc; }
+@media (max-width: 1000px) { .contact-cards, .positions-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .contact-card { padding: 20px 16px; } .contact-card .contact-details .contact-value { font-size: 14px; } .positions-grid { grid-template-columns: 1fr; } .position-card { padding: 24px; } .position-card .position-icon { margin-bottom: 20px; } }
+
+
+.contact-container { max-width: 1680px; padding-top: 80px; }
+.contact-header { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid #ffffff20; }
+.contact-header .contact-title { font-size: var(--heading-page); font-weight: 600; letter-spacing: -2px; line-height: 1.25; }
+.contact-header .contact-subtitle { font-size: 19px; color: #b0c4b6; line-height: 1.7; }
+.contact-header .page-eyebrow { font-size: 14px; color: #a2c6b2; margin-bottom: 24px; }
+.content-grid { gap: 80px; }
+.section-title { font-size: 30px; font-weight: 500; margin-bottom: 32px; }
+.contact-cards { gap: 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.contact-card { padding: 30px; flex-direction: row; align-items: center; gap: 24px; background: #111d18; min-height: 130px; }
+.contact-card .contact-icon svg { width: 28px; height: 28px; }
+.contact-card .contact-details .contact-label { font-size: 15px; color: #a0c4ac; margin-bottom: 12px; }
+.contact-card .contact-details .contact-value { font-size: 20px; line-height: 1.6; }
+.join-section .join-banner { min-height: 480px; }
+.join-section .join-banner h3 { font-size: var(--heading-section); font-weight: 600; line-height: 1.35; }
+.join-section .join-banner p { font-size: 19px; }
+.join-section .join-banner .join-btn { font-size: 16px; min-height: 58px; padding: 15px 26px; }
+.join-section .positions-title { font-size: 28px; margin-bottom: 32px; }
+.positions-grid { gap: 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.position-card { padding: 36px; background: #111d18; }
+.position-card .position-name { font-size: 30px; font-weight: 600; }
+.position-card .position-icon svg { width: 34px; height: 34px; }
+.position-card .position-desc { font-size: 18px; color: #acc1b3; }
+.position-card .position-action { font-size: 16px; padding: 8px 0; margin-top: 28px; }
+.position-modal { max-height: calc(100dvh - 64px); overflow-y: auto; }
+.recruitment-paths p, .requirement-block li { font-size: 16px; line-height: 1.8; }
+@media (max-width: 768px) { .contact-container { padding-top: 46px; } .contact-header { margin-bottom: 40px; padding-bottom: 30px; } .contact-header .contact-title { font-size: 44px; } .contact-header .contact-subtitle { font-size: 17px; } .contact-cards, .positions-grid { grid-template-columns: 1fr; gap: 18px; } .contact-card { padding: 26px; min-height: 120px; } .contact-card .contact-details .contact-value { font-size: 18px; } .contact-card .contact-details .contact-label { font-size: 14px; } .join-section .join-banner { min-height: 400px; padding: 28px; } .join-section .join-banner h3 { font-size: 34px; } .join-section .join-banner p { font-size: 17px; } .position-card { padding: 30px; } .position-card .position-desc { font-size: 16px; } .position-card .position-name { font-size: 28px; } .content-grid { gap: 60px; } .position-modal { max-height: calc(100dvh - 32px); } }
 
 </style>

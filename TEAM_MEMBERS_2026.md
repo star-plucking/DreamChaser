@@ -1,6 +1,8 @@
 # 2026 队员信息表
 
-请补充下面表格中的信息。填写完成后告诉我，我会根据这个文件更新 `src/views/TeamView.vue`。
+此表用于保存 2026 队员资料。网页当前展示有头像并完成介绍的核心队员；其他队员资料可先保留在此表中。
+
+高分辨率照片原件保存在 `assets-source/imgs/`。网页发布用的压缩图片放在 `public/imgs/`。
 
 字段说明：
 - `展示名`：网页主标题显示的姓名，可以填中文名、英文名或中英混排。
@@ -12,7 +14,7 @@
 
 ## 王倍卓
 - ID：1
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-操作手-王倍卓.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-操作手-王倍卓.JPG`
 - 英文职位：project manager/operator
 - 分组：OPERATORS / MANAGEMENT / MECHANICS
 - 队内职务：项目管理，英雄操作手
@@ -21,7 +23,7 @@
 
 ## 宋昊润
 - ID：2
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-研发代表-宋昊润.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/1号-研发代表-宋昊润.JPG`
 - 英文职位：Electrical control engineer of hero robot
 - 分组：EMBEDDED SOFTWARE
 - 队内职务：英雄机器人研发
@@ -30,7 +32,7 @@
 
 ## 潘志榛
 - ID：3
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/2号-操作手-潘志榛.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/2号-操作手-潘志榛.JPG`
 - 英文职位：Engineering operator and its mechanical engineer
 - 分组：OPERATORS /MECHANICS
 - 队内职务：工程操作手，工程机器人研发
@@ -39,7 +41,7 @@
 
 ## 王博
 - ID：4
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/2号-研发代表-王博.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/2号-研发代表-王博.JPG`
 - 英文职位：Electrical control engineer of engineering robot
 - 分组：EMBEDDED SOFTWARE
 - 队内职务：工程机器人研发
@@ -48,7 +50,7 @@
 
 ## 陈志鸿
 - ID：5
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/3号-操作手-陈志鸿.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/3号-操作手-陈志鸿.JPG`
 - 英文职位：captain and operator
 - 分组：OPERATORS / MANAGEMENT
 - 队内职务：3号操作手，队长
@@ -57,7 +59,7 @@
 
 ## 苏铭宇
 - ID：6
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/3号-研发代表-苏铭宇.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/3号-研发代表-苏铭宇.JPG`
 - 英文职位：Electrical control engineer of infantry robot
 - 分组：EMBEDDED SOFTWARE
 - 队内职务：步兵机器人研发
@@ -66,7 +68,7 @@
 
 ## 李韦俊
 - ID：7
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/4号-操作手-李韦俊.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/4号-操作手-李韦俊.JPG`
 - 英文职位：Infantry operator and its mechanical engineer
 - 分组：OPERATORS /MECHANICS
 - 队内职务：步兵机器人研发，步兵操作手
@@ -75,7 +77,7 @@
 
 ## 岑之初
 - ID：8
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/4号-研发代表-岑之初.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/4号-研发代表-岑之初.JPG`
 - 英文职位：Electrical control engineer of infantry robot
 - 分组：EMBEDDED SOFTWARE
 - 队内职务：步兵机器人研发
@@ -85,7 +87,7 @@
 
 ## 闫博程
 - ID：9
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/6号-研发代表-闫博程.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/6号-研发代表-闫博程.JPG`
 - 英文职位：Mechanical engineer of Aerial robot 
 - 分组：MECHANICS
 - 队内职务：无人机研发
@@ -94,7 +96,7 @@
 
 ## 郑杰心
 - ID：10
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/6号-飞手-郑杰心.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/6号-飞手-郑杰心.JPG`
 - 英文职位：Drone pilot and mechanical engineer
 - 分组：OPERATORS / MECHANICS
 - 队内职务：无人机飞手，工程机械
@@ -103,7 +105,7 @@
 
 ## 王瑶程
 - ID：11
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/7号-研发代表-王瑶程.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/7号-研发代表-王瑶程.JPG`
 - 英文职位：Electrical control engineer of sentry robot
 - 分组：EMBEDDED SOFTWARE
 - 队内职务：哨兵机器人研发
@@ -112,7 +114,7 @@
 
 ## 施宇翔
 - ID：12
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/8号-研发代表-施宇翔.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/8号-研发代表-施宇翔.JPG`
 - 英文职位：mechanical engineer of dart
 - 分组：MECHANICS
 - 队内职务：飞镖机械
@@ -121,10 +123,9 @@
 
 ## 秦沐阳
 - ID：13
-- 照片文件：`public/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/9号-研发代表-秦沐阳.JPG`
+- 照片文件：`assets-source/imgs/北京理工大学/北京理工大学-人员/北京理工大学人员（主）/9号-研发代表-秦沐阳.JPG`
 - 英文职位：Radar algorithm engineer
 - 分组：VISION
 - 队内职务：雷达研发代表
 - 技术组：雷达组
 - 个人介绍：雷达组最强工程师
-

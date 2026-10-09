@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
+import { FolderClosed, Globe, Building2 } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const isExpanded = ref(false)
 const showMenu = ref(false)
+const avatarButton = ref<HTMLButtonElement | null>(null)
 
 const nasUrls = {
   internal: 'http://nas.dreamchaser.ink',
@@ -14,174 +18,63 @@ const toggleMenu = () => {
   isExpanded.value = !isExpanded.value
 }
 
+const closeMenu = () => {
+  showMenu.value = false
+  isExpanded.value = false
+  nextTick(() => avatarButton.value?.focus())
+}
+
 const openNas = (type: 'internal' | 'external') => {
-  window.open(nasUrls[type], '_blank')
+  window.open(nasUrls[type], '_blank', 'noopener,noreferrer')
   showMenu.value = false
   isExpanded.value = false
 }
 </script>
 
 <template>
-  <div class="assistant-container" :class="{ expanded: isExpanded }">
-    <div class="nas-menu" v-if="showMenu">
-      <div class="menu-title">选择NAS入口</div>
-      <button class="menu-item" @click="openNas('internal')">
-        <span class="icon">🏫</span>
-        <div class="item-info">
-          <div class="item-title">校内访问</div>
-          <div class="item-url">nas.dreamchaser.ink</div>
-        </div>
+  <div class="assistant-container" :class="{ expanded: isExpanded }" @keydown.esc.prevent="closeMenu">
+    <div v-show="showMenu" id="nas-menu" class="nas-menu" role="group" :aria-label="t('assistant.menuTitle')">
+      <div class="menu-title">{{ t('assistant.menuTitle') }}</div>
+      <button class="menu-item" type="button" @click="openNas('internal')">
+        <Building2 :size="20" aria-hidden="true" />
+        <span class="item-info">
+          <span class="item-title">{{ t('assistant.internal') }}</span>
+          <span class="item-url">nas.dreamchaser.ink</span>
+        </span>
       </button>
-      <button class="menu-item" @click="openNas('external')">
-        <span class="icon">🌐</span>
-        <div class="item-info">
-          <div class="item-title">校外访问</div>
-          <div class="item-url">nas2.dreamchaser.ink</div>
-        </div>
+      <button class="menu-item" type="button" @click="openNas('external')">
+        <Globe :size="20" aria-hidden="true" />
+        <span class="item-info">
+          <span class="item-title">{{ t('assistant.external') }}</span>
+          <span class="item-url">nas2.dreamchaser.ink</span>
+        </span>
       </button>
     </div>
-    <div class="avatar" @click="toggleMenu">
-      <div class="avatar-placeholder">
-        <span class="nas-icon">📁</span>
-      </div>
-      <div class="ring"></div>
-    </div>
+    <button
+      class="avatar"
+      ref="avatarButton"
+      type="button"
+      :aria-label="t('assistant.toggle')"
+      :aria-expanded="showMenu"
+      aria-controls="nas-menu"
+      @click="toggleMenu"
+    >
+      <span class="avatar-placeholder">
+        <FolderClosed :size="18" aria-hidden="true" />
+      </span>
+
+    </button>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.assistant-container {
-  position: fixed;
-  bottom: 60px;
-  right: 20px;
-  z-index: 200;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 15px;
-}
-
-.avatar {
-  width: 80px;
-  height: 80px;
-  position: relative;
-  cursor: pointer;
-  transition: transform 0.3s;
-  
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  .avatar-placeholder {
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 30% 30%, $color-primary, #000);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    border: 2px solid $color-primary;
-    box-shadow: 0 0 15px $color-primary;
-    font-size: 2rem;
-    
-    .nas-icon {
-      filter: drop-shadow(0 0 8px $color-primary);
-    }
-  }
-
-  .ring {
-    position: absolute;
-    top: -5px; left: -5px;
-    width: 90px; height: 90px;
-    border: 1px dashed $color-accent;
-    border-radius: 50%;
-    animation: rotate 10s linear infinite;
-  }
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.nas-menu {
-  background: rgba(13, 13, 14, 0.95);
-  border: 2px solid $color-primary;
-  border-radius: 12px;
-  padding: 1rem;
-  min-width: 280px;
-  box-shadow: 0 0 30px rgba($color-primary, 0.3);
-  animation: slideIn 0.3s ease-out;
-  
-  .menu-title {
-    color: $color-primary;
-    font-family: $font-title;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    text-align: center;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba($color-primary, 0.3);
-  }
-  
-  .menu-item {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-    background: rgba($color-primary, 0.05);
-    border: 1px solid rgba($color-primary, 0.3);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-    color: $color-white;
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
-    
-    &:hover {
-      background: rgba($color-primary, 0.15);
-      border-color: $color-primary;
-      transform: translateX(-5px);
-      box-shadow: 0 0 15px rgba($color-primary, 0.3);
-    }
-    
-    .icon {
-      font-size: 1.8rem;
-      flex-shrink: 0;
-    }
-    
-    .item-info {
-      flex: 1;
-      text-align: left;
-      
-      .item-title {
-        font-family: $font-title;
-        font-size: 1rem;
-        margin-bottom: 0.25rem;
-        color: $color-white;
-      }
-      
-      .item-url {
-        font-family: $font-code;
-        font-size: 0.75rem;
-        color: $color-text-dim;
-      }
-    }
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+.assistant-container { position: fixed; bottom: 24px; right: 24px; z-index: 200; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.avatar { width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border: 1px solid #a8e8cc35; border-radius: 50%; background: #15231fe8; backdrop-filter: blur(12px); color: #b4d8c7; cursor: pointer; transition: background .2s, transform .2s; box-shadow: 0 8px 30px #0004; }
+.avatar:hover { background: #243e33; transform: translateY(-2px); }
+.nas-menu { padding: 16px; width: 280px; background: #111c1ff5; border: 1px solid #ffffff20; border-radius: 6px; box-shadow: 0 20px 60px #0007; }
+.menu-title { color: #8aac9d; font-size: 14px; padding: 0 4px 12px; }
+.menu-item { display: flex; align-items: center; gap: 14px; width: 100%; border: 0; border-radius: 3px; background: transparent; text-align: left; padding: 12px; cursor: pointer; color: #a8e8cc; }
+.menu-item:hover { background: #ffffff08; }
+.item-title { display: block; font-size: 14px; color: #dde9e2; }
+.item-url { display: block; font-size: 14px; color: #69877b; margin-top: 3px; }
 </style>

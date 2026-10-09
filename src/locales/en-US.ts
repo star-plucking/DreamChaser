@@ -1,34 +1,55 @@
 export default {
+  site: {
+    title: 'DreamChaser Robotics | Beijing Institute of Technology',
+    description: 'The official website of BIT DreamChaser Robotics: meet the robots and team, explore our competition history and open-source work.'
+  },
   nav: {
-    dashboard: 'Dashboard',
+    dashboard: 'Home',
     logs: 'History',
     arsenal: 'Robots',
     about: 'About',
     crew: 'Crew',
     knowledge: 'Knowledge',
-    ipStore: 'Contact Us'
+    ipStore: 'Contact Us',
+    toggleMenu: 'Open or close navigation menu'
   },
   common: {
     language: 'Language',
     chinese: '中文',
-    english: 'English'
+    english: 'English',
+    teamMotto: 'Dream Unlimited, Challenge Supreme'
+  },
+  status: {
+    site: 'BEIJING INSTITUTE OF TECHNOLOGY · DREAMCHASER'
+  },
+  assistant: {
+    menuTitle: 'NAS ACCESS',
+    internal: 'On-campus access',
+    external: 'Off-campus access',
+    toggle: 'Open or close NAS access options'
+  },
+  loader: {
+    loading: 'Loading the team website',
+    ready: 'READY',
+    initializing: 'INITIALIZING',
+    tagline: 'Dream · Keep Evolving'
   },
   home: {
     title: 'DreamChaser RoboMaster',
-    subtitle: '>>> Dream Unlimited, Challenge Supreme.',
+    subtitle: 'Dream Unlimited, Challenge Supreme',
     accessArsenal: 'Learn About Our Robots',
+    joinUs: 'Join DreamChaser',
     latestIntel: '/// LATEST INTEL',
-    stats: {
-      coreCodeLines: 'CORE CODE LINES',
-      totalPoints: 'TOTAL POINTS',
-      ranking: 'RANKING',
-      activeOperatives: 'ACTIVE OPERATIVES'
+    capabilities: {
+      sectionTitle: 'TECHNICAL FOCUS',
+      engineeringTitle: 'Full-Stack Robotics',
+      intelligenceTitle: 'Intelligent Systems',
+      competitionTitle: 'Competition',
+      knowledgeTitle: 'Open Resources'
     },
-    units: {
-      loc: 'LOC',
-      points: 'PTS',
-      rank: 'TH',
-      personnel: 'PERSONNEL'
+    categories: {
+      event: 'EVENT',
+      competition: 'COMPETITION'
     }
   },
   contact: {
@@ -37,8 +58,10 @@ export default {
     contactInfo: 'Contact Information',
     email: 'Email',
     phone: 'Phone',
+    phoneValue: '+86 17511626718 (weekdays)',
     qq: 'QQ Group',
     address: 'Address',
+    addressValue: 'Engineering Training Building, Liangxiang Campus, BIT, Fangshan District, Beijing',
     joinUs: 'JOIN US',
     joinTitle: 'Want to Join Us?',
     joinDesc: 'Join DreamChaser and explore robotics and engineering with us.',
@@ -101,6 +124,39 @@ export default {
     title: 'Our History',
     subtitle: 'Journey of Dreams · Moments of Glory',
     journey: 'Development Journey',
-    honors: 'Past Honors'
+    honors: 'Past Honors',
+    resultArchive: 'SEASON RECORDS',
+    recordCount: '{count} RESULTS',
+    recordSource: 'Competition report'
+  },
+  about: {
+    introTitle: 'About the Team',
+    teamName: 'Beijing Institute of Technology DreamChaser',
+    paragraph1: 'Founded in 2018 under the guidance of the School of Automation, BIT DreamChaser is a university-wide student robotics team. Its roots reach back to the university’s RoboMaster and Robocon teams in 2015. RoboMaster is our main platform for developing engineering talent through shared values, technical learning and hands-on practice.',
+    paragraph2: 'The team has advanced to national competitions and earned national awards. Beyond competition, DreamChaser supports technical development and knowledge sharing through training, campus events and open-source releases, guided by humility, inclusion and mentorship.',
+    paragraph3: 'Today, more than 80 students from across campus take part. Students with different levels of experience are welcome to learn, build and compete with us.',
+    founded: 'Founded',
+    members: 'Team Members',
+    bestResult: '2024 Central Regional',
+    photoArchive: 'Team Moments',
+    openPhoto: 'Open photo {number}',
+    closePhoto: 'Close photo preview',
+    photoPreview: 'Photo preview'
+  },
+  team: {
+    title: 'Core Roster',
+    management: 'Management',
+    operators: 'Operators',
+    engineering: 'Engineering',
+    role: 'Team Role',
+    technicalGroup: 'Technical Group',
+    bio: 'About'
+  },
+  robots: {
+    title: 'Robot Arsenal',
+    unitsDetected: 'ROBOT UNITS',
+    profile: 'ROBOT PROFILE',
+    tacticalTags: 'TECHNICAL FEATURES',
+    toggle: 'Show or hide details for {name}'
   }
 }

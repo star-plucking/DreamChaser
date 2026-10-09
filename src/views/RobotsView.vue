@@ -1,576 +1,240 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
+import { Plus, ArrowDownRight } from 'lucide-vue-next'
+import gsap from 'gsap'
+import { useI18n } from 'vue-i18n'
+
+const root = ref<HTMLElement | null>(null)
+const { locale, t } = useI18n()
 
 const withBase = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
 
-// 随机打乱数组的工具函数
-const shuffleArray = <T>(array: T[]): T[] => {
-  const newArr = [...array]
-  for (let i = newArr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArr[i], newArr[j]] = [newArr[j], newArr[i]]
-  }
-  return newArr
-}
-
-const robots = ref(shuffleArray([
+const robots = ref([
   { 
     id: 1, 
-    name: 'HERO | 英雄', 
+    nameZh: '英雄', nameEn: 'HERO',
     type: 'Destroy Turret', 
+    typeZh: '攻坚输出',
     img: withBase('imgs/robots/机器人2026抠图/1号英雄.webp'), 
     description: '英雄机器人具备快速上台阶与地形跨越能力，采用快拆三摩擦云台与双相机自瞄方案，兼顾高爆发火力与复杂地形作战能力。',
-    features: ['高伤害', '近战爆发', '建筑摧毁', '地形跨越']
+    descriptionEn: 'The hero robot combines stair-climbing mobility with a quick-release triple-friction turret and dual-camera aiming for powerful attacks across difficult terrain.',
+    features: ['高伤害', '近战爆发', '建筑摧毁', '地形跨越'],
+    featuresEn: ['High damage', 'Close-range burst', 'Structure breaking', 'Terrain traversal']
   },
   { 
     id: 2, 
-    name: 'INFANTRY | 轮腿步兵', 
+    nameZh: '轮腿步兵', nameEn: 'WHEELED-LEG INFANTRY',
     type: 'Main Assault', 
+    typeZh: '主力突击',
     img: withBase('imgs/robots/机器人2026抠图/3号轮腿步兵.webp'), 
     description: '轮腿步兵底盘采用主动悬挂与串联腿构型，能够稳定跨越台阶、飞坡等复杂地形，并支持翻倒自救与高机动连续作战。',
-    features: ['快速机动', '灵活打击', '前线突破']
+    descriptionEn: 'An active suspension and serial-leg chassis helps the infantry robot cross steps and ramps, recover from falls and stay mobile in combat.',
+    features: ['快速机动', '灵活打击', '前线突破'],
+    featuresEn: ['Fast mobility', 'Flexible engagement', 'Front-line breakthrough']
   },
   { 
     id: 3, 
-    name: 'SENTRY | 哨兵', 
+    nameZh: '哨兵', nameEn: 'SENTRY',
     type: 'Auto Defense', 
+    typeZh: '自主防御',
     img: withBase('imgs/robots/机器人2026抠图/7号哨兵.webp'), 
     description: '哨兵机器人采用底盘与发射机构解耦设计，支持快速拆装与维护，同时结合自主识别、自主决策与无线充电，实现长期区域压制。',
-    features: ['自主导航', '自主决策', '区域控制']
+    descriptionEn: 'A modular chassis and launcher support fast maintenance. Autonomous perception, decision-making and wireless charging enable persistent area defense.',
+    features: ['自主导航', '自主决策', '区域控制'],
+    featuresEn: ['Autonomous navigation', 'Autonomous decisions', 'Area defense']
   },
   { 
     id: 4, 
-    name: 'ENGINEER | 工程', 
+    nameZh: '工程', nameEn: 'ENGINEER',
     type: 'Economic Support', 
+    typeZh: '资源保障',
     img: withBase('imgs/robots/机器人2026抠图/2号工程.webp'), 
     description: '工程机器人兼顾跨越能力与资源作业能力，搭载六轴串联机械臂和主动锁紧存储舱，能够完成能量单元抓取、兑换与精确搬运任务。',
-    features: ['地形跨越', '资源获取', '机械臂操作', '双臂操作']
+    descriptionEn: 'A six-axis serial arm and actively locked storage bay let the engineer robot collect, exchange and precisely transport game resources while crossing obstacles.',
+    features: ['地形跨越', '资源获取', '机械臂操作', '双臂操作'],
+    featuresEn: ['Terrain traversal', 'Resource collection', 'Robotic-arm operation', 'Dual-arm operation']
   },
   { 
     id: 5, 
-    name: 'DART | 飞镖', 
+    nameZh: '飞镖', nameEn: 'DART',
     type: 'Long Range', 
+    typeZh: '远程打击',
     img: withBase('imgs/robots/机器人2026抠图/8号飞镖.webp'), 
     description: '飞镖系统采用双制导思路，发射架通过长焦识别与精密装填完成发射准备，镖体则配合 FPGA 视觉实时解算，实现高速度远程精确打击。',
-    features: ['超远程打击', '超高伤害', '致盲效果']
+    descriptionEn: 'A dual-guidance system pairs long-range recognition and precision loading with FPGA vision on the dart for fast, accurate long-range engagement.',
+    features: ['超远程打击', '超高伤害', '致盲效果'],
+    featuresEn: ['Long-range engagement', 'High damage', 'Blinding effect']
   },
   { 
     id: 6, 
-    name: 'RADAR | 雷达', 
+    nameZh: '雷达', nameEn: 'RADAR',
     type: 'Surveillance', 
+    typeZh: '战场感知',
     img: withBase('imgs/robots/机器人2026抠图/9号雷达.webp'), 
     description: '雷达系统融合激光雷达、视觉与点云信息，可完成战场感知、目标标记、信息波解析与反无人机辅助，是整队战术协同的信息中枢。',
-    features: ['全场视野', '信息共享', '战术中心', '信息波解码', '无人机反制']
+    descriptionEn: 'The radar system combines lidar, vision and point-cloud data for field awareness, target marking, signal analysis and drone defense, coordinating team tactics.',
+    features: ['全场视野', '信息共享', '战术中心', '信息波解码', '无人机反制'],
+    featuresEn: ['Full-field awareness', 'Shared information', 'Tactical coordination', 'Signal analysis', 'Drone defense']
   },
   { 
     id: 7, 
-    name: 'AERIAL | 空中', 
+    nameZh: '空中机器人', nameEn: 'AERIAL',
     type: 'Air Support', 
+    typeZh: '空中支援',
     img: withBase('imgs/robots/机器人2026抠图/6号无人机.webp'), 
     description: '空中机器人采用折叠机臂轻量化结构，配合神经网络识别、卡尔曼滤波建模与双相机方案，兼顾空中侦察、远近打击和快速收纳部署。',
-    features: ['空中打击', '强化火力', '视野侦察']
+    descriptionEn: 'A lightweight folding frame, neural-network recognition, Kalman-filter modeling and dual cameras support aerial scouting and flexible engagement.',
+    features: ['空中打击', '强化火力', '视野侦察'],
+    featuresEn: ['Aerial engagement', 'Enhanced firepower', 'Visual reconnaissance']
   },
-]))
+])
 
 const activeRobot = ref<number | null>(null)
 
 const toggleRobot = (id: number) => {
   activeRobot.value = activeRobot.value === id ? null : id
 }
+const expandPanel = (el: Element, done: () => void) => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { gsap.set(el, { clearProps: 'height,opacity' }); done(); return }
+  gsap.fromTo(el, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: .55, ease: 'power3.inOut', clearProps: 'height,opacity', onComplete: done })
+}
+const collapsePanel = (el: Element, done: () => void) => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { gsap.set(el, { clearProps: 'height,opacity' }); done(); return }
+  gsap.to(el, { height: 0, opacity: 0, duration: .4, ease: 'power3.inOut', clearProps: 'height,opacity', onComplete: done })
+}
+onBeforeUnmount(() => { if (root.value) gsap.killTweensOf(root.value.querySelectorAll('.features-panel')) })
 </script>
 
 <template>
-  <div class="robots-container">
-    <div class="header">
-      <h1 class="page-title">MECHA ARSENAL <span class="count">[{{ robots.length }} UNITS DETECTED]</span></h1>
-    </div>
+  <div ref="root" class="robots-container">
+    <header class="header" v-reveal>
+      <div data-reveal-item><p class="page-eyebrow">ENGINEERED IN-HOUSE / 2026</p>
+        <h1 class="page-title">{{ t('robots.title') }}<span class="title-dot">.</span></h1>
+      </div>
+      <div class="header-note" data-reveal-item>
+        <p>{{ locale === 'zh-CN' ? '从一颗螺丝，到一整套协同系统。\n每一台机器人，都是追梦的另一种形态。' : 'From a single screw to a coordinated system.\nEvery robot is another expression of our ambition.' }}</p>
+        <span class="count"><span class="count-dot"></span>{{ String(robots.length).padStart(2, '0') }} {{ t('robots.unitsDetected') }} <ArrowDownRight :size="20" /></span>
+      </div>
+    </header>
 
-    <TransitionGroup 
-      tag="div" 
-      name="robot-list" 
-      class="robots-grid"
-      :class="{ 'has-active': activeRobot !== null }"
-    >
-      <div 
-        v-for="robot in robots" 
+    <div class="robots-grid" :class="{ 'has-active': activeRobot !== null }">
+      <article
+        v-reveal="(index % 2) * .09"
+        v-for="(robot, index) in robots"
         :key="robot.id" 
         class="robot-card"
         :class="{ active: activeRobot === robot.id }"
-        @click="toggleRobot(robot.id)"
       >
-        <div class="card-main">
+        <div v-surface="12" class="card-main motion-surface">
           <div class="card-bg"></div>
-          <div class="robot-visual">
-            <img :src="robot.img" :alt="robot.name" loading="lazy" />
+          <div class="robot-visual"><div class="visual-ring" aria-hidden="true"></div>
+            <img data-depth :src="robot.img" :alt="locale === 'zh-CN' ? robot.nameZh : robot.nameEn" loading="lazy" decoding="async" />
           </div>
           
-          <div class="robot-info">
-            <h2 class="robot-name">{{ robot.name }}</h2>
-            <div class="robot-type">{{ robot.type }}</div>
+          <div class="robot-info"><span class="robot-index">{{ String(robot.id).padStart(2, '0') }} / 2026</span>
+            <h2 class="robot-name">{{ locale === 'zh-CN' ? robot.nameZh : robot.nameEn }}</h2>
+            <div class="robot-type">{{ locale === 'zh-CN' ? robot.typeZh : robot.type }}</div>
+            <p class="robot-summary">{{ locale === 'zh-CN' ? robot.description : robot.descriptionEn }}</p>
+            <div class="robot-action" aria-hidden="true">
+              <span>{{ locale === 'zh-CN' ? '战术能力' : 'Tactical capabilities' }}</span>
+              <span class="expand-mark" :class="{ expanded: activeRobot === robot.id }"><Plus :size="24" :stroke-width="1.5" /></span>
+            </div>
           </div>
+          <button
+            class="card-toggle"
+            type="button"
+            :aria-expanded="activeRobot === robot.id"
+            :aria-controls="`robot-panel-${robot.id}`"
+            :aria-label="t('robots.toggle', { name: locale === 'zh-CN' ? robot.nameZh : robot.nameEn })"
+            @click="toggleRobot(robot.id)"
+          >
+            <span class="visually-hidden">{{ t('robots.toggle', { name: locale === 'zh-CN' ? robot.nameZh : robot.nameEn }) }}</span>
+          </button>
         </div>
 
-        <transition name="features-slide">
-          <div class="features-panel" v-if="activeRobot === robot.id">
-            <div class="robot-description">
-              <div class="panel-label">UNIT PROFILE</div>
-              <p>{{ robot.description }}</p>
-            </div>
-            <div class="features-list">
-              <div class="panel-label">TACTICAL TAGS</div>
-              <div v-for="(feature, idx) in robot.features" :key="idx" class="feature-tag">
+        <transition :css="false" @enter="expandPanel" @leave="collapsePanel" @enter-cancelled="el => gsap.killTweensOf(el)" @leave-cancelled="el => gsap.killTweensOf(el)">
+          <div class="features-panel" v-show="activeRobot === robot.id" :id="`robot-panel-${robot.id}`">
+            <div class="features-inner"><div class="features-list">
+              <div class="panel-label">{{ t('robots.tacticalTags') }}</div>
+              <div v-for="(feature, idx) in (locale === 'zh-CN' ? robot.features : robot.featuresEn)" :key="idx" class="feature-tag">
                 <span class="tag-icon">▸</span>
                 {{ feature }}
               </div>
-            </div>
+            </div></div>
           </div>
         </transition>
-      </div>
-    </TransitionGroup>
+      </article>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.robots-container {
-  padding: var(--page-padding-y) var(--page-padding-x);
-  height: 100%;
-  overflow-x: hidden;
+.robots-container { max-width: 1680px; margin: auto; padding: 80px var(--page-padding-x) 120px; }
+.header { display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: end; margin-bottom: 64px; padding-bottom: 48px; border-bottom: 1px solid #ffffff20; }
+.page-eyebrow { font-family: $font-code; font-size: 14px; letter-spacing: 1.7px; color: #a2c6b2; margin: 0 0 26px; }
+.page-title { font-size: var(--heading-page); font-weight: 600; margin: 0; letter-spacing: -3px; line-height: 1.2; }
+.title-dot { color: $color-primary; margin-left: 5px; }
+.header-note { padding-bottom: 5px; }
+.header-note p { font-size: 18px; line-height: 1.8; color: #b0c2b7; margin: 0 0 22px; white-space: pre-line; }
+.count { display: flex; align-items: center; gap: 12px; font-size: 14px; letter-spacing: 1px; color: #a9c9b6; }
+.count svg { margin-left: auto; }
+.count-dot { width: 6px; height: 6px; border-radius: 50%; background: #a8e8cc; }
+.robots-grid { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; }
+.robot-card { border: 1px solid #b9e1cb25; background: #101a16; border-radius: 8px; overflow: hidden; transition: border-color .45s, background .45s; }
+.robot-card:hover, .robot-card.active { border-color: #b9e1cb88; background: #15261d; }
+.card-main { position: relative; display: grid; grid-template-columns: 44% minmax(0, 1fr); align-items: center; }
+.card-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 22% 50%, #345d4438, transparent 62%); pointer-events: none; }
+.robot-visual { position: relative; height: 330px; padding: 40px; display: grid; place-items: center; overflow: hidden; }
+.robot-visual img { position: relative; z-index: 1; width: 86%; height: 240px; object-fit: contain; filter: drop-shadow(0 24px 16px #0006); }
+.visual-ring { position: absolute; width: 64%; height: 32px; bottom: 36px; border: 1px solid #a8e8cc28; border-radius: 50%; background: radial-gradient(ellipse, #9ed2b52b, transparent 70%); transform: rotate(-7deg); transition: border-color .5s; }
+.robot-card:hover .visual-ring { border-color: #a8e8cc65; }
+.robot-visual::after { content: ''; position: absolute; left: 10%; right: 10%; top: 0; height: 2px; background: linear-gradient(90deg, transparent, #a8e8cc66, transparent); box-shadow: 0 0 24px #a8e8cc55; opacity: 0; z-index: 2; pointer-events: none; }
+.robot-card:hover .robot-visual::after { opacity: 1; animation: scan 2.8s ease-in-out infinite; }
+@keyframes scan { 0% { transform: translateY(20px); opacity: 0; } 20% { opacity: .6; } 80% { opacity: .6; } 100% { transform: translateY(340px); opacity: 0; } }
+.robot-info { position: relative; padding: 38px 48px 38px 24px; }
+.robot-index { font-family: $font-code; font-size: 14px; letter-spacing: 2px; color: #99b9a6; }
+.robot-name { font-size: clamp(30px, 2.5vw, 38px); font-weight: 600; line-height: 1.3; letter-spacing: -.7px; margin: 14px 0 8px; overflow-wrap: anywhere; }
+.robot-type { font-size: 16px; color: #a8e8cc; line-height: 1.5; }
+.expand-mark { position: static; border: 1px solid #a8e8cc55; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; color: #c3efda; transition: transform .6s var(--motion-ease), background .4s, color .4s; }
+.expand-mark svg { display: block; flex-shrink: 0; width: 20px; height: 20px; }
+.robot-card:hover .expand-mark, .expand-mark.expanded { background: #b7efd1; color: #0d2117; }
+.expand-mark.expanded { transform: rotate(45deg); }
+.card-toggle { position: absolute; inset: 0; z-index: 3; width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; border-radius: 8px; }
+.card-toggle:focus-visible { outline-offset: -6px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.features-panel { overflow: hidden; background: #0c1711; }
+.features-inner { padding: 26px 48px; border-top: 1px solid #a8e8cc25; }
+.panel-label { font-size: 14px; color: #a4cbb4; letter-spacing: 1px; }
+.features-list { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.features-list .panel-label { flex: 0 0 auto; margin: 0 14px 0 0; }
+.feature-tag { font-size: 14px; color: #c8e6d3; background: #a8e8cc0b; border: 1px solid #a8e8cc28; padding: 7px 13px; border-radius: 4px; }
+.tag-icon { display: none; }
+
+.robot-summary { max-width: 640px; font-size: 17px; line-height: 1.85; color: #bccbc2; margin: 20px 0 24px; }
+
+.robot-action { display: flex; align-items: center; gap: 16px; color: #c3dfd0; font-size: 14px; }
+@media (min-width: 1700px) { .robot-visual { height: 350px; } .robot-visual img { height: 260px; } }
+@media (max-width: 1100px) {
+ .header { gap: 32px; } .page-title { letter-spacing: -1.5px; } .header-note p { font-size: 17px; }
+ .card-main { grid-template-columns: 42% minmax(0, 1fr); }
+ .robot-visual { height: 300px; padding: 28px; } .robot-visual img { height: 210px; width: 100%; }
+ .robot-info { padding: 30px 30px 30px 12px; } .robot-summary { font-size: 16px; }
+ .features-inner { padding: 24px 30px; }
 }
-
-.header {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid rgba($color-primary, 0.3);
-  padding-bottom: 1rem;
-}
-
-.page-title {
-  font-family: $font-title;
-  color: $color-white;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  
-  .count {
-    color: $color-primary;
-    font-size: 1rem;
-    font-family: $font-code;
-  }
-}
-
-.robots-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-  transition: all 0.5s;
-}
-
-/* 当有卡片被激活时，锁定其他卡片的状态，防止呼吸效应和乱跳 */
-.robots-grid.has-active .robot-card:not(.active) {
-  flex-grow: 0; /* 禁止填充剩余空间 */
-  flex-basis: 280px; /* 锁定为最小宽度 */
-  max-width: 280px; /* 物理锁定宽度 */
-  border-color: rgba($color-text-dim, 0.1); /* 稍微变暗淡一点，突出主体 */
-  opacity: 0.7; /* 降低非主体卡片的视觉权重 */
-}
-
-/* FLIP 动画类 - 处理列表重排 */
-.robot-list-move {
-  transition: transform 1.2s cubic-bezier(0.18, 0.98, 0.22, 1);
-}
-
-.robot-list-leave-active {
-  position: absolute; /* 确保离开的元素不占位，虽然这里主要是列表重排 */
-}
-
-.robot-card {
-  position: relative;
-  min-height: 400px;
-  height: 400px;
-  /* 移除容器本身背景和边框，由内部元素或伪元素接管，或者接受边框瞬变 */
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba($color-text-dim, 0.2);
-  overflow: hidden;
-  cursor: pointer;
-  
-  /* Flex 布局属性 - 移除过渡以启用即时布局计算 + FLIP */
-  display: flex;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 280px;
-  min-width: 280px; 
-  max-width: 350px;
-  
-  /* 仅保留外观过渡，移除布局属性过渡 */
-  transition: 
-    background-color 0.4s,
-    border-color 0.4s,
-    box-shadow 0.4s,
-    transform 0.4s; /* transform 用于 hover 效果，FLIP 会覆盖它 */
-    
-  transform-origin: center center;
-  /* 移除 layout properties 的 will-change */
-  will-change: transform;
-  
-  &:hover {
-    border-color: $color-primary;
-    box-shadow: 0 0 20px rgba($color-primary, 0.2);
-    z-index: 10; 
-    
-    .robot-visual img {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 10px rgba($color-primary, 0.5));
-    }
-  }
-  
-  &.active {
-    flex-grow: 10; 
-    flex-basis: 600px; 
-    min-width: 600px; 
-    max-width: 800px;
-    height: auto;
-    background: rgba($color-primary, 0.05);
-    border-color: $color-accent;
-    z-index: 20;
-    
-    .card-main {
-      border-right-color: rgba($color-primary, 0.2);
-    }
-    
-    .robot-visual img {
-        /* 保持图片在激活状态下稳定 */
-         transform: scale(1.05);
-         filter: drop-shadow(0 0 10px rgba($color-primary, 0.5));
-    }
-  }
-}
-
-.card-main {
-    position: relative;
-    width: 350px; /* 设定固定理想宽度 */
-    max-width: 100%; /* 允许缩窄以适应小屏幕或未展开状态 */
-    min-height: 400px;
-    height: 100%;
-    flex-shrink: 0; /* 防止被挤压 */
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid transparent;
-    transition: border-right-color 0.4s;
-}
-
-.robot-visual {
-  height: 70%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: 0.8s cubic-bezier(0.18, 0.98, 0.22, 1);
-    filter: drop-shadow(0 10px 10px black);
-  }
-}
-
-.robot-info {
-  margin-top: auto; /* 推到底部 */
-  width: 100%;
-  padding: 1.5rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-  
-  .robot-name {
-    font-family: $font-title;
-    color: $color-white;
-    margin: 0;
-    font-size: 1.5rem;
-  }
-  
-  .robot-type {
-    font-family: $font-code;
-    color: $color-primary;
-    font-size: 0.8rem;
-  }
-}
-
-.features-panel {
-  /* 不再绝对定位，作为 Flex 项目存在 */
-  width: 0; /* 初始宽度 */
-  flex-grow: 1; /* 占据剩余空间 */
-  height: 100%;
-  background: rgba(13, 13, 14, 0.6);
-  /* border-left: 2px solid $color-accent; 移动到 active 状态或者 card-main 的右边框 */
-  padding: 0; 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow-x: hidden;
-  overflow-y: auto;
-  
-  .features-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    padding: 1rem 1.5rem 1.5rem; /* Padding移动到内部容器以避免宽度为0时的溢出 */
-    min-width: 300px; /* 防止内容换行 */
-  }
-  
-  .feature-tag {
-    font-family: $font-code;
-    font-size: 1rem;
-    color: $color-white;
-    padding: 0.8rem 1rem;
-    background: rgba($color-primary, 0.1);
-    border-left: 3px solid $color-accent;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    transition: all 0.3s;
-    
-    &:hover {
-      background: rgba($color-primary, 0.2);
-      transform: translateX(5px);
-    }
-    
-    .tag-icon {
-      color: $color-accent;
-      font-size: 1.2rem;
-    }
-  }
-}
-
-/* 过渡动画 - 抽屉效果 */
-.features-slide-enter-active,
-.features-slide-leave-active {
-  transition: all 1.2s cubic-bezier(0.18, 0.98, 0.22, 1);
-  max-width: 500px; /* 目标最大宽度 */
-}
-
-.features-slide-enter-from,
-.features-slide-leave-to {
-  max-width: 0;
-  opacity: 0;
-}
-
-.features-slide-enter-to,
-.features-slide-leave-from {
-  max-width: 500px;
-  opacity: 1;
-}
-
-.features-panel .feature-tag {
-  animation: feature-rise 1.3s cubic-bezier(0.18, 0.98, 0.22, 1) both;
-}
-
-.features-panel .feature-tag:nth-child(1) { animation-delay: 0.08s; }
-.features-panel .feature-tag:nth-child(2) { animation-delay: 0.16s; }
-.features-panel .feature-tag:nth-child(3) { animation-delay: 0.24s; }
-.features-panel .feature-tag:nth-child(4) { animation-delay: 0.32s; }
-.features-panel .feature-tag:nth-child(5) { animation-delay: 0.4s; }
-.features-panel .feature-tag:nth-child(6) { animation-delay: 0.48s; }
-.features-panel .feature-tag:nth-child(7) { animation-delay: 0.56s; }
-.features-panel .feature-tag:nth-child(8) { animation-delay: 0.64s; }
-
-.features-slide-enter-active,
-.features-slide-leave-active {
-  transition: opacity 1.3s ease-out, clip-path 1.3s cubic-bezier(0.18, 0.98, 0.22, 1);
-}
-
-.features-slide-enter-from,
-.features-slide-leave-to {
-  opacity: 0;
-  clip-path: inset(0 100% 0 0);
-}
-
-.features-slide-enter-to,
-.features-slide-leave-from {
-  opacity: 1;
-  clip-path: inset(0 0 0 0);
-}
-
-@keyframes feature-rise {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.robot-description {
-  padding: 1.5rem 1.5rem 0;
-  min-width: 300px;
-
-  p {
-    margin: 0.75rem 0 0;
-    color: rgba($color-white, 0.88);
-    line-height: 1.68;
-    font-size: 0.92rem;
-  }
-}
-
-.panel-label {
-  font-family: $font-code;
-  color: $color-primary;
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-}
-
-@media (max-width: 1024px) {
-  .robots-grid {
-    gap: 1.5rem;
-  }
-}
-
 @media (max-width: 768px) {
-  .robots-grid.has-active .robot-card:not(.active) .features-panel {
-    display: none;
-  }
-
-  .robots-container {
-    padding-top: 1.5rem;
-  }
-
-  .header {
-    margin-bottom: 1.5rem;
-  }
-
-  .page-title {
-    font-size: 1.6rem;
-    gap: 0.5rem;
-
-    .count {
-      font-size: 0.78rem;
-    }
-  }
-
-  .robots-grid,
-  .robots-grid.has-active {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-content: stretch;
-  }
-
-  .robots-grid.has-active .robot-card:not(.active) {
-    flex-basis: auto;
-    max-width: none;
-    opacity: 1;
-  }
-
-  .robot-card,
-  .robot-card.active {
-    display: block;
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    height: auto;
-    flex-basis: auto;
-    overflow: visible;
-  }
-
-  .card-main {
-    width: 100%;
-    height: auto;
-    border-right: none;
-  }
-
-  .robot-visual {
-    height: 220px;
-    padding: 1.25rem;
-  }
-
-  .robot-info {
-    padding: 1rem 1rem 1.25rem;
-
-    .robot-name {
-      font-size: 1.2rem;
-    }
-  }
-
-  .features-panel,
-  .features-slide-enter-active,
-  .features-slide-leave-active,
-  .features-slide-enter-to,
-  .features-slide-leave-from {
-    width: 100%;
-    max-width: none;
-  }
-
-  .robot-card:not(.active) .features-panel {
-    display: none;
-  }
-
-  .features-panel {
-    height: auto;
-    display: block;
-    flex-grow: 0;
-    background: rgba(13, 13, 14, 0.82);
-    border-top: 1px solid rgba($color-primary, 0.18);
-    overflow: visible;
-
-    .features-list {
-      display: grid;
-      grid-template-columns: 1fr;
-      min-width: 0;
-      padding: 1rem;
-      gap: 0.75rem;
-    }
-
-    .feature-tag {
-      font-size: 0.92rem;
-      padding: 0.75rem 0.85rem;
-    }
-  }
-
-  .robot-description {
-    min-width: 0;
-    padding: 1rem 1rem 0;
-
-    p {
-      font-size: 0.92rem;
-      line-height: 1.7;
-    }
-  }
-
-  .features-slide-enter-active,
-  .features-slide-leave-active {
-    transition: opacity 0.25s ease, max-height 0.25s ease;
-    max-height: 480px;
-    clip-path: none;
-  }
-
-  .features-slide-enter-from,
-  .features-slide-leave-to {
-    opacity: 0;
-    max-height: 0;
-    clip-path: none;
-  }
-
-  .features-slide-enter-to,
-  .features-slide-leave-from {
-    opacity: 1;
-    max-height: 480px;
-    clip-path: none;
-  }
-
-  .features-panel .feature-tag {
-    animation: none;
-  }
+ .robots-container { padding-top: 46px; }
+ .header { grid-template-columns: 1fr; gap: 26px; margin-bottom: 36px; padding-bottom: 32px; }
+ .page-eyebrow { font-size: 13px; margin-bottom: 18px; letter-spacing: 1px; }
+ .page-title { font-size: 46px; } .header-note p { font-size: 16px; }
+ .robots-grid { gap: 24px; } .card-main { grid-template-columns: 1fr; }
+ .robot-visual { height: 260px; padding: 28px 32px 20px; } .robot-visual img { height: 200px; width: 82%; }
+ .visual-ring { bottom: 24px; }
+ .robot-info { padding: 12px 28px 28px; } .robot-name { font-size: 32px; } .robot-index { font-size: 13px; }
+ .robot-summary { margin: 18px 0 22px; }
+ .features-inner { padding: 24px 28px; } .features-list .panel-label { flex-basis: 100%; margin-bottom: 4px; }
 }
-
-@media (max-width: 480px) {
-  .page-title {
-    font-size: 1.35rem;
-  }
-
-  .robot-visual {
-    height: 180px;
-    padding: 1rem;
-  }
+@media (max-width: 400px) {
+ .page-title { font-size: 40px; } .robot-visual { height: 230px; padding: 24px; } .robot-visual img { height: 182px; }
+ .robot-info { padding: 10px 24px 26px; } .robot-name { font-size: 29px; } .features-inner { padding: 24px; }
 }
 </style>

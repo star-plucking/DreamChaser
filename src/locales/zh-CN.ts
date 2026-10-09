@@ -1,34 +1,55 @@
 export default {
+  site: {
+    title: '北京理工大学追梦战队 | DreamChaser',
+    description: '北京理工大学 DreamChaser 追梦战队官方网站，了解机器人、队员、赛事历程与开源技术。'
+  },
   nav: {
-    dashboard: '仪表盘',
+    dashboard: '首页',
     logs: '历史',
     arsenal: '机器人介绍',
     about: '关于队伍',
     crew: '队员',
-    knowledge: '知识库',
-    ipStore: '联系我们'
+    knowledge: '技术开源',
+    ipStore: '联系我们',
+    toggleMenu: '打开或关闭导航菜单'
   },
   common: {
     language: '语言',
     chinese: '中文',
-    english: 'English'
+    english: 'English',
+    teamMotto: '追梦无限，挑战至上'
+  },
+  status: {
+    site: '北京理工大学 · DreamChaser'
+  },
+  assistant: {
+    menuTitle: 'NAS 访问入口',
+    internal: '校内访问',
+    external: '校外访问',
+    toggle: '打开或关闭 NAS 入口'
+  },
+  loader: {
+    loading: '正在载入战队官网',
+    ready: '已就绪',
+    initializing: '正在启动',
+    tagline: '追梦 · 持续进化'
   },
   home: {
     title: 'DreamChaser RoboMaster',
-    subtitle: '>>> 追梦无限，挑战至上。',
+    subtitle: '追梦无限，挑战至上',
     accessArsenal: '了解我们的机器人',
-    latestIntel: '/// 最新情报',
-    stats: {
-      coreCodeLines: '核心代码行数',
-      totalPoints: '累计积分',
-      ranking: '排名',
-      activeOperatives: '活跃人员'
+    joinUs: '加入追梦战队',
+    latestIntel: '战队动态',
+    capabilities: {
+      sectionTitle: '技术方向',
+      engineeringTitle: '整机研发',
+      intelligenceTitle: '智能算法',
+      competitionTitle: '赛事实战',
+      knowledgeTitle: '开源资料'
     },
-    units: {
-      loc: '行',
-      points: '分',
-      rank: '名',
-      personnel: '人'
+    categories: {
+      event: '活动',
+      competition: '赛事'
     }
   },
   contact: {
@@ -37,8 +58,10 @@ export default {
     contactInfo: '联系方式',
     email: '邮箱',
     phone: '电话',
+    phoneValue: '+86 17511626718（工作日）',
     qq: 'QQ群',
     address: '地址',
+    addressValue: '北京市房山区北京理工大学良乡校区工训楼',
     joinUs: '加入我们',
     joinTitle: '想要加入我们？',
     joinDesc: '欢迎加入追梦战队，与我们一起探索机器人技术与工程实践。',
@@ -101,6 +124,39 @@ export default {
     title: '队伍历史',
     subtitle: '追梦之路 · 荣耀时刻',
     journey: '发展历程',
-    honors: '过往荣誉'
+    honors: '过往荣誉',
+    resultArchive: '赛季成绩',
+    recordCount: '{count} 项记录',
+    recordSource: '赛事报道'
+  },
+  about: {
+    introTitle: '战队介绍',
+    teamName: '北京理工大学追梦战队',
+    paragraph1: '北京理工大学追梦战队（Dream Chaser）成立于2018年，是由自动化学院指导、面向全校选拔的校级学生机器人战队，前身可追溯至2015年的 RoboMaster 与 Robocon 参赛队。战队以 RoboMaster 机甲大师赛为核心平台，致力于培养具备价值引领、知识积累与工程实践能力的工程创新人才。',
+    paragraph2: '战队多次晋级全国赛并斩获国家级奖项。除竞赛外，追梦战队也重视技术研发与文化传承，通过薪火培训、校内机甲大师赛和技术开源推动科创普及，形成谦卑、包容、传承的团队文化。',
+    paragraph3: '目前，战队拥有80余名跨学院成员，欢迎不同基础的同学加入，在机器人竞赛与工程实践中共同追梦。',
+    founded: '成立年份',
+    members: '队员人数',
+    bestResult: '2024 中部分区赛',
+    photoArchive: '战队瞬间',
+    openPhoto: '查看第 {number} 张照片',
+    closePhoto: '关闭照片预览',
+    photoPreview: '照片预览'
+  },
+  team: {
+    title: '现役核心队员',
+    management: '管理组',
+    operators: '操作手',
+    engineering: '工程研发',
+    role: '队内职务',
+    technicalGroup: '技术组',
+    bio: '个人介绍'
+  },
+  robots: {
+    title: '机器人装备',
+    unitsDetected: '台机器人',
+    profile: '机器人介绍',
+    tacticalTags: '技术特征',
+    toggle: '展开或收起{name}机器人详情'
   }
 }

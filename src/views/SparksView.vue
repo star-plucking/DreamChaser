@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+import { Search, X, FileText, FileCode2, Cog, SlidersHorizontal, ScanEye, Route, CircuitBoard, Zap, Wrench } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+const search = ref('')
+const docIcons: Record<string, typeof FileText> = { REPORT: FileText, MECH: Cog, CTRL: SlidersHorizontal, VISION: ScanEye, ROS2: Route, FPGA: CircuitBoard, POWER: Zap, TOOL: Wrench, ARTICLE: FileCode2 }
 
 const docs = [
   {
@@ -84,32 +88,32 @@ const docs = [
     type: 'TOOL',
     url: 'https://github.com/HargereavesQin/bit-auto-label'
   },
-  { 
-    title: '300FPS识别帧率FPGA制导飞镖开源', 
+  {
+    title: '300FPS识别帧率FPGA制导飞镖开源',
     titleEn: '300FPS Recognition & FPGA Guided Dart',
     description: '一种高帧率的视觉识别与制导方法',
     descriptionEn: 'A high-frame-rate vision recognition and guidance method',
     type: 'ARTICLE',
     url: 'https://bbs.robomaster.com/article/1438280' // 替换为实际链接
   },
-  { 
-    title: '校内赛方案开源', 
+  {
+    title: '校内赛方案开源',
     titleEn: 'Intra-school Competition Strategy Open Source',
     description: '完整的校内赛战术与实现方案',
     descriptionEn: 'Complete intra-school competition tactics and implementation plan',
     type: 'ARTICLE',
     url: 'https://bbs.robomaster.com/article/1316520'
   },
-  { 
-    title: '无线充电装置软硬件开源', 
+  {
+    title: '无线充电装置软硬件开源',
     titleEn: 'Wireless Charging Device Hardware and Software Open Source',
     description: '无线充电装置的设计与实现',
     descriptionEn: 'Wireless charging device design and implementation',
     type: 'ARTICLE',
     url: 'https://bbs.robomaster.com/article/716312'
   },
-  { 
-    title: '半下供弹麦轮步兵机械开源', 
+  {
+    title: '半下供弹麦轮步兵机械开源',
     titleEn: 'Half-Down Ammunition Feeding Mecanum Infantry Mechanical Open Source',
     description: '麦轮步兵机器人机械设计与实现',
     descriptionEn: 'Mecanum infantry robot mechanical design and implementation',
@@ -118,12 +122,17 @@ const docs = [
   }
 ]
 
+const filteredDocs = computed(() => {
+  const query = search.value.trim().toLowerCase()
+  return docs.filter(doc => `${doc.title} ${doc.titleEn} ${doc.description} ${doc.descriptionEn} ${doc.type}`.toLowerCase().includes(query))
+})
+
 const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的B站链接
 </script>
 
 <template>
   <div class="sparks-container">
-    <div class="header">
+    <div v-reveal class="header"><p class="page-eyebrow">KNOWLEDGE / OPEN SOURCE</p>
       <h1>{{ t('knowledge.title') }}</h1>
       <p>{{ t('knowledge.subtitle') }}</p>
     </div>
@@ -132,15 +141,18 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
       <!-- 开源文档 -->
       <section class="section-docs">
         <h2 class="section-badge">{{ t('knowledge.docs') }}</h2>
+        <div class="search-row"><label class="search-field"><Search :size="17" aria-hidden="true" /><input v-model="search" type="search" :aria-label="locale === 'zh-CN' ? '搜索开源资料' : 'Search open-source resources'" :placeholder="locale === 'zh-CN' ? '搜索技术、项目或关键词…' : 'Search projects, technologies, keywords…'" /><button v-if="search" :aria-label="locale === 'zh-CN' ? '清除搜索' : 'Clear search'" @click="search = ''"><X :size="16" /></button></label><span class="result-count" role="status">{{ filteredDocs.length }} / {{ docs.length }}</span></div>
+        <p v-if="!filteredDocs.length" class="empty-search">{{ locale === 'zh-CN' ? '暂未找到相关资料，试试其他关键词。' : 'No resources found. Try another keyword.' }}</p>
         <div class="doc-list">
-          <a 
-            v-for="(doc, idx) in docs" 
-            :key="idx" 
-            :href="doc.url" 
+          <a
+            v-for="doc in filteredDocs"
+            :key="doc.url"
+            :href="doc.url"
             target="_blank"
-            class="doc-item"
+            rel="noopener noreferrer"
+            v-surface class="doc-item motion-surface"
           >
-            <div class="doc-icon">{{ doc.type }}</div>
+            <div class="doc-icon" aria-hidden="true"><component :is="docIcons[doc.type] || FileCode2" :size="25" :stroke-width="1.5" /></div>
             <div class="doc-info">
               <div class="doc-title">{{ $i18n.locale === 'zh-CN' ? doc.title : doc.titleEn }}</div>
               <div class="doc-desc">{{ $i18n.locale === 'zh-CN' ? doc.description : doc.descriptionEn }}</div>
@@ -161,7 +173,7 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
           </div>
           <h3>{{ t('knowledge.watchOnBilibili') }}</h3>
           <p>{{ t('knowledge.trainingDesc') }}</p>
-          <a :href="bilibiliUrl" target="_blank" class="bilibili-btn">
+          <a :href="bilibiliUrl" target="_blank" rel="noopener noreferrer" v-magnetic class="bilibili-btn">
             <span>Bilibili >></span>
           </a>
         </div>
@@ -181,20 +193,20 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
 .header {
   text-align: center;
   margin-bottom: 4rem;
-  
-  h1 { 
-    font-family: $font-title; 
-    font-size: 4rem; 
+
+  h1 {
+    font-family: $font-title;
+    font-size: 4rem;
     color: $color-primary;
     @include text-glow;
     margin: 0;
     text-transform: uppercase;
   }
-  
-  p { 
+
+  p {
     color: $color-text-dim;
-    font-family: $font-code; 
-    letter-spacing: 4px; 
+    font-family: $font-body;
+    letter-spacing: 0.03em;
     margin-top: 1rem;
     font-size: 1.2rem;
   }
@@ -235,20 +247,20 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
   transition: all 0.3s;
   text-decoration: none;
   cursor: pointer;
-  
+
   &:hover {
     transform: translateY(-3px);
     border-color: $color-primary;
     box-shadow: 0 0 20px rgba($color-primary, 0.3);
-    
+
     .link-arrow {
       transform: translateX(5px);
       color: $color-primary;
     }
   }
-  
+
   .doc-icon {
-    width: 50px; 
+    width: 50px;
     height: 50px;
     background: rgba($color-primary, 0.2);
     color: $color-primary;
@@ -256,31 +268,31 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 0.7rem;
+    font-size: .875rem;
     margin-right: 1rem;
     flex-shrink: 0;
     border: 2px solid $color-primary;
   }
-  
-  .doc-info { 
+
+  .doc-info {
     flex: 1;
     min-width: 0;
   }
-  
-  .doc-title { 
-    color: $color-white; 
-    font-family: $font-code; 
+
+  .doc-title {
+    color: $color-white;
+    font-family: $font-body;
     font-size: 1rem;
     margin-bottom: 0.5rem;
     font-weight: bold;
   }
-  
-  .doc-desc { 
-    color: $color-text-dim; 
-    font-size: 0.85rem;
-    font-family: $font-code;
+
+  .doc-desc {
+    color: $color-text-dim;
+    font-size: .875rem;
+    font-family: $font-body;
   }
-  
+
   .link-arrow {
     color: $color-accent;
     font-size: 1.5rem;
@@ -298,18 +310,18 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
     text-align: center;
     background: linear-gradient(135deg, rgba($color-primary, 0.05), rgba(#00A1D6, 0.1));
     border: 2px solid rgba(#00A1D6, 0.3);
-    
+
     .bilibili-icon {
       color: #00A1D6;
       margin-bottom: 2rem;
       display: flex;
       justify-content: center;
-      
+
       svg {
         filter: drop-shadow(0 0 20px rgba(#00A1D6, 0.5));
       }
     }
-    
+
     h3 {
       font-family: $font-title;
       font-size: 2rem;
@@ -317,15 +329,15 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
       margin: 0 0 1.5rem;
       text-transform: uppercase;
     }
-    
+
     p {
-      font-family: $font-code;
+      font-family: $font-body;
       color: $color-text-dim;
       font-size: 1.1rem;
       margin: 0 0 2.5rem;
       line-height: 1.6;
     }
-    
+
     .bilibili-btn {
       display: inline-block;
       background: #00A1D6;
@@ -338,7 +350,7 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
       text-transform: uppercase;
       transition: all 0.3s;
       border: 2px solid #00A1D6;
-      
+
       &:hover {
         background: transparent;
         color: #00A1D6;
@@ -407,4 +419,59 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
     }
   }
 }
+
+.sparks-container { max-width: 1600px; margin: auto; }
+.header { text-align: left; margin-bottom: 44px; }
+.header .page-eyebrow { font-family: $font-code; font-size: 14px; letter-spacing: 2px; color: #75958b; margin: 0 0 16px; }
+.header h1 { font-size: clamp(28px, 3vw, 42px); color: #e4ede8; font-weight: 500; letter-spacing: -1px; }
+.header > p:last-child { font-size: 14px; margin-top: 12px; }
+.content-wrapper { max-width: none; }
+.section-badge { background: transparent; padding: 0; color: #e4ede8; font-family: $font-body; font-size: 18px; font-weight: 500; margin: 0 0 24px; }
+.search-row { display: flex; align-items: center; gap: 20px; margin-bottom: 28px; }
+.search-field { display: flex; align-items: center; gap: 12px; padding: 12px 16px; width: min(480px, 100%); background: #111b1e; border: 1px solid #ffffff1b; border-radius: 4px; color: #7da58f; }
+.search-field:focus-within { border-color: #a8e8cc70; }
+.search-field input { width: 100%; background: transparent; border: 0; outline: 0; font-size: 14px; color: #e4ede8; }
+.search-field input::-webkit-search-cancel-button { display: none; }
+.search-field button { border: 0; padding: 0; background: transparent; cursor: pointer; color: #a8e8cc; }
+.result-count { font-family: $font-code; font-size: 14px; color: #708d80; white-space: nowrap; }
+.empty-search { padding: 36px 0; color: #96a3a7; font-size: 14px; }
+.section-docs .doc-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.doc-item { background: #111b1e; border-radius: 4px; padding: 24px; }
+.doc-item:hover { box-shadow: none; transform: translateY(-3px); background: #16251f; border-color: #a8e8cc55; }
+.doc-item .doc-icon { background: #a8e8cc09; border: 1px solid #a8e8cc25; font-family: $font-code; border-radius: 3px; width: 48px; height: 48px; font-size: 14px; }
+.doc-item .doc-title { font-size: 14px; font-weight: 500; }
+.doc-item .doc-desc { font-size: 14px; line-height: 1.8; color: #81978d; }
+.doc-item .link-arrow { font-size: 18px; font-weight: 400; color: #7c9c8b; }
+.section-training .training-banner { background: #111b1e; border: 1px solid #ffffff16; border-radius: 4px; padding: 48px 28px; }
+.section-training .training-banner .bilibili-icon { margin-bottom: 22px; color: #a8e8cc; }
+.section-training .training-banner .bilibili-icon svg { filter: none; width: 45px; height: 45px; }
+.section-training .training-banner h3 { font-size: 26px; font-weight: 500; }
+.section-training .training-banner p { font-size: 14px; }
+.section-training .training-banner .bilibili-btn { background: #a8e8cc; border-color: #a8e8cc; color: #10241d; padding: 12px 24px; font-size: 14px; border-radius: 3px; }
+.section-training .training-banner .bilibili-btn:hover { box-shadow: none; background: #cbf5df; transform: translateY(-2px); color: #10241d; }
+@media (max-width: 768px) { .section-docs .doc-list { grid-template-columns: 1fr; } .doc-item { padding: 20px; } .search-row { gap: 14px; } }
+
+
+.sparks-container { max-width: 1680px; padding-top: 80px; }
+.header { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid #ffffff20; }
+.header h1 { font-size: var(--heading-page); font-weight: 600; letter-spacing: -2px; line-height: 1.25; }
+.header > p:last-child { font-size: 19px; color: #b0c4b6; }
+.header .page-eyebrow { font-size: 14px; color: #a2c6b2; margin-bottom: 24px; }
+.section-badge { font-size: 28px; font-weight: 500; margin-bottom: 30px; }
+.search-row { margin-bottom: 36px; }
+.search-field { width: min(640px, 100%); padding: 17px 20px; }
+.search-field input { font-size: 16px; }
+.result-count { font-size: 14px; }
+.section-docs .doc-list { gap: 24px; }
+.doc-item { padding: 30px; background: #111d18; }
+.doc-item .doc-icon { width: 64px; height: 64px; font-size: 10px; border-color: #a8e8cc35; }
+.doc-item .doc-title { font-size: 20px; font-weight: 500; line-height: 1.5; margin-bottom: 12px; }
+.doc-item .doc-desc { font-size: 16px; color: #a3bcab; }
+.doc-item .link-arrow { font-size: 28px; }
+.section-training .training-banner { padding: 70px 36px; }
+.section-training .training-banner h3 { font-size: var(--heading-section); font-weight: 600; }
+.section-training .training-banner p { font-size: 18px; }
+.section-training .training-banner .bilibili-btn { font-size: 16px; padding: 16px 30px; }
+@media (max-width: 768px) { .sparks-container { padding-top: 46px; } .header { margin-bottom: 40px; padding-bottom: 30px; } .header h1 { font-size: 44px; } .header > p:last-child { font-size: 17px; } .doc-item { padding: 24px 20px; } .doc-item .doc-title { font-size: 18px; } .doc-item .doc-desc { font-size: 15px; } .doc-item .doc-icon { width: 48px; height: 48px; font-size: 8px; margin-right: 14px; } }
+
 </style>

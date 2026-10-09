@@ -1,16 +1,17 @@
-$color-bg: #0D0D0E;
-$color-bg-trans: rgba(13, 13, 14, 0.9);
-$color-primary: #00FFFF; // 冰蓝
-$color-secondary: #E60012; // 战火红 
-$color-accent: #F0FF00; // 警示黄
+$color-bg: #0a0f12;
+$color-bg-trans: rgba(10, 15, 18, 0.9);
+$color-primary: #a8e8cc; // 青绿
+$color-secondary: #d68778; // 暖色点缀
+$color-accent: #a8e8cc; // 交互强调
 $color-text-main: #FFFFFF;
-$color-text-dim: #888888;
+$color-text-dim: #96a3a7;
 $color-white: #FFFFFF;
 $color-black: #000000;
 
-$font-title: 'Exo 2', 'Michroma', "Z Labs RoundPix 16px M CN", sans-serif;
-$font-code: 'Source Code Pro', "Z Labs RoundPix 16px M CN", monospace;
-$font-tech: 'Michroma', "Z Labs RoundPix 16px M CN", sans-serif;
+$font-body: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+$font-title: $font-body;
+$font-tech: $font-body;
+$font-code: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
 
 $spacing-xs: 4px;
 $spacing-sm: 8px;
@@ -21,12 +22,12 @@ $spacing-xl: 32px;
 @mixin glass-panel {
   background: rgba(13, 13, 14, 0.7);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba($color-primary, 0.3);
-  box-shadow: 0 0 15px rgba($color-primary, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
 }
 
 @mixin text-glow($color: $color-primary) {
-  text-shadow: 0 0 5px rgba($color, 0.8), 0 0 10px rgba($color, 0.5);
+  text-shadow: none;
 }
 
 @mixin scanline {

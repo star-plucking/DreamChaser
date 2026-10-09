@@ -33,25 +33,22 @@
 ```text
 root
 ├── public/
-│   └── imgs/                    # 静态图片资源
-│       ├── 机娘/               # 吉祥物立绘
-│       ├── robots/              # 机器人图片
-│       └── people/              # 队员照片
-│           └── 北京理工大学_人员/
-│               ├── 魏洲航.png
-│               └── *.webp         # 现役队员头像
+│   └── imgs/                    # 当前网页实际使用的优化图片，会复制到 dist
+├── assets-source/
+│   └── imgs/                    # 原始照片、机器人和机娘素材，不会随网页发布
 ├── src/
 │   ├── components/              # 公共组件
 │   │   ├── NavBar.vue          # 导航栏
 │   │   ├── StatusBar.vue       # 底部状态栏
-│   │   └── CommanderAssistant.vue
+│   │   ├── CommanderAssistant.vue
+│   │   └── StartupLoader.vue   # 启动动画
 │   ├── views/                   # 页面视图
-│   │   ├── HomeView.vue        # 首页（统计数据、快讯）
-│   │   ├── TeamView.vue        # 队员介绍（含雷达图）
+│   │   ├── HomeView.vue        # 首页、技术方向与近期消息
+│   │   ├── TeamView.vue        # 核心队员介绍
 │   │   ├── RobotsView.vue      # 机器人介绍
-│   │   ├── NewsView.vue        # 发展历程时间线
+│   │   ├── AboutView.vue       # 战队介绍、历程、荣誉与照片墙
 │   │   ├── SparksView.vue      # 开源文档与仓库
-│   │   └── MerchView.vue       # 周边商店
+│   │   └── MerchView.vue       # 联系方式与招新
 │   ├── i18n/                    # 国际化配置
 │   ├── locales/                 # 翻译文件
 │   │   ├── zh-CN.ts            # 中文
@@ -69,33 +66,34 @@ root
 
 ### 1. 图片资源
 
-**位置**: `public/imgs/`
+**网页使用的图片**: `public/imgs/`
+
+高分辨率原图和当前页面未使用的素材保存在 `assets-source/imgs/`，避免被 Vite 一并复制到部署产物。需要在网页中使用归档图片时，先导出合适尺寸的 WebP 到 `public/imgs/`，再在页面中引用。
 
 **建议**:
 - 将中文文件名改为英文 (例如 `1号-操作手.jpg` → `operator_wang.webp`)
 - 建议使用 WebP 格式以优化加载性能
-- 在代码中使用绝对路径 `/imgs/xxx/yyy.webp`
+- 在 Vue 代码中使用 `import.meta.env.BASE_URL` 构造图片路径，确保 GitHub Pages 子路径部署可用
 
 ### 2. 首页 (HomeView.vue)
 
-**修改位置**: `src/views/HomeView.vue` 中的 `stats` 和 `news` 数据
+**修改位置**: `src/views/HomeView.vue` 中的 `capabilities` 和 `news` 数据
 
-**统计数据格式**:
+**首页内容**:
 ```typescript
-const stats = computed(() => [
-  { label: t('home.stats.coreCodeLines'), value: '10,543,855', unit: t('home.units.loc') },
-  { label: t('home.stats.totalPoints'), value: '11.300', unit: t('home.units.points') },
-  { label: t('home.stats.ranking'), value: '43', unit: t('home.units.rank') },
-  { label: t('home.stats.activeOperatives'), value: '50+', unit: t('home.units.personnel') }
+const capabilities = computed(() => [
+  t('home.capabilities.engineeringTitle'),
+  t('home.capabilities.intelligenceTitle'),
+  t('home.capabilities.competitionTitle'),
+  t('home.capabilities.knowledgeTitle')
 ])
 ```
 
 **快讯格式**:
 ```typescript
 const news = ref([
-  { id: 1, date: '2025-11-30', title: '"追梦杯"机器人校内赛决赛', category: 'COMPETITION' },
-  { id: 2, date: '2025-09-13', title: '机器人队秋招正式启动', category: 'EVENT' },
-  { id: 3, date: '2025-05-26', title: 'RMUC机甲大师超级对抗赛东部分区赛', category: 'COMPETITION' }
+  { id: 1, date: '2025-11-30', title: '校内机器人赛事', titleEn: 'Campus robotics competition', category: 'competition' },
+  { id: 2, date: '2025-09-13', title: '秋季招新', titleEn: 'Autumn recruitment', category: 'event' }
 ])
 ```
 
@@ -103,17 +101,21 @@ const news = ref([
 
 **修改位置**: `src/views/TeamView.vue` 中的 `members` 数组
 
-**数据结构**:
+当前网页展示有照片并完成介绍的 7 名核心队员。其他队员资料继续保存在 `TEAM_MEMBERS_2026.md`，后续补齐照片和介绍后再加入页面。数据结构：
 ```typescript
 interface Member {
   id: number;
-  name: string;                    // 英文名
-  role: string;                    // 英文职位
-  group: string;                   // 分类：MANAGEMENT、OPERATORS
+  name: string;                    // 姓名
+  role: string;                    // 中文职位
+  roleEn: string;                  // 英文职位
+  groups: string[];                // 分类：MANAGEMENT、OPERATORS 等
   img: string;                      // 头像路径
   title: string;                    // 队内职务（中文）
+  titleEn: string;                  // 队内职务（英文）
   technicalGroup: string;           // 技术组名称
+  technicalGroupEn: string;         // 技术组名称（英文）
   description: string;              // 个人介绍
+  descriptionEn: string;            // 个人介绍（英文）
 }
 ```
 
@@ -123,17 +125,21 @@ interface Member {
   id: 1, 
   name: 'Cheng Zhihong', 
   role: 'Captain', 
-  group: 'MANAGEMENT', 
-  img: '/imgs/people/北京理工大学_人员/xxx.webp',
+  roleEn: 'Captain',
+  groups: ['MANAGEMENT'],
+  img: `${import.meta.env.BASE_URL}imgs/people/xxx.webp`,
   title: '队长',
+  titleEn: 'Captain',
   technicalGroup: '电控组',
-  description: '具备卓越的领导能力和技术专长，负责团队整体战略规划与执行。'
+  technicalGroupEn: 'Electrical',
+  description: '负责团队管理。',
+  descriptionEn: 'Leads the team.'
 }
 ```
 
-### 4. 发展历程 (NewsView.vue)
+### 4. 发展历程 (AboutView.vue)
 
-**修改位置**: `src/views/NewsView.vue` 中的 `milestones` 数组
+**修改位置**: `src/views/AboutView.vue` 中的 `milestones` 数组
 
 **时间线格式**:
 ```typescript
@@ -147,15 +153,11 @@ interface Member {
 }
 ```
 
-### 5. 机器人参数 (RobotsView.vue)
+### 5. 机器人介绍 (RobotsView.vue)
 
 **修改位置**: `src/views/RobotsView.vue` 中的 `robots` 数组
 
-**修改 `specs` 对象中的数值** (进度条会自动调整):
-- `speed` - 速度
-- `hp` - 血量
-- `ammo` - 弹药
-- 等其他参数
+每台机器人使用 `nameZh` / `nameEn`、`typeZh` / `type`、中英文介绍及中英文特征标签；图片统一从 `public/imgs/robots/` 引用。
 
 ### 6. 开源文档 (SparksView.vue)
 
@@ -291,7 +293,7 @@ https://你的用户名.github.io/DreamChaser/
 
 ## 注意事项
 
-- **图片重命名**: 尽快将 `public/imgs` 下的中文文件名改为英文，避免部署后路径失效
+- **网页图片**: 只将当前页面需要的压缩图片放在 `public/imgs/`；原图保存在 `assets-source/imgs/`
 - **浏览器缓存**: 替换图片后如网页无变化，尝试 `Ctrl + F5` 强制刷新
 - **WebP格式**: 推荐使用WebP格式图片以优化性能
-- **路径约定**: 使用绝对路径 `/imgs/...` 而非相对路径
+- **路径约定**: 在 Vue 代码中通过 `import.meta.env.BASE_URL` 构造资源路径，兼容 GitHub Pages 子路径
