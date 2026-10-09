@@ -2,6 +2,7 @@
 import { onBeforeUnmount, ref } from 'vue'
 import { Plus, ArrowDownRight } from 'lucide-vue-next'
 import gsap from 'gsap'
+import { seasonHighlights } from '@/data/season2026'
 import { useI18n } from 'vue-i18n'
 
 const root = ref<HTMLElement | null>(null)
@@ -135,6 +136,7 @@ onBeforeUnmount(() => { if (root.value) gsap.killTweensOf(root.value.querySelect
             <h2 class="robot-name">{{ locale === 'zh-CN' ? robot.nameZh : robot.nameEn }}</h2>
             <div class="robot-type">{{ locale === 'zh-CN' ? robot.typeZh : robot.type }}</div>
             <p class="robot-summary">{{ locale === 'zh-CN' ? robot.description : robot.descriptionEn }}</p>
+            <div v-if="seasonHighlights[robot.id]" class="season-highlight"><span>{{ locale === 'zh-CN' ? '2026 赛季实绩' : '2026 SEASON HIGHLIGHT' }}</span><p>{{ locale === 'zh-CN' ? seasonHighlights[robot.id].zh : seasonHighlights[robot.id].en }}</p></div>
             <div class="robot-action" aria-hidden="true">
               <span>{{ locale === 'zh-CN' ? '战术能力' : 'Tactical capabilities' }}</span>
               <span class="expand-mark" :class="{ expanded: activeRobot === robot.id }"><Plus :size="24" :stroke-width="1.5" /></span>
@@ -212,6 +214,9 @@ onBeforeUnmount(() => { if (root.value) gsap.killTweensOf(root.value.querySelect
 
 .robot-summary { max-width: 640px; font-size: 17px; line-height: 1.85; color: #bccbc2; margin: 20px 0 24px; }
 
+.season-highlight { border-left: 2px solid #a8e8cc66; padding-left: 16px; margin: 0 0 24px; }
+.season-highlight > span { font-size: 13px; color: #a8c4b5; letter-spacing: .5px; }
+.season-highlight p { font-size: 16px; line-height: 1.8; color: #d2e3d9; margin: 8px 0 0; }
 .robot-action { display: flex; align-items: center; gap: 16px; color: #c3dfd0; font-size: 14px; }
 @media (min-width: 1700px) { .robot-visual { height: 350px; } .robot-visual img { height: 260px; } }
 @media (max-width: 1100px) {

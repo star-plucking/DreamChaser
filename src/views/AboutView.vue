@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import SeasonReview from '@/components/SeasonReview.vue'
 
 const { t, locale } = useI18n()
 
@@ -334,6 +335,7 @@ onBeforeUnmount(() => {
             <p>{{ t('about.paragraph1') }}</p>
             <p>{{ t('about.paragraph2') }}</p>
             <p>{{ t('about.paragraph3') }}</p>
+            <p class="organization-note">{{ locale === 'zh-CN' ? '队伍采用兵种组与职能技术组纵横协作的组织方式，机械、电控、硬件与算法共同完成研发，宣运组连接队伍文化、对外传播与赛时保障。成员来自机械与车辆、机电、信息与电子、自动化、计算机等学院，让不同专业的知识在同一台机器人上汇合。' : 'Robot divisions work alongside specialist groups in mechanics, control, hardware and algorithms. Operations members support team culture, communications and competition logistics. Students from mechanical, mechatronic, electronic, automation and computing disciplines bring their knowledge together in each robot.' }}</p>
           </div>
 
           <div class="stats-highlight">
@@ -353,6 +355,8 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </section>
+
+    <SeasonReview />
 
     <!-- 发展历程时间线 -->
     <section class="timeline-section">
@@ -429,6 +433,8 @@ onBeforeUnmount(() => {
       </div>
     </section>
 
+    <section v-reveal class="campus-story" aria-labelledby="campus-story-title"><div data-reveal-item><p class="campus-eyebrow">LEARN. BUILD. COMPETE.</p><h2 id="campus-story-title">{{ locale === 'zh-CN' ? '追梦杯，让热爱迈出第一步。' : 'The DreamChaser Cup. A first step into robotics.' }}</h2></div><div data-reveal-item><p>{{ locale === 'zh-CN' ? '2026 年北京理工大学“追梦杯”机器人竞赛由自动化学院主办，机器人队联合特立科协承办。参赛同学沿电控、机械、视觉与硬件四条技术路线学习与实践，在小组赛和淘汰赛中完成团队协作与机器人任务。' : 'Hosted by BIT’s School of Automation and organised by the robotics team with the Teli science association, the 2026 DreamChaser Cup brings control, mechanics, vision and hardware into a hands-on campus competition, with group and knockout stages.' }}</p><p>{{ locale === 'zh-CN' ? '从薪火培训到校内赛，我们希望把工程实践的机会带给更多同学。表现优异且满足要求的选手，可获得机器人队入队面试资格。' : 'From introductory training to the campus arena, we open engineering practice to more students. Outstanding participants who meet the requirements can qualify for a team interview.' }}</p><router-link to="/merch#recruitment-paths">{{ locale === 'zh-CN' ? '了解入队路径' : 'Explore recruitment paths' }} <span aria-hidden="true">↗</span></router-link></div></section>
+
     <!-- 照片墙部分 -->
     <section class="photo-wall-section">
       <div class="section-header">
@@ -482,6 +488,10 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss" scoped>
+.campus-story { display: grid; grid-template-columns: 1fr 1.3fr; gap: 60px; margin: 80px 0; border-block: 1px solid #ffffff20; padding: 40px 0; }
+.campus-eyebrow { font-family: $font-code; font-size: 14px; letter-spacing: 1px; color: #a4c6b3; margin: 0 0 20px; }.campus-story h2 { font-size: clamp(27px, 2.7vw, 38px); font-weight: 500; line-height: 1.5; margin: 0; }.campus-story div > p:not(.campus-eyebrow) { font-size: 17px; color: #b5c5bc; line-height: 1.9; margin: 0 0 20px; }.campus-story a { display: inline-flex; gap: 14px; font-size: 16px; color: #c3efda; padding: 8px 0; }.campus-story a:hover { color: #fff; }
+@media(max-width: 768px) { .campus-story { grid-template-columns: 1fr; gap: 26px; margin: 56px 0; padding: 32px 0; }.campus-story div > p:not(.campus-eyebrow) { font-size: 16px; } }
+
 .about-container {
   min-height: 100%;
   padding: var(--page-padding-y) var(--page-padding-x);

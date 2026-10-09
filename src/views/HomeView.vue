@@ -88,6 +88,7 @@ const manifesto = computed(() => zh.value ? ['把热爱，', '写进每一次创
 
     <section v-reveal class="news-section">
       <div class="section-heading"><div><p class="eyebrow">03 / {{ zh ? '保持前进' : 'KEEP MOVING' }}</p><h2>{{ t('home.latestIntel') }}</h2></div><button class="text-button" :aria-expanded="showAll" aria-controls="news-list" @click="showAll = !showAll">{{ zh ? (showAll ? '收起动态' : '全部动态') : (showAll ? 'Show less' : 'All updates') }} <ArrowRight :size="16" /></button></div>
+      <router-link to="/about#season-2026" class="season-news"><span class="season-news-year">2026<span>RMUC</span></span><div><p class="season-news-label">{{ zh ? '赛季回望' : 'SEASON IN REVIEW' }}</p><h3>{{ zh ? '重返全国赛，再至十六强。' : 'Back at nationals. Back in the top sixteen.' }}</h3><p>{{ zh ? '北部赛区八强 · 全国赛十六强。飞镖随机移动目标命中、工程双臂协同，让技术突破在赛场上落地。' : 'Northern Regional top eight. National top sixteen. Moving-target hits and coordinated dual-arm operations brought technical progress into the arena.' }}</p></div><ArrowUpRight :size="24" aria-hidden="true" /></router-link>
       <div id="news-list" class="news-list"><router-link v-for="item in visibleNews" :key="item.date" :to="item.to" class="news-item"><time :datetime="item.date.split('.').join('-')">{{ item.date }}</time><span class="news-category">{{ t(`home.categories.${item.category}`) }}</span><h3>{{ zh ? item.title : item.en }}</h3><ArrowUpRight :size="19" /></router-link></div>
     </section>
 
@@ -96,6 +97,10 @@ const manifesto = computed(() => zh.value ? ['把热爱，', '写进每一次创
 </template>
 
 <style lang="scss" scoped>
+.season-news { display: grid; grid-template-columns: 120px minmax(0, 1fr) 24px; gap: 36px; align-items: start; padding: 30px 0 34px; border-top: 1px solid #a8e8cc44; color: inherit; }
+.season-news-year { font-size: 35px; font-weight: 500; line-height: 1.2; letter-spacing: -1px; color: #c3efda; }.season-news-year > span { display: block; font-family: $font-code; font-size: 13px; letter-spacing: 1px; margin-top: 12px; color: #a4c1b3; }
+.season-news-label { margin: 0 0 10px; font-size: 14px; color: #a4c1b3; }.season-news h3 { font-size: clamp(23px, 2.1vw, 30px); font-weight: 500; line-height: 1.4; margin: 0 0 14px; }.season-news div > p:last-child { max-width: 850px; margin: 0; font-size: 17px; line-height: 1.85; color: #aebeb4; }.season-news > svg { color: #a8e8cc; transition: transform .3s; }.season-news:hover > svg { transform: translate(3px, -3px); }
+@media(max-width: 768px) { .season-news { grid-template-columns: minmax(0, 1fr) 24px; gap: 20px; }.season-news-year { grid-column: 1 / -1; display: flex; gap: 16px; align-items: baseline; font-size: 28px; }.season-news-year > span { margin: 0; }.season-news div > p:last-child { font-size: 16px; } }
 .home-container { max-width: 1680px; margin: auto; }
 .eyebrow { display: flex; align-items: center; gap: 14px; margin: 0 0 32px; color: #a4c1b3; font-size: 14px; letter-spacing: 2px; line-height: 1.6; }
 .status-dot { width: 7px; height: 7px; border-radius: 50%; background: $color-primary; box-shadow: 0 0 20px #a8e8cc88; }

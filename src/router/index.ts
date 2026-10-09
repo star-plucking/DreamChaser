@@ -36,7 +36,22 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  scrollBehavior(_to, _from, savedPosition) { return savedPosition || { top: 0 } }
+  async scrollBehavior(to, _from, savedPosition) {
+    if (savedPosition) return savedPosition
+    if (to.hash) {
+      // Wait for the outgoing page transition and lazy-loaded destination.
+      for (let frame = 0; frame < 90; frame++) {
+        const target = document.getElementById(to.hash.slice(1))
+        if (target && frame > 1 && !target.closest('.page-fade-enter-active')) {
+          // Let layout observers settle before measuring the anchor.
+          await new Promise<void>(resolve => setTimeout(resolve, 180))
+          return { el: target, top: 112 }
+        }
+        await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
+      }
+    }
+    return { top: 0 }
+  }
 })
 
 export default router

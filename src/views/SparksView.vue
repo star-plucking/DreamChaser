@@ -127,6 +127,8 @@ const filteredDocs = computed(() => {
   return docs.filter(doc => `${doc.title} ${doc.titleEn} ${doc.description} ${doc.descriptionEn} ${doc.type}`.toLowerCase().includes(query))
 })
 
+const featuredDocs = [docs[10], docs[12], docs[3]]
+
 const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的B站链接
 </script>
 
@@ -138,6 +140,8 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
     </div>
 
     <div class="content-wrapper">
+      <section v-reveal class="open-source-focus" aria-labelledby="open-source-focus-title"><header data-reveal-item><p class="focus-eyebrow">FROM THE ARENA, TO THE COMMUNITY</p><h2 id="open-source-focus-title">{{ locale === 'zh-CN' ? '让一次突破，成为下一次起点。' : 'Share a breakthrough. Start the next one.' }}</h2><p class="focus-intro">{{ locale === 'zh-CN' ? '从 300FPS 视觉识别与 FPGA 制导，到无线充电和双臂控制。我们把赛场上的探索整理为可追溯的技术资料，与更多研发者共同进步。' : 'From 300FPS vision and FPGA guidance to wireless charging and dual-arm control, we document our engineering work so others can build on it.' }}</p></header><div class="focus-projects"><a v-for="doc in featuredDocs" :key="doc.url" :href="doc.url" target="_blank" rel="noopener noreferrer" data-reveal-item><h3>{{ locale === 'zh-CN' ? doc.title : doc.titleEn }}</h3><p>{{ locale === 'zh-CN' ? doc.description : doc.descriptionEn }}</p><span>{{ locale === 'zh-CN' ? '阅读开源原帖' : 'Read the original release' }} ↗</span></a></div><p class="source-license" data-reveal-item>{{ locale === 'zh-CN' ? '使用与转载请遵循各原帖的授权声明，并注明作者及出处。' : 'Follow each original release’s licence and credit its authors and source.' }}</p></section>
+
       <!-- 开源文档 -->
       <section class="section-docs">
         <h2 class="section-badge">{{ t('knowledge.docs') }}</h2>
@@ -183,6 +187,10 @@ const bilibiliUrl = 'https://space.bilibili.com/411495552' // 替换为实际的
 </template>
 
 <style lang="scss" scoped>
+.focus-eyebrow { font-family: $font-code; font-size: 13px; letter-spacing: 1px; color: #a4c6b3; margin: 0 0 20px; }.open-source-focus h2 { font-size: clamp(28px, 3vw, 40px); font-weight: 500; line-height: 1.4; margin: 0 0 20px; }.focus-intro { font-size: 17px; line-height: 1.85; color: #afc1b5; max-width: 900px; margin: 0; }
+.focus-projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 32px; }.focus-projects a { display: flex; flex-direction: column; border-top: 1px solid #a8e8cc44; padding: 24px 0 8px; color: inherit; }.focus-projects h3 { font-size: 21px; font-weight: 500; line-height: 1.5; margin: 0 0 14px; }.focus-projects p { font-size: 16px; color: #aebeb4; line-height: 1.8; margin: 0 0 20px; }.focus-projects span { font-size: 15px; color: #c3efda; margin-top: auto; }.focus-projects a:hover h3 { color: #c3efda; }.source-license { font-size: 14px; color: #9bb2a4; line-height: 1.8; margin: 24px 0 0; }
+@media(max-width: 768px) { .focus-projects { grid-template-columns: 1fr; gap: 20px; }.focus-intro { font-size: 16px; } }
+
 .sparks-container {
   padding: var(--page-padding-y) var(--page-padding-x);
   height: 100%;

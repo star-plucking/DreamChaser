@@ -2,6 +2,7 @@
 import { nextTick, onBeforeUnmount, ref } from 'vue'
 import { Mail, Phone, MessageSquare, MapPin, Cog, CircuitBoard, ScanEye, Code2 } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
+import RecruitmentPaths from '@/components/RecruitmentPaths.vue'
 
 const { t, tm } = useI18n()
 const recruitmentImage = `url("${import.meta.env.BASE_URL}imgs/photo_wall/photo_01.webp")`
@@ -148,6 +149,8 @@ onBeforeUnmount(() => {
 
       </section>
     </div>
+
+    <RecruitmentPaths :recruitment-url="recruitmentUrl" />
 
     <Teleport to="body">
       <Transition name="modal">
