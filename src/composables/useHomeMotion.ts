@@ -1,10 +1,11 @@
-import { onBeforeUnmount, onMounted, type Ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export function useHomeMotion(root: Ref<HTMLElement | null>) {
+  const sceneProgress = ref(0)
   let context: gsap.Context | undefined
   let refreshObserver: ResizeObserver | undefined
   let timer: ReturnType<typeof setTimeout>
@@ -24,9 +25,24 @@ export function useHomeMotion(root: Ref<HTMLElement | null>) {
     if (!root.value) return
     context = gsap.context(() => {
       const media = gsap.matchMedia()
+      media.add('(min-width: 1000px) and (min-height: 740px) and (prefers-reduced-motion: no-preference)', () => {
+        const targets = root.value!.querySelectorAll<HTMLElement>('.hero-copy, .machine-controls, .machine-link')
+        const timeline = gsap.timeline({ scrollTrigger: {
+          trigger: '.hero-sequence', start: 'top 80px', end: 'bottom bottom', scrub: .85,
+          onUpdate: self => { targets.forEach(el => { el.inert = self.progress > .2 }) }
+        } })
+        timeline.to('.hero-copy', { opacity: 0, y: -65, duration: .3 }, 0)
+          .to('.machine-topline, .machine-caption, .machine-controls', { opacity: 0, duration: .2 }, 0)
+          .to('.hero-machine', { xPercent: -78, y: 45, duration: .75, ease: 'power2.inOut' }, .05)
+          .to('.stage-parallax', { scale: 1.08, duration: .75, ease: 'power2.inOut' }, .05)
+          .fromTo('.engineering-heading', { y: 30 }, { y: 0, opacity: 1, duration: .3 }, .35)
+          .fromTo('.engineering-note', { x: 45 }, { x: 0, opacity: 1, stagger: .12, duration: .25 }, .52)
+          .to('.engineering-footer', { opacity: 1, duration: .2 }, .8)
+          .to({}, { duration: .15 })
+        timeline.eventCallback('onUpdate', () => { sceneProgress.value = timeline.progress() })
+        return () => { sceneProgress.value = 0; targets.forEach(el => { el.inert = false }) }
+      })
       media.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.to('.hero-title', { y: -45, ease: 'none', scrollTrigger: { trigger: '.hero-section', start: 'top top', end: 'bottom top', scrub: .8 } })
-        gsap.to('.hero-machine .stage-parallax', { y: -100, rotation: -3, ease: 'none', scrollTrigger: { trigger: '.hero-section', start: 'top top', end: 'bottom top', scrub: 1 } })
         gsap.fromTo('.story-photo img', { yPercent: -8, scale: 1.16 }, { yPercent: 8, scale: 1.04, ease: 'none', scrollTrigger: { trigger: '.story-photo', start: 'top bottom', end: 'bottom top', scrub: .9 } })
         gsap.to('.marquee-track', { xPercent: -16, ease: 'none', scrollTrigger: { trigger: '.brand-marquee', start: 'top bottom', end: 'bottom top', scrub: 1.2 } })
         const words = root.value?.querySelectorAll('.manifesto-word')
@@ -47,4 +63,5 @@ export function useHomeMotion(root: Ref<HTMLElement | null>) {
     refreshObserver?.disconnect()
     context?.revert()
   })
+  return { sceneProgress }
 }
