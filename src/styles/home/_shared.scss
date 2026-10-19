@@ -1,0 +1,90 @@
+@use '../variables' as *;
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 32px;
+  color: #a4c1b3;
+  font-size: 14px;
+  letter-spacing: 2px;
+  line-height: 1.6;
+}
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  min-height: 58px;
+  padding: 16px 26px;
+  background: $color-primary;
+  color: #10241d;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid $color-primary;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.primary-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #e2ffee;
+  transform: translateY(101%);
+  transition: transform 0.5s var(--motion-ease);
+  z-index: -1;
+}
+
+.primary-button:hover {
+  background: #d0f5e4;
+  color: #10241d;
+}
+
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 44px;
+  font-size: 16px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  color: #d4e3da;
+}
+
+.text-button:hover {
+  color: $color-primary;
+}
+
+@media (max-width: 600px) {
+  .primary-button {
+    padding: 14px 20px;
+    font-size: 15px;
+    gap: 18px;
+    min-height: 54px;
+  }
+  .text-button {
+    font-size: 15px;
+    gap: 10px;
+  }
+  .eyebrow {
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 380px) {
+  .primary-button {
+    padding: 14px 15px;
+    gap: 12px;
+    font-size: 14px;
+  }
+  .text-button {
+    font-size: 14px;
+  }
+}

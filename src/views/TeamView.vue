@@ -46,7 +46,7 @@ const members = ref<Member[]>([
     descriptionEn: 'Leads the hardware group.'
   },
   { 
-    id: 7, name: '李伟俊', role: '副队长', groups: ['OPERATORS', 'MANAGEMENT', 'MECHANICS'], 
+    id: 7, name: '李韦俊', role: '副队长', groups: ['OPERATORS', 'MANAGEMENT', 'MECHANICS'],
     roleEn: 'Vice Captain',
     img: withBase('imgs/people/北京理工大学_人员/4号-操作手-李韦俊.webp'),
     title: '副队长，步兵机器人研发，步兵操作手',

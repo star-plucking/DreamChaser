@@ -77,7 +77,9 @@ root
 
 ### 2. 首页 (HomeView.vue)
 
-**修改位置**: `src/views/HomeView.vue` 中的 `capabilities` 和 `news` 数据
+**修改位置**: `src/views/HomeView.vue` 中的 `capabilities`；近期消息在 `src/data/home.ts` 的 `homeNews`，首屏机器人在同文件的 `heroMachines`。
+
+首屏组件、动效与样式的维护说明见 [首页维护指南](docs/homepage-maintenance.md)。
 
 **首页内容**:
 ```typescript
@@ -91,10 +93,10 @@ const capabilities = computed(() => [
 
 **快讯格式**:
 ```typescript
-const news = ref([
-  { id: 1, date: '2025-11-30', title: '校内机器人赛事', titleEn: 'Campus robotics competition', category: 'competition' },
-  { id: 2, date: '2025-09-13', title: '秋季招新', titleEn: 'Autumn recruitment', category: 'event' }
-])
+export const homeNews = [
+  { date: '2025.11.30', title: '校内机器人赛事', en: 'Campus robotics competition', category: 'competition', to: '/about' },
+  { date: '2025.09.13', title: '秋季招新', en: 'Autumn recruitment', category: 'event', to: '/merch' }
+]
 ```
 
 ### 3. 队员介绍 (TeamView.vue)
